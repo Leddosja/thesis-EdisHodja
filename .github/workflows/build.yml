@@ -1,0 +1,15 @@
+name: Build tesi
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: typst-community/setup-typst@v4
+      - run: typst compile --root . src/main.typ tesi.pdf
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tesi
+          path: tesi.pdf
