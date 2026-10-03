@@ -1,5 +1,9 @@
 # Tesi di laurea
 
+<p align="center">
+  <img src="img/logo_unipd.jpeg" alt="Logo dell'Università degli Studi di Padova" width="180">
+</p>
+
 **Titolo:** Sviluppo di un prototipo di biglietteria automatizzata conforme alla normativa AdE/SIAE
 
 **Autore:** Edis Hodja
