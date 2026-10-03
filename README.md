@@ -1,4 +1,4 @@
-# Tesi di laurea
+# Tesi di laurea triennale - Edis Hodja
 
 <p align="center">
   <img src="img/logo_unipd.jpeg" alt="Logo dell'Università degli Studi di Padova" width="180">
