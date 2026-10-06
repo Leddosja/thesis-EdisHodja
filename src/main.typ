@@ -16,6 +16,7 @@
 #set quote(block: true)
 #set figure.caption(position: bottom)
 #show figure.caption: set text(weight: "bold")
+#show heading: set text(size: 23pt)
 
 #import "chapters/shared.typ": *
 
@@ -82,8 +83,9 @@ Desidero poi ringraziare i miei amici per i bellissimi anni trascorsi insieme e 
 
 = Sommario <sommario>
 
-Il presente documento descrive il lavoro svolto durante il periodo di stage svolto dal laureando #io presso l'azienda #azienda dalla durata di circa 300 ore.
+Il presente documento descrive il lavoro svolto durante il periodo di stage dal laureando #io presso l'azienda #azienda della durata di circa 300 ore, svolte nel periodo che intercorre dal 28 settembre 2026 al 20 novembre 2026. L'elaborato è stato redatto seguendo il piano di lavoro proposto dal tutor aziendale #tutor ed espone le diverse procedure operative e metodologiche adoperate durante lo sviluppo del prodotto atteso, in particolare le modalità di apprendimento e di esecuzione oltre alle attività organizzative.
 
+/*
 #pagebreak()
 = Ringraziamenti <ringraziamenti>
 
@@ -97,6 +99,7 @@ Il presente documento descrive il lavoro svolto durante il periodo di stage svol
 
 #pagebreak()
 = Elenco delle tabelle <tabelle>
+*/
 
 #pagebreak()
 #counter(page).update(1)

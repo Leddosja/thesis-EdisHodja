@@ -4,6 +4,7 @@
 #let titolo = [Sviluppo di un prototipo di biglietteria automatizzata conforme alla normativa AdE/SIAE]
 #let degree = [Tesi di Laurea]
 #let relatore = [Prof. Zanella Marco]
+#let tutor = [Matteo Forzan]
 #let io = [Edis Hodja]
 #let matricola = [2116422]
 #let anno = [2025-2026]
