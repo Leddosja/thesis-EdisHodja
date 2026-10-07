@@ -11,12 +11,12 @@
   number-align: center,
 )
 #set text(font: "New Computer Modern", size: 12pt, lang: "it")
-#set par(justify: true, leading: 0.75em, first-line-indent: 1.25em)
+#set par(justify: true, leading: 0.8em, first-line-indent: 1.25em)
 #set heading(numbering: "1.1")
 #set quote(block: true)
 #set figure.caption(position: bottom)
 #show figure.caption: set text(weight: "bold")
-#show heading: set text(size: 23pt)
+#show heading: set text(size: 21pt)
 
 #import "chapters/shared.typ": *
 
@@ -79,16 +79,18 @@ Desidero poi ringraziare i miei amici per i bellissimi anni trascorsi insieme e 
 #align(right)[#location, #date \\ #emph[#io]]
 */
 
+#pagebreak()
 #set heading(numbering: none)
 
 = Sommario <sommario>
 
-Il presente documento descrive il lavoro svolto durante il periodo di stage dal laureando #io presso l'azienda #azienda della durata di circa 300 ore, svolte nel periodo che intercorre dal 28 settembre 2026 al 20 novembre 2026. L'elaborato è stato redatto seguendo il piano di lavoro proposto dal tutor aziendale #tutor ed espone le diverse procedure operative e metodologiche adoperate durante lo sviluppo del prodotto atteso, in particolare le modalità di apprendimento e di esecuzione oltre alle attività organizzative.
+Il presente documento descrive il lavoro svolto durante il periodo di stage dal laureando #io presso l'azienda #azienda, della durata di circa 300 ore, svolte nel periodo che intercorre dal 28 settembre 2026 al 20 novembre 2026. Lo stage ha per oggetto la realizzazione di un prototipo di sistema di biglietteria automatizzata per la vendita online di titoli di accesso per conto di organizzatori terzi, in modalità white-label, destinato a integrarsi con il CRM aziendale RelAi. Il sistema deve rispettare i requisiti stabiliti dalla normativa AdE/SIAE.
+
+L'elaborato è stato redatto seguendo il piano di lavoro proposto dal tutor aziendale #tutor ed espone le procedure operative e metodologiche adoperate durante lo sviluppo del prodotto atteso. In particolare, descrive le modalità di apprendimento e di esecuzione delle attività, l'organizzazione del lavoro in settimane e il confronto periodico con il tutor, che comprende incontri settimanali e revisioni del codice.
+
+Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile sono simulati e il sistema non è oggetto di certificazione durante lo stage, il prototipo serve a dimostrare i flussi end-to-end e a costituire la base tecnica per lo sviluppo del sistema definitivo. Il lavoro comprende l'analisi dei requisiti normativi, la progettazione del modello dati su PostgreSQL, l'emissione e l'annullamento dei titoli, la generazione del log delle transazioni e dei riepiloghi, la vendita online e il controllo accessi, con la verifica dei risultati tramite test funzionali e di concorrenza.
 
 /*
-#pagebreak()
-= Ringraziamenti <ringraziamenti>
-
 #pagebreak()
 = Indice <indice>
 #outline(title: none, depth: 5)
@@ -100,6 +102,9 @@ Il presente documento descrive il lavoro svolto durante il periodo di stage dal 
 #pagebreak()
 = Elenco delle tabelle <tabelle>
 */
+
+#pagebreak()
+//#include "chapters/00-glossario.typ"
 
 #pagebreak()
 #counter(page).update(1)

@@ -9,6 +9,13 @@ Questo elaborato presenta il progetto di stage presso Spazio Dev S.r.l., che pre
 == L’azienda
 
 Spazio Dev S.r.l. ha sede a Tombolo, in provincia di Padova. Il progetto di stage riguarda un sistema di biglietteria da integrare con RelAi, il CRM aziendale. L’integrazione dovrà mettere in relazione le informazioni sugli organizzatori e sugli eventi con quelle relative alle vendite e agli accessi.
+#v(0.5cm)
+
+#figure(
+  image("../../img/logo_spaziodev.jpeg", width: 50%),
+  caption: [Logo di Spazio Dev S.r.l.],
+)
+
 
 == Il progetto e gli obiettivi
 
