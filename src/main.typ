@@ -6,7 +6,7 @@
 
 #set page(
   paper: "a4",
-  margin: (top: 2.75cm, bottom: 2.75cm, left: 3.75cm, right: 3cm),
+  margin: (top: 2.75cm, bottom: 2.75cm, left: 3.65cm, right: 3cm),
   numbering: "i",
   number-align: center,
 )
@@ -113,8 +113,8 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 
 #include "chapters/01-introduzione.typ"
 #include "chapters/02-descrizione-stage.typ"
-#include "chapters/03-analisi-requisiti.typ"
-#include "chapters/04-progettazione-codifica.typ"
-#include "chapters/05-verifica-validazione.typ"
-#include "chapters/06-conclusioni.typ"
-#include "chapters/07-bibliografia.typ"
+// #include "chapters/03-analisi-requisiti.typ"
+// #include "chapters/04-progettazione-codifica.typ"
+// #include "chapters/05-verifica-validazione.typ"
+// #include "chapters/06-conclusioni.typ"
+// #include "chapters/07-bibliografia.typ"

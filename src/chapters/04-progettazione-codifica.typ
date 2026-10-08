@@ -1,6 +1,5 @@
 #import "shared.typ": *
 
-/*
 #pagebreak()
 = Progettazione e codifica <progettazione-codifica>
 
@@ -33,4 +32,4 @@ int main() {
     return 0;
 }
 ```, caption: [Example of code], kind: raw) <listing-c>
-*/
+

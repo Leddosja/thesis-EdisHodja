@@ -1,6 +1,6 @@
 #import "shared.typ": *
 
-/*
+
 #pagebreak()
 = Conclusioni <conclusioni>
 
@@ -33,4 +33,3 @@ Si puo consultare la sezione Glossario per alcuni esempi di utilizzo.
 
 
 == Valutazione personale
-*/

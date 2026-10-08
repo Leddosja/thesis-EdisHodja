@@ -1,9 +1,9 @@
 #import "shared.typ": *
 
-/*
+
 #let status-table(rows, caption: none) = {
   table(
-    columns: (1.5cm, 1fr, 3cm, 2cm),
+    columns: (1.5cm, 7cm, 3cm, 3cm),
     inset: 5pt,
     stroke: 0.5pt + rgb("b8b8bd"),
     fill: (_, row) => if calc.odd(row) { rgb("f5f5f7") } else { white },
@@ -15,11 +15,6 @@
   }
 }
 
-// BOZZA. Fonti: "12 - Requisiti (per gruppi)" e "Matrice dei requisiti - Biglietteria SIAE".
-// Da verificare: la checklist dichiara 88 requisiti, ma i gruppi A–L ne contengono 71.
-// I 17 mancanti sono nel file "11 - Requisiti (checklist 88)", che non è ancora stato letto.
-// Da fare: la matrice usa codici diversi (CA-01, MF-01, TA-01…). Va riportata sui codici della checklist.
-// Gli stati della colonna "Stato" sono una proposta mia: vanno confermati con il tutor.
 
 #pagebreak()
 
@@ -42,7 +37,7 @@ Il perimetro è il sistema di emissione dei titoli di accesso previsto dall’ar
 La tabella seguente collega gli obiettivi del piano di lavoro ai gruppi di requisiti e ai casi d’uso.
 
 #table(
-  columns: (2cm, 4.2cm, 3.5cm, 3.2cm),
+  columns: (2.5cm, 5.5cm, 3.3cm, 3cm),
   inset: 5pt,
   stroke: 0.5pt + rgb("b8b8bd"),
   fill: (_, row) => if calc.odd(row) { rgb("f5f5f7") } else { white },
@@ -79,25 +74,28 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
 // (configurazione, fiscale, vendita online, controllo accessi, opzionali). Va in questa posizione,
 // prima dei sottoparagrafi.
 
+#show heading: set text(size: 16pt)
+
 === Configurazione: organizzatori, locali, eventi e prezzi <uc-configurazione>
 
 Prima di emettere un titolo, il sistema deve conoscere l’organizzatore, il locale e l’evento. I prezzi e le tabelle di sistema sono configurati nella stessa fase.
 
 // FIGURA 3: diagramma dei casi d’uso UC1–UC2 (solo operatore di back-office, con il sistema di carta come attore di supporto).
 
-#usecase(1, [Configurazione dell’evento], [Operatore di back-office.], [L’operatore è autenticato e l’organizzatore è registrato.], [L’operatore crea un evento associato a un locale e a un organizzatore, con date e tipologie di titolo.], [L’evento è disponibile per la vendita e per il controllo accessi.]) <uc-configurazione-evento>
+#usecase(1, [Configurazione dell’evento], [Operatore di back-office, carta di attivazione simulata.], [L’operatore è autenticato, la carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’organizzatore è registrato e il locale è già definito (#link(<uc-locali-prezzi>)[UC-2]).], [L’operatore crea un evento associato a un locale e a un organizzatore, con date e tipologie di titolo. Sono ammessi eventi che attraversano la mezzanotte.], [L’evento è disponibile per la vendita e per il controllo accessi.], alternative: [Se il locale o l’organizzatore non esistono, o le date sono incoerenti, il sistema rifiuta il salvataggio e indica il motivo.], diagram: "../../img/diagrams/uc-1.png") <uc-configurazione-evento>
 
-#usecase(2, [Gestione di locali e prezzi], [Operatore di back-office.], [Il locale ha un codice locale univoco, assegnato da SIAE.], [L’operatore definisce i locali e i listini, separando prevendita e prestazioni accessorie dal titolo principale.], [Listini e locali sono usati dalle operazioni di emissione.], alternative: [Se il codice locale è già in uso, il sistema rifiuta il salvataggio e segnala il conflitto.]) <uc-locali-prezzi>
+#usecase(2, [Gestione di organizzatori, locali e prezzi], [Operatore di back-office, carta di attivazione simulata.], [L’operatore è autenticato, la carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’operatore dispone del codice locale assegnato da SIAE.],
+[L’operatore registra gli organizzatori e definisce i locali, ciascuno con il proprio codice locale, e i listini, separando prevendita e prestazioni accessorie dal titolo principale.], [Organizzatori, locali e listini sono disponibili per la configurazione degli eventi (#link(<uc-configurazione-evento>)[UC-1]) e per le operazioni di emissione (#link(<uc-emissione>)[UC-4]).], requires: [#link(<uc-carta>)[UC-3]], alternative: [Se il codice locale è già in uso, il sistema rifiuta il salvataggio e segnala il conflitto.], diagram: "../../img/diagrams/uc-2.png") <uc-locali-prezzi>
 
 === Area fiscale: carta, emissione, annullo, log e riepiloghi <uc-fiscale>
 
-Quest’area è il nucleo del prototipo. Ogni operazione richiede una carta valida e viene scritta nel log in modo serializzato.
+Quest’area è il nucleo del prototipo in cui ogni operazione richiede una carta valida e viene scritta nel log in modo serializzato.
 
-// FIGURA 4: diagramma dei casi d’uso UC3–UC7 (operatore di back-office, con la carta simulata come attore di supporto).
+#usecase(3, [Gestione della carta simulata], [Operatore di back-office, carta di attivazione simulata.], [La carta simulata è inserita nel sistema e l’operatore conosce il PIN.],
+[All’accensione, e a ogni rimozione della carta, il sistema richiede il PIN. Alla prima attivazione memorizza titolare, codice sistema e codice carta, controlla la firma e mostra i contatori. Il sistema legge poi contatori, progressivo e sigillo simulati, verifica che la carta sia associata a questo sistema e porta lo stato a pronto. Con la carta assente o non valida tutte le funzioni di anagrafica, emissione, annullo, log e riepilogo restano bloccate.], [Lo stato del sistema riflette la carta presente. Solo con lo stato pronto sono utilizzabili #link(<uc-locali-prezzi>)[UC-2], #link(<uc-configurazione-evento>)[UC-1], #link(<uc-emissione>)[UC-4] e #link(<uc-annullo>)[UC-5]. Il blocco per guasto è gestito da #link(<uc-guasto>)[UC-15].], alternative: [Se il PIN è errato, la carta è assente o non è associata a questo sistema, il sistema resta bloccato e segnala il motivo.], diagram: "../../img/diagrams/uc-3.png") <uc-carta>
 
-#usecase(3, [Gestione della carta simulata], [Operatore di back-office, carta di attivazione simulata.], [È inserita una carta simulata con PIN corretto.], [Il sistema legge contatori, progressivo e sigillo simulati e porta lo stato a pronto. Con la carta assente o non valida tutte le funzioni restano bloccate.], [Lo stato del sistema riflette la carta presente.], alternative: [Se il sistema è in blocco per guasto, le operazioni fiscali restano sospese fino alla risoluzione.]) <uc-carta>
-
-#usecase(4, [Emissione del titolo], [Operatore di back-office.], [La carta è valida e l’evento è configurato.], [L’operatore emette un titolo con i dati obbligatori dell’art. 3 del D.M. 13/7/2000. Sono gestiti i titoli gratuiti e ridotti con causale, gli abbonamenti a turno fisso e libero e i titoli open.], [Il titolo è registrato e il movimento è scritto nel log.], alternative: [Se un dato obbligatorio manca, l’emissione non viene completata.]) <uc-emissione>
+#usecase(4, [Emissione del titolo], [Operatore di back-office, carta di attivazione simulata.], [La carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’evento è configurato (#link(<uc-configurazione-evento>)[UC-1]) e i listini sono definiti (#link(<uc-locali-prezzi>)[UC-2]).], [L’operatore emette un titolo con i dati obbligatori dell’art. 3 del D.M. 13/7/2000, comprese le diciture per la vendita per conto di terzi. Sono gestiti i titoli gratuiti e ridotti con causale, gli abbonamenti a turno fisso e libero e i titoli open. Per i titoli nominativi sono registrati nome e cognome. La carta simulata calcola il sigillo e incrementa i contatori, e gli importi sono espressi in euro con due cifre decimali.], [Il titolo è registrato con progressivo e sigillo e il movimento è scritto nel log, anche se il titolo non è stato stampato. Il titolo può essere annullato (#link(<uc-annullo>)[UC-5]) e rientra nella chiusura giornaliera (#link(<uc-chiusura>)[UC-6]).],
+requires: [#link(<uc-carta>)[UC-3], #link(<uc-configurazione-evento>)[UC-1], #link(<uc-locali-prezzi>)[UC-2]], alternative: [Se un dato obbligatorio manca, l’emissione non viene completata. Se la carta è assente o il sistema è bloccato, l’operazione è rifiutata e non viene scritto alcun movimento.], diagram: "../../img/diagrams/uc-4.png") <uc-emissione>
 
 #usecase(5, [Annullo del titolo], [Operatore di back-office.], [Il titolo esiste ed è stato emesso nel sistema.], [L’operatore annulla il titolo indicando una causale. Il sistema verifica i termini previsti e genera il record ANNULLATO con i dati del titolo originario.], [Il titolo risulta annullato e i due movimenti sono correlati nel log.], alternative: [Se il termine di annullo è scaduto, l’operazione viene rifiutata con il motivo.]) <uc-annullo>
 
@@ -285,4 +283,5 @@ Alcuni punti limitano il prototipo e vanno dichiarati nella relazione finale.
 + *Codice locale e trasmissione.* Il codice locale per ogni impianto e le modalità di trasmissione telematica vanno richiesti a SIAE. Queste informazioni vanno dichiarate già nella domanda di carta di attivazione.
 + *Varianti dopo l’istanza.* Ogni variante che incide sul funzionamento fiscale richiede un’autorizzazione preventiva. Wallet pass, controllo accessi e canali di vendita vanno quindi inclusi nella prima istanza. Se restano fuori dalla domanda, il prototipo può mostrarli ma non può presentarli come conformi.
 + *Termini dell’istanza.* L’istanza completa va presentata circa cinque settimane prima di una seduta della Commissione e in ogni caso almeno sessanta giorni prima dell’avvio in esercizio. Un esemplare del sistema deve restare disponibile all’Agenzia per i controlli.
-*/
+
+#show heading: set text(size: 21pt)

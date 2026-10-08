@@ -1,0 +1,112 @@
+<mxfile host="65bd71144e">
+    <diagram id="rsmdZ6SaubqFKEKktrSU" name="uc-1">
+        <mxGraphModel dx="691" dy="665" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="XD4VHSo1z_g_xd7qa_y7-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=default;verticalAlign=top;" value="Sistema di biglietteria" vertex="1">
+                    <mxGeometry height="300" width="400" x="270" y="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="hKlibiE-Phd1E5z1TlDr-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;rounded=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="UC1: Configurazione dell&#39;evento" vertex="1">
+                    <mxGeometry height="70" width="140" x="400" y="305" as="geometry"/>
+                </mxCell>
+                <mxCell id="hKlibiE-Phd1E5z1TlDr-3" edge="1" parent="1" source="hKlibiE-Phd1E5z1TlDr-2" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="hKlibiE-Phd1E5z1TlDr-1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hKlibiE-Phd1E5z1TlDr-2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="Operatore di&lt;br&gt;back-office" vertex="1">
+                    <mxGeometry height="60" width="30" x="180" y="310" as="geometry"/>
+                </mxCell>
+                <mxCell id="wJykWGZ_3GlNzBTTjiFO-2" edge="1" parent="1" source="wJykWGZ_3GlNzBTTjiFO-1" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="hKlibiE-Phd1E5z1TlDr-1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="wJykWGZ_3GlNzBTTjiFO-1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="Carta di attivazione&lt;br&gt;simulata" vertex="1">
+                    <mxGeometry height="60" width="30" x="720" y="310" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="uc-2" id="xnG-3TMY_bnIItjfs9kW">
+        <mxGraphModel dx="691" dy="665" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+            <root>
+                <mxCell id="gWJNCnpefFMrHf-PVyWw-0"/>
+                <mxCell id="gWJNCnpefFMrHf-PVyWw-1" parent="gWJNCnpefFMrHf-PVyWw-0"/>
+                <mxCell id="gWJNCnpefFMrHf-PVyWw-2" parent="gWJNCnpefFMrHf-PVyWw-1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=default;verticalAlign=top;" value="Sistema di biglietteria" vertex="1">
+                    <mxGeometry height="300" width="400" x="270" y="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="gWJNCnpefFMrHf-PVyWw-3" parent="gWJNCnpefFMrHf-PVyWw-1" style="ellipse;whiteSpace=wrap;html=1;rounded=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="UC2: Gestione di organizzatori, &lt;br&gt;locali e prezzi" vertex="1">
+                    <mxGeometry height="90" width="260" x="340" y="293" as="geometry"/>
+                </mxCell>
+                <mxCell id="gWJNCnpefFMrHf-PVyWw-4" edge="1" parent="gWJNCnpefFMrHf-PVyWw-1" source="gWJNCnpefFMrHf-PVyWw-5" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="gWJNCnpefFMrHf-PVyWw-3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="gWJNCnpefFMrHf-PVyWw-5" parent="gWJNCnpefFMrHf-PVyWw-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="Operatore di&lt;br&gt;back-office" vertex="1">
+                    <mxGeometry height="60" width="30" x="180" y="308" as="geometry"/>
+                </mxCell>
+                <mxCell id="BN8d5hpRwOaPRkXliL9n-0" edge="1" parent="gWJNCnpefFMrHf-PVyWw-1" source="BN8d5hpRwOaPRkXliL9n-1" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;verticalAlign=middle;">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="600" y="338" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="BN8d5hpRwOaPRkXliL9n-1" parent="gWJNCnpefFMrHf-PVyWw-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="Carta di attivazione&lt;br&gt;simulata" vertex="1">
+                    <mxGeometry height="60" width="30" x="740" y="308" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="uc-3" id="porJvcIxJNM3nKdd-K-p">
+        <mxGraphModel dx="652" dy="628" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+            <root>
+                <mxCell id="rMH6ToG-suWBpNMrrEwc-0"/>
+                <mxCell id="rMH6ToG-suWBpNMrrEwc-1" parent="rMH6ToG-suWBpNMrrEwc-0"/>
+                <mxCell id="rMH6ToG-suWBpNMrrEwc-2" parent="rMH6ToG-suWBpNMrrEwc-1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=default;verticalAlign=top;" value="Sistema di biglietteria" vertex="1">
+                    <mxGeometry height="300" width="400" x="270" y="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="rMH6ToG-suWBpNMrrEwc-3" parent="rMH6ToG-suWBpNMrrEwc-1" style="ellipse;whiteSpace=wrap;html=1;rounded=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="UC3:&lt;br&gt;Gestione della carta simulata" vertex="1">
+                    <mxGeometry height="90" width="260" x="340" y="293" as="geometry"/>
+                </mxCell>
+                <mxCell id="rMH6ToG-suWBpNMrrEwc-4" edge="1" parent="rMH6ToG-suWBpNMrrEwc-1" source="rMH6ToG-suWBpNMrrEwc-5" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="rMH6ToG-suWBpNMrrEwc-3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rMH6ToG-suWBpNMrrEwc-5" parent="rMH6ToG-suWBpNMrrEwc-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="Operatore di&lt;br&gt;back-office" vertex="1">
+                    <mxGeometry height="60" width="30" x="180" y="308" as="geometry"/>
+                </mxCell>
+                <mxCell id="rMH6ToG-suWBpNMrrEwc-6" edge="1" parent="rMH6ToG-suWBpNMrrEwc-1" source="rMH6ToG-suWBpNMrrEwc-7" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;verticalAlign=middle;">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="600" y="338" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rMH6ToG-suWBpNMrrEwc-7" parent="rMH6ToG-suWBpNMrrEwc-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="Carta di attivazione&lt;br&gt;simulata" vertex="1">
+                    <mxGeometry height="60" width="30" x="740" y="308" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="uc-4" id="UYr71SGeguEAL6CeGj_1">
+        <mxGraphModel dx="652" dy="628" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+            <root>
+                <mxCell id="bKLtZH-uC5TYlH7MfvUF-0"/>
+                <mxCell id="bKLtZH-uC5TYlH7MfvUF-1" parent="bKLtZH-uC5TYlH7MfvUF-0"/>
+                <mxCell id="bKLtZH-uC5TYlH7MfvUF-2" parent="bKLtZH-uC5TYlH7MfvUF-1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=default;verticalAlign=top;" value="Sistema di biglietteria" vertex="1">
+                    <mxGeometry height="300" width="400" x="270" y="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="bKLtZH-uC5TYlH7MfvUF-3" parent="bKLtZH-uC5TYlH7MfvUF-1" style="ellipse;whiteSpace=wrap;html=1;rounded=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="UC4:&lt;br&gt;Emissione del titolo" vertex="1">
+                    <mxGeometry height="90" width="260" x="340" y="293" as="geometry"/>
+                </mxCell>
+                <mxCell id="bKLtZH-uC5TYlH7MfvUF-4" edge="1" parent="bKLtZH-uC5TYlH7MfvUF-1" source="bKLtZH-uC5TYlH7MfvUF-5" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="bKLtZH-uC5TYlH7MfvUF-3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bKLtZH-uC5TYlH7MfvUF-5" parent="bKLtZH-uC5TYlH7MfvUF-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="Operatore di&lt;br&gt;back-office" vertex="1">
+                    <mxGeometry height="60" width="30" x="180" y="308" as="geometry"/>
+                </mxCell>
+                <mxCell id="bKLtZH-uC5TYlH7MfvUF-6" edge="1" parent="bKLtZH-uC5TYlH7MfvUF-1" source="bKLtZH-uC5TYlH7MfvUF-7" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;verticalAlign=middle;">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="600" y="338" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="bKLtZH-uC5TYlH7MfvUF-7" parent="bKLtZH-uC5TYlH7MfvUF-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="Carta di attivazione&lt;br&gt;simulata" vertex="1">
+                    <mxGeometry height="60" width="30" x="740" y="308" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

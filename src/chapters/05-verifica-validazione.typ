@@ -1,6 +1,5 @@
 #import "shared.typ": *
 
-/*
 #pagebreak()
 = Verifica e validazione <verifica-validazione>
 
@@ -21,4 +20,3 @@ for i in range(nterms):
 ```, caption: [Fibonacci recursive], kind: raw) <listing-py-fibo>
 
 #placeholder
-*/
