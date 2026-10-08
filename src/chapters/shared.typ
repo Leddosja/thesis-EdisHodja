@@ -34,9 +34,11 @@
 }
 
 #let risk(number, title, description, solution) = {
-  block(spacing: 0.75em)[
+  block(spacing: 1.5em)[
     *#number. #title* \
-    *Descrizione:* #description. \
+
+    *Descrizione:* #description.
+
     *Soluzione:* #solution.
   ]
 }

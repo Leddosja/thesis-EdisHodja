@@ -90,11 +90,11 @@ L'elaborato è stato redatto seguendo il piano di lavoro proposto dal tutor azie
 
 Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile sono simulati e il sistema non è oggetto di certificazione durante lo stage, il prototipo serve a dimostrare i flussi end-to-end e a costituire la base tecnica per lo sviluppo del sistema definitivo. Il lavoro comprende l'analisi dei requisiti normativi, la progettazione del modello dati su PostgreSQL, l'emissione e l'annullamento dei titoli, la generazione del log delle transazioni e dei riepiloghi, la vendita online e il controllo accessi, con la verifica dei risultati tramite test funzionali e di concorrenza.
 
-/*
+
 #pagebreak()
 = Indice <indice>
 #outline(title: none, depth: 5)
-
+/*
 #pagebreak()
 = Elenco delle figure <figure>
 #outline(target: figure.where(kind: image), title: none)
@@ -104,17 +104,17 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 */
 
 #pagebreak()
-//#include "chapters/00-glossario.typ"
+#include "chapters/00-glossario.typ"
 
 #pagebreak()
 #counter(page).update(1)
 #set page(numbering: "1.")
+#set heading(numbering: "1.")
 
 #include "chapters/01-introduzione.typ"
-#include "chapters/02-processi-metodologie.typ"
-#include "chapters/03-descrizione-stage.typ"
-#include "chapters/04-analisi-requisiti.typ"
-#include "chapters/05-progettazione-codifica.typ"
-#include "chapters/06-verifica-validazione.typ"
-#include "chapters/07-conclusioni.typ"
-#include "chapters/08-bibliografia.typ"
+#include "chapters/02-descrizione-stage.typ"
+#include "chapters/03-analisi-requisiti.typ"
+#include "chapters/04-progettazione-codifica.typ"
+#include "chapters/05-verifica-validazione.typ"
+#include "chapters/06-conclusioni.typ"
+#include "chapters/07-bibliografia.typ"

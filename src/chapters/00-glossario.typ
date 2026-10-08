@@ -30,11 +30,7 @@
 
   / Perimetro fiscale: insieme dei componenti del sistema soggetti direttamente agli obblighi normativi AdE/SIAE, quali la carta di attivazione, l'emissione, l'annullo, il log delle transazioni e i riepiloghi, distinto dai servizi non fiscali.
 
-  / Progressivo: numero sequenziale univoco assegnato dalla carta di attivazione a ciascun titolo emesso o annullato, utilizzato insieme al sigillo per la ricerca e la tracciabilità dei movimenti.
-
   / RelAi: CRM aziendale di Spazio Dev S.r.l. con cui il prototipo di biglietteria si integra, sincronizzando organizzatori ed eventi e restituendo i dati di vendita e di presenza.
-
-  / Rimessa in vendita: procedura che consente al possessore di un titolo nominativo di renderlo nuovamente disponibile per l'acquisto attraverso il canale di vendita primario, con conseguente annullo del titolo originario.
 
   / Sigillo fiscale: codice alfanumerico generato dalla carta di attivazione, nel prototipo dichiaratamente simulato, che certifica l'autenticità di un titolo o di un segmento del log delle transazioni.
 
@@ -43,8 +39,6 @@
   / SPID: Sistema Pubblico di Identità Digitale. Sistema italiano di autenticazione digitale, nel prototipo simulato, previsto come modalità di accesso alternativa in fase di registrazione.
 
   / Storefront: interfaccia web rivolta al pubblico, personalizzata per dominio in modalità _white-label_, attraverso cui gli utenti consultano gli eventi e acquistano i titoli di accesso.
-
-  / Supporto immodificabile: mezzo di conservazione dei dati fiscali, nel prototipo simulato, che garantisce la non alterabilità dei segmenti di log già chiusi e firmati, verificata tramite digest.
 
   / Tenant: organizzatore che utilizza il sistema in modalità multi-tenant, con propria configurazione, dominio e catalogo di eventi isolato dagli altri organizzatori.
 

@@ -39,10 +39,9 @@ L’avanzamento è organizzato con confronti regolari con il tutor aziendale, re
 
 == Organizzazione del testo
 
-- Il *secondo capitolo* descrive i processi e le metodologie adottati.
-- Il *terzo capitolo* presenta lo stage, i suoi obiettivi e la pianificazione.
-- Il *quarto capitolo* analizza i requisiti.
-- Il *quinto capitolo* tratta la progettazione e la codifica.
-- Il *sesto capitolo* descrive la verifica e la validazione.
-- Il *settimo capitolo* riassume i risultati e le conclusioni.
-- L’*ottavo capitolo* raccoglie la bibliografia.
+- Il *secondo capitolo* descrive lo stage: il rapporto con l’azienda, i processi e le metodologie adottati e l’analisi preventiva dei rischi.
+- Il *terzo capitolo* analizza i requisiti.
+- Il *quarto capitolo* tratta la progettazione e la codifica.
+- Il *quinto capitolo* descrive la verifica e la validazione.
+- Il *sesto capitolo* riassume i risultati e le conclusioni.
+- Il *settimo capitolo* raccoglie la bibliografia.

@@ -25,7 +25,7 @@
 
 = Analisi dei requisiti <analisi-requisiti>
 
-Questo capitolo raccoglie i requisiti del prototipo e li collega ai casi d’uso che li realizzano. La fonte principale è il documento di requisiti costruito dall’azienda a partire dalla normativa, organizzato in gruppi tematici. Ogni requisito conserva il codice della checklist aziendale, così che la matrice requisito → componente → test → evidenza del capitolo 6 usi gli stessi identificativi.
+Questo capitolo raccoglie i requisiti del prototipo e li collega ai casi d’uso che li realizzano. La fonte principale è il documento di requisiti costruito dall’azienda a partire dalla normativa, organizzato in gruppi tematici. Ogni requisito conserva il codice della checklist aziendale, così che la matrice requisito → componente → test → evidenza del capitolo 5 usi gli stessi identificativi.
 
 == Fonti normative e perimetro <fonti-perimetro>
 
