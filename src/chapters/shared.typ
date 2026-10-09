@@ -21,14 +21,14 @@
 
 #let uc-diagram(path, caption-text: "Diagramma dei Casi d'Uso dell'intero sistema.") = {
   figure(
-    image(path, width: 85%),
+    image(path, width: 100%),
     caption: [#caption-text],
     kind: image,
     supplement: [Figura],
   )
 }
 
-#let usecase(id, title, actors, pre, description, post, alternative: none, diagram: none, requires: none) = {
+#let usecase(id, title, actors, pre, description, post, alternative: none, diagram: none, requires: none, secondary: none) = {
   block(spacing: 2em)[
     #text(size: 0.5cm, weight: "bold")[UC #id: #title]
     \ \
@@ -37,13 +37,18 @@
     ]
     \
     - *Attori principali:* #actors \
+    #if secondary != none [
+      - *Attori secondari* #secondary \
+    ]
     - *Precondizioni:* #pre \
     - *Descrizione:* #description \
     - *Postcondizioni:* #post \
     #if requires != none [
       - *Dipendenze:* #requires \
     ]
-    - *Scenario alternativo:* #alternative
+    #if alternative != none [
+      - *Scenario alternativo:* #alternative \
+    ]
 
     #v(1em)
     #line(length: 100%, stroke: 0.5pt + luma(150))

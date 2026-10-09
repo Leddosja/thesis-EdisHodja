@@ -18,28 +18,42 @@ jobs:
         with:
           name: tesi
           path: tesi.pdf
-      - name: Prepare PDF for GitHub Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          mkdir -p _site
-          cp tesi.pdf _site/tesi.pdf
-      - name: Upload PDF for GitHub Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
 
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev')
     needs: build
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       pages: write
       id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+      - uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: dev
+        continue-on-error: true
+      - uses: typst-community/setup-typst@v4
+      - name: Build both PDFs
+        run: |
+          mkdir -p _site/dev
+          (cd main && typst compile --root . src/main.typ ../_site/tesi.pdf)
+          if [ -d dev/src ]; then
+            (cd dev && typst compile --root . src/main.typ ../_site/dev/tesi.pdf) || true
+          fi
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

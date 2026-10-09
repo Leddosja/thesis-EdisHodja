@@ -56,52 +56,166 @@ La tabella seguente collega gli obiettivi del piano di lavoro ai gruppi di requi
 
 == Attori <attori>
 
-Il sistema ha quattro attori esterni e un attore di supporto.
+Un attore è una persona o un sistema esterno che interagisce con il sistema. Ciò che il progetto può controllare e realizzare fa parte del sistema e non è un attore. Per questo la carta di attivazione, il pagamento e lo SPID, che il prototipo simula internamente, non sono attori: compaiono nelle precondizioni e nelle descrizioni, e le loro interfacce restano compatibili con una futura sostituzione con i componenti reali.
+
+Gli attori primari avviano un caso d’uso per raggiungere un proprio obiettivo. Gli attori secondari sono sistemi esterni da cui il sistema dipende per completare un caso d’uso, ma che non lo avviano.
+
+*Attori primari*
 
 - *Operatore di back-office*: configura organizzatori, locali, eventi e prezzi, gestisce la carta simulata, emette e annulla titoli, chiude la giornata e consulta i riepiloghi.
-- *Utente acquirente*: un utente identificato che acquista titoli dallo storefront di un organizzatore, cambia il nominativo o rimette in vendita un titolo.
+- *Utente non identificato*: visitatore dello storefront di un organizzatore che non ha ancora completato la registrazione con doppio riscontro né l’accesso tramite SPID, simulato nel prototipo. Può solo registrarsi o accedere.
+- *Utente identificato*: specializza l’utente non identificato. Acquista titoli, cambia il nominativo, rimette in vendita e stampa il titolo. L’acquisto è consentito solo a un utente identificato.
 - *Addetto al varco*: legge il codice del titolo all’ingresso e registra l’accesso.
-- *CRM RelAi*: sistema esterno con cui il prototipo scambia organizzatori, eventi, vendite e presenze. Il collegamento è facoltativo (F03).
-- *Carta di attivazione simulata*: attore di supporto che rappresenta la carta con PIN, contatori, progressivo e sigillo. Non è un utente, ma senza di essa il sistema non emette né annulla titoli (A1).
 
-// FIGURA 1 (attori): non serve un diagramma dedicato. Gli attori compaiono nel diagramma generale qui sotto.
+*Attori secondari*
+
+- *CRM RelAi*: sistema aziendale esterno con cui il prototipo scambia organizzatori, eventi, vendite e presenze. Il collegamento è facoltativo.
+- *Apple Wallet e Google Wallet*: servizi esterni che ricevono il pass del titolo. Sono previsti solo se l’attività facoltativa sul wallet pass entra nel perimetro.
+
+L’organizzatore non è un attore: i suoi dati sono configurati dall’operatore e per il prototipo è un _tenant_.
 
 == Casi d’uso <casi-uso>
 
-Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descrive le funzioni offerte da un sistema così come le vedono gli attori che lo usano. Qui il diagramma serve a mostrare il perimetro complessivo prima di entrare nei dettagli di ciascuna area.
+Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descrive le funzioni offerte da un sistema così come le vedono gli attori che lo usano. Ogni caso d’uso ha un identificativo, e quelli di dettaglio lo estendono in modo gerarchico.
 
-// FIGURA 2: diagramma generale dei casi d’uso, con i quattro attori e UC1–UC16 raggruppati per area
-// (configurazione, fiscale, vendita online, controllo accessi, opzionali). Va in questa posizione,
-// prima dei sottoparagrafi.
+Nei diagrammi si usano queste convenzioni:
+- l’associazione tra attore e caso d’uso è una linea continua non direzionata;
+- «include» è una freccia tratteggiata dal caso d’uso base verso quello incluso, eseguito sempre;
+- «extend» è una freccia tratteggiata dal caso d’uso di estensione verso quello esteso, usata per modellare errori e rifiuti, che sono descritti anche nello scenario alternativo;
+- la generalizzazione tra attori è una freccia con triangolo vuoto, dall’attore più specifico a quello più generale.
 
-#show heading: set text(size: 16pt)
+Le precondizioni, come la carta valida e lo stato pronto del sistema, non sono modellate con «include»: sono condizioni già vere quando l’operazione parte.
+
+#show heading.where(level: 3): set text(size: 16pt)
 
 === Configurazione: organizzatori, locali, eventi e prezzi <uc-configurazione>
 
 Prima di emettere un titolo, il sistema deve conoscere l’organizzatore, il locale e l’evento. I prezzi e le tabelle di sistema sono configurati nella stessa fase.
 
-// FIGURA 3: diagramma dei casi d’uso UC1–UC2 (solo operatore di back-office, con il sistema di carta come attore di supporto).
+#usecase(1, [Configurazione dell’evento], [Operatore di back-office.],
+  [L’operatore è autenticato, la carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’organizzatore è registrato e il locale è già definito (#link(<uc-locali-prezzi>)[UC-2]).],
+  [L’operatore crea un evento associato a un locale e a un organizzatore, con date e tipologie di titolo. Sono ammessi eventi che attraversano la mezzanotte e possono coesistere più eventi di più organizzatori.],
+  [L’evento è disponibile per l’emissione (#link(<uc-emissione>)[UC-4]), per la vendita online (#link(<uc-acquisto>)[UC-8]) e per il controllo accessi (#link(<uc-varco>)[UC-12]).],
+  requires: [#link(<uc-carta>)[UC-3], #link(<uc-locali-prezzi>)[UC-2]],
+  alternative: [Se il locale o l’organizzatore non esistono, il sistema rifiuta il salvataggio e indica il motivo (#link(<uc-configurazione-evento-locale>)[UC-1.1]). Se le date sono incoerenti, il sistema rifiuta il salvataggio e segnala l’incongruenza (#link(<uc-configurazione-evento-date>)[UC-1.2]).],
+  diagram: "../../img/diagrams/uc-1.png") <uc-configurazione-evento>
 
-#usecase(1, [Configurazione dell’evento], [Operatore di back-office, carta di attivazione simulata.], [L’operatore è autenticato, la carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’organizzatore è registrato e il locale è già definito (#link(<uc-locali-prezzi>)[UC-2]).], [L’operatore crea un evento associato a un locale e a un organizzatore, con date e tipologie di titolo. Sono ammessi eventi che attraversano la mezzanotte.], [L’evento è disponibile per la vendita e per il controllo accessi.], alternative: [Se il locale o l’organizzatore non esistono, o le date sono incoerenti, il sistema rifiuta il salvataggio e indica il motivo.], diagram: "../../img/diagrams/uc-1.png") <uc-configurazione-evento>
+#usecase("1.1", [Locale o organizzatore non trovato], [Operatore di back-office.],
+  [Il sistema sta eseguendo la configurazione dell’evento (#link(<uc-configurazione-evento>)[UC-1]) e l’operatore ha indicato un locale o un organizzatore non registrato.],
+  [Il sistema rifiuta il salvataggio e indica quale dei due dati non è stato trovato.],
+  [Nessun evento viene creato. L’operatore può correggere il dato o registrarlo (#link(<uc-locali-prezzi>)[UC-2]).],
+  requires: [#link(<uc-configurazione-evento>)[UC-1]]) <uc-configurazione-evento-locale>
 
-#usecase(2, [Gestione di organizzatori, locali e prezzi], [Operatore di back-office, carta di attivazione simulata.], [L’operatore è autenticato, la carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’operatore dispone del codice locale assegnato da SIAE.],
-[L’operatore registra gli organizzatori e definisce i locali, ciascuno con il proprio codice locale, e i listini, separando prevendita e prestazioni accessorie dal titolo principale.], [Organizzatori, locali e listini sono disponibili per la configurazione degli eventi (#link(<uc-configurazione-evento>)[UC-1]) e per le operazioni di emissione (#link(<uc-emissione>)[UC-4]).], requires: [#link(<uc-carta>)[UC-3]], alternative: [Se il codice locale è già in uso, il sistema rifiuta il salvataggio e segnala il conflitto.], diagram: "../../img/diagrams/uc-2.png") <uc-locali-prezzi>
+#usecase("1.2", [Date incoerenti], [Operatore di back-office.],
+  [Il sistema sta eseguendo la configurazione dell’evento (#link(<uc-configurazione-evento>)[UC-1]) e l’operatore ha indicato date non coerenti, per esempio una data e ora di fine precedente a quella di inizio.],
+  [Il sistema rifiuta il salvataggio e segnala l’incongruenza. Un evento che attraversa la mezzanotte, con la fine nel giorno successivo all’inizio, non è un’incongruenza e viene accettato.],
+  [Nessun evento viene creato. L’operatore può correggere le date e ripetere la configurazione.],
+  requires: [#link(<uc-configurazione-evento>)[UC-1]]) <uc-configurazione-evento-date>
+
+#usecase(2, [Gestione di organizzatori, locali e prezzi], [Operatore di back-office.],
+  [L’operatore è autenticato, la carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’operatore dispone del codice locale assegnato da SIAE.],
+  [L’operatore registra gli organizzatori e definisce i locali, ciascuno con il proprio codice locale, e i listini, separando prevendita e prestazioni accessorie dal titolo principale.],
+  [Organizzatori, locali e listini sono disponibili per la configurazione degli eventi (#link(<uc-configurazione-evento>)[UC-1]), per l’emissione (#link(<uc-emissione>)[UC-4]) e per la vendita online (#link(<uc-acquisto>)[UC-8]).],
+  requires: [#link(<uc-carta>)[UC-3]],
+  alternative: [Se il codice locale è già in uso, il sistema rifiuta il salvataggio e segnala il conflitto (#link(<uc-locali-prezzi-codice>)[UC-2.1]).],
+  diagram: "../../img/diagrams/uc-2.png") <uc-locali-prezzi>
+
+#usecase("2.1", [Codice locale già in uso], [Operatore di back-office.],
+  [Il sistema sta eseguendo la gestione di organizzatori, locali e prezzi (#link(<uc-locali-prezzi>)[UC-2]) e l’operatore ha indicato un codice locale già assegnato a un altro locale.],
+  [Il sistema rifiuta il salvataggio e segnala il conflitto, indicando il locale che usa già quel codice. Il codice locale è acquisito da SIAE e non viene mai generato dal sistema.],
+  [Nessun locale viene creato o modificato. L’operatore può correggere il codice e ripetere l’operazione.],
+  requires: [#link(<uc-locali-prezzi>)[UC-2]]) <uc-locali-prezzi-codice>
 
 === Area fiscale: carta, emissione, annullo, log e riepiloghi <uc-fiscale>
 
 Quest’area è il nucleo del prototipo in cui ogni operazione richiede una carta valida e viene scritta nel log in modo serializzato.
 
-#usecase(3, [Gestione della carta simulata], [Operatore di back-office, carta di attivazione simulata.], [La carta simulata è inserita nel sistema e l’operatore conosce il PIN.],
-[All’accensione, e a ogni rimozione della carta, il sistema richiede il PIN. Alla prima attivazione memorizza titolare, codice sistema e codice carta, controlla la firma e mostra i contatori. Il sistema legge poi contatori, progressivo e sigillo simulati, verifica che la carta sia associata a questo sistema e porta lo stato a pronto. Con la carta assente o non valida tutte le funzioni di anagrafica, emissione, annullo, log e riepilogo restano bloccate.], [Lo stato del sistema riflette la carta presente. Solo con lo stato pronto sono utilizzabili #link(<uc-locali-prezzi>)[UC-2], #link(<uc-configurazione-evento>)[UC-1], #link(<uc-emissione>)[UC-4] e #link(<uc-annullo>)[UC-5]. Il blocco per guasto è gestito da #link(<uc-guasto>)[UC-15].], alternative: [Se il PIN è errato, la carta è assente o non è associata a questo sistema, il sistema resta bloccato e segnala il motivo.], diagram: "../../img/diagrams/uc-3.png") <uc-carta>
+#usecase(3, [Gestione della carta simulata], [Operatore di back-office.],
+  [La carta simulata è inserita nel sistema e l’operatore conosce il PIN.],
+  [All’accensione, e a ogni rimozione della carta, il sistema richiede il PIN. Alla prima attivazione memorizza titolare, codice sistema e codice carta, controlla la firma e mostra i contatori. Il sistema legge poi contatori, progressivo e sigillo simulati, verifica che la carta sia associata a questo sistema e porta lo stato a pronto.],
+  [Lo stato del sistema riflette la carta presente. Solo con lo stato pronto sono utilizzabili #link(<uc-locali-prezzi>)[UC-2], #link(<uc-configurazione-evento>)[UC-1], #link(<uc-emissione>)[UC-4], #link(<uc-annullo>)[UC-5], #link(<uc-chiusura>)[UC-6] e #link(<uc-riepiloghi>)[UC-7]. Il blocco per guasto è gestito da #link(<uc-guasto>)[UC-15].],
+  alternative: [Se il PIN è errato, il sistema resta bloccato (#link(<uc-carta-pin>)[UC-3.1]). Se la carta è assente o non è associata a questo sistema, il sistema resta bloccato (#link(<uc-carta-assente>)[UC-3.2]).],
+  diagram: "../../img/diagrams/uc-3.png") <uc-carta>
 
-#usecase(4, [Emissione del titolo], [Operatore di back-office, carta di attivazione simulata.], [La carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’evento è configurato (#link(<uc-configurazione-evento>)[UC-1]) e i listini sono definiti (#link(<uc-locali-prezzi>)[UC-2]).], [L’operatore emette un titolo con i dati obbligatori dell’art. 3 del D.M. 13/7/2000, comprese le diciture per la vendita per conto di terzi. Sono gestiti i titoli gratuiti e ridotti con causale, gli abbonamenti a turno fisso e libero e i titoli open. Per i titoli nominativi sono registrati nome e cognome. La carta simulata calcola il sigillo e incrementa i contatori, e gli importi sono espressi in euro con due cifre decimali.], [Il titolo è registrato con progressivo e sigillo e il movimento è scritto nel log, anche se il titolo non è stato stampato. Il titolo può essere annullato (#link(<uc-annullo>)[UC-5]) e rientra nella chiusura giornaliera (#link(<uc-chiusura>)[UC-6]).],
-requires: [#link(<uc-carta>)[UC-3], #link(<uc-configurazione-evento>)[UC-1], #link(<uc-locali-prezzi>)[UC-2]], alternative: [Se un dato obbligatorio manca, l’emissione non viene completata. Se la carta è assente o il sistema è bloccato, l’operazione è rifiutata e non viene scritto alcun movimento.], diagram: "../../img/diagrams/uc-4.png") <uc-emissione>
+#usecase("3.1", [PIN errato], [Operatore di back-office.],
+  [Il sistema sta eseguendo la gestione della carta simulata (#link(<uc-carta>)[UC-3]) e l’operatore ha inserito un PIN non corretto.],
+  [Il sistema rifiuta il PIN, segnala l’errore e non legge i dati della carta.],
+  [Lo stato del sistema resta bloccato. Tutte le funzioni di anagrafica, emissione, annullo, log e riepilogo restano non utilizzabili finché non viene inserito il PIN corretto.],
+  requires: [#link(<uc-carta>)[UC-3]]) <uc-carta-pin>
 
-#usecase(5, [Annullo del titolo], [Operatore di back-office.], [Il titolo esiste ed è stato emesso nel sistema.], [L’operatore annulla il titolo indicando una causale. Il sistema verifica i termini previsti e genera il record ANNULLATO con i dati del titolo originario.], [Il titolo risulta annullato e i due movimenti sono correlati nel log.], alternative: [Se il termine di annullo è scaduto, l’operazione viene rifiutata con il motivo.]) <uc-annullo>
+#usecase("3.2", [Carta assente o non associata], [Operatore di back-office.],
+  [Il sistema sta eseguendo la gestione della carta simulata (#link(<uc-carta>)[UC-3]) e la carta è assente, non valida o associata a un altro sistema.],
+  [Il sistema rileva l’anomalia e segnala il motivo. Un movimento sigillato da una carta si registra solo nel sistema che la ospita.],
+  [Lo stato del sistema resta bloccato e nessuna funzione di anagrafica, emissione, annullo, log e riepilogo è utilizzabile.],
+  requires: [#link(<uc-carta>)[UC-3]]) <uc-carta-assente>
 
-#usecase(6, [Chiusura giornaliera e log], [Operatore di back-office.], [Sono presenti movimenti non ancora chiusi nella giornata fiscale.], [Il sistema genera i record del log in formato ASCII a campi fissi e XML, aggiorna la catena di impronte e chiude la giornata con firma simulata.], [La giornata è chiusa e il supporto simulato contiene il digest verificato.]) <uc-chiusura>
+#usecase(4, [Emissione del titolo], [Operatore di back-office.],
+  [La carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’evento è configurato (#link(<uc-configurazione-evento>)[UC-1]) e i listini sono definiti (#link(<uc-locali-prezzi>)[UC-2]).],
+  [L’operatore emette un titolo con i dati obbligatori dell’art. 3 del D.M. 13/7/2000, comprese le diciture per la vendita per conto di terzi, il numero della carta al posto del logotipo fiscale e il codice di otto caratteri del soggetto richiedente il sigillo. Il titolo è emesso al momento del pagamento, salvo le emissioni anticipate previste dalla norma. Sono gestiti i titoli gratuiti e ridotti con causale, gli abbonamenti a turno fisso e libero, con la dicitura «abbonato» sul titolo di ciascuna prestazione, e i titoli open. Per i titoli nominativi sono registrati nome e cognome. La carta simulata calcola il sigillo e incrementa i contatori, e gli importi sono espressi in euro con due cifre decimali.],
+  [Il titolo è registrato con progressivo e sigillo e il movimento è scritto nel log, anche se il titolo non è stato stampato. Il titolo può essere annullato (#link(<uc-annullo>)[UC-5]) e rientra nella chiusura giornaliera (#link(<uc-chiusura>)[UC-6]).],
+  requires: [#link(<uc-carta>)[UC-3], #link(<uc-configurazione-evento>)[UC-1], #link(<uc-locali-prezzi>)[UC-2]],
+  alternative: [Se un dato obbligatorio manca, l’emissione non viene completata (#link(<uc-emissione-dato>)[UC-4.1]).],
+  diagram: "../../img/diagrams/uc-4.png") <uc-emissione>
 
-#usecase(7, [Riepiloghi e ricerca], [Operatore di back-office.], [Esistono movimenti registrati nel periodo richiesto.], [L’operatore consulta i riepiloghi giornalieri e mensili, cerca un titolo per carta e progressivo o per sigillo, e lo esporta. Le viste sono organizzate per giornata di emissione e per evento.], [I dati esportati corrispondono ai movimenti del log.]) <uc-riepiloghi>
+#usecase("4.1", [Dato obbligatorio mancante], [Operatore di back-office.],
+  [Il sistema sta eseguendo l’emissione del titolo (#link(<uc-emissione>)[UC-4]) e l’operatore non ha indicato uno dei dati obbligatori previsti dall’art. 3 del D.M. 13/7/2000.],
+  [Il sistema rifiuta l’emissione e indica quale dato manca.],
+  [Nessun titolo viene registrato, nessun movimento viene scritto nel log e i contatori della carta non avanzano. L’operatore può completare i dati e ripetere l’emissione.],
+  requires: [#link(<uc-emissione>)[UC-4]]) <uc-emissione-dato>
+
+#usecase(5, [Annullo del titolo], [Operatore di back-office.],
+  [La carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). Il titolo esiste ed è stato emesso nel sistema (#link(<uc-emissione>)[UC-4]).],
+  [L’operatore annulla il titolo indicando una causale, scelta tra i codici da 001 a 010. Il sistema verifica i termini previsti: l’annullo è immediato per errore o mancato rilascio, entro il quinto giorno lavorativo successivo all’evento negli altri casi, entro l’inizio dell’evento per gli altri titoli digitali e, se l’evento non è stato effettuato, prima del termine di versamento dell’imposta. Genera il record ANNULLATO con i dati del titolo originario, un proprio progressivo e un proprio sigillo, e il riferimento al titolo originario. Per i titoli digitali, annulli e rimborsi sono ammessi solo con pagamenti tracciabili, simulati nel prototipo.],
+  [Il titolo risulta annullato e viene conservato, anche in forma informatica. I due movimenti sono correlati nel log e rientrano nella chiusura giornaliera (#link(<uc-chiusura>)[UC-6]). La lista del varco si aggiorna (#link(<uc-varco>)[UC-12]) e l’eventuale wallet pass è revocato (#link(<uc-wallet>)[UC-14]).],
+  requires: [#link(<uc-carta>)[UC-3], #link(<uc-emissione>)[UC-4]],
+  alternative: [Se il termine di annullo è scaduto, l’operazione viene rifiutata (#link(<uc-annullo-termine>)[UC-5.1]). Se il titolo è già annullato, l’operazione viene rifiutata (#link(<uc-annullo-gia>)[UC-5.2]).],
+  diagram: "../../img/diagrams/uc-5.png") <uc-annullo>
+
+#usecase("5.1", [Termine di annullo scaduto], [Operatore di back-office.],
+  [Il sistema sta eseguendo l’annullo del titolo (#link(<uc-annullo>)[UC-5]) e il termine previsto per la causale indicata è scaduto.],
+  [Il sistema rifiuta l’annullo e indica il termine non rispettato.],
+  [Il titolo resta valido, nessun record ANNULLATO viene creato e nessun movimento viene scritto nel log.],
+  requires: [#link(<uc-annullo>)[UC-5]]) <uc-annullo-termine>
+
+#usecase("5.2", [Titolo già annullato], [Operatore di back-office.],
+  [Il sistema sta eseguendo l’annullo del titolo (#link(<uc-annullo>)[UC-5]) e il titolo risulta già annullato.],
+  [Il sistema rifiuta l’operazione e segnala che il titolo è già annullato.],
+  [Nessun nuovo record ANNULLATO viene creato e il log non cambia.],
+  requires: [#link(<uc-annullo>)[UC-5]]) <uc-annullo-gia>
+
+#usecase(6, [Chiusura giornaliera e log], [Operatore di back-office.],
+  [La carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). Sono presenti movimenti non ancora chiusi nella giornata fiscale, prodotti da emissioni (#link(<uc-emissione>)[UC-4]) e annulli (#link(<uc-annullo>)[UC-5]).],
+  [Il sistema genera i record del log in formato ASCII a campi fissi e XML, aggiorna la catena di impronte e chiude la giornata con la firma digitale simulata, calcolata con la chiave della carta. Il log è registrato, firmato e reso non riscrivibile per ogni giornata in cui sono emessi titoli. Il totale giornaliero è memorizzato su supporto simulato non riscrivibile e può essere ricostruito dopo la perdita della memoria di lavoro. Alla chiusura il sistema produce il riepilogo giornaliero. Il log è conservato per 24 mesi dall’ultimo titolo, con funzioni di verifica e copia per il controllo. La conformità dei tracciati dipende dai layout ufficiali (vedi la sezione sulle lacune).],
+  [La giornata è chiusa e il supporto simulato contiene il digest verificato. I movimenti chiusi sono consultabili tramite i riepiloghi (#link(<uc-riepiloghi>)[UC-7]).],
+  requires: [#link(<uc-carta>)[UC-3], #link(<uc-emissione>)[UC-4], #link(<uc-annullo>)[UC-5]],
+  alternative: [Se la verifica del digest sul supporto simulato fallisce, la giornata non risulta chiusa (#link(<uc-chiusura-digest>)[UC-6.1]). Se non ci sono movimenti da chiudere, il sistema non genera alcun record (#link(<uc-chiusura-vuota>)[UC-6.2]).],
+  diagram: "../../img/diagrams/uc-6.png") <uc-chiusura>
+
+#usecase("6.1", [Verifica del digest fallita], [Operatore di back-office.],
+  [Il sistema sta eseguendo la chiusura giornaliera (#link(<uc-chiusura>)[UC-6]) e il digest letto dal supporto simulato non coincide con quello calcolato.],
+  [Il sistema interrompe la chiusura e segnala l’errore di verifica.],
+  [La giornata non risulta chiusa e i movimenti registrati restano invariati. L’operatore può ripetere la chiusura dopo aver risolto l’anomalia.],
+  requires: [#link(<uc-chiusura>)[UC-6]]) <uc-chiusura-digest>
+
+#usecase("6.2", [Nessun movimento da chiudere], [Operatore di back-office.],
+  [Il sistema sta eseguendo la chiusura giornaliera (#link(<uc-chiusura>)[UC-6]) e nella giornata fiscale non risultano movimenti non ancora chiusi.],
+  [Il sistema non genera alcun record e segnala che non ci sono movimenti da chiudere.],
+  [Nessuna firma viene calcolata e il log non cambia.],
+  requires: [#link(<uc-chiusura>)[UC-6]]) <uc-chiusura-vuota>
+
+#usecase(7, [Riepiloghi e ricerca], [Operatore di back-office.],
+  [La carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). Esistono movimenti registrati nel periodo richiesto e le relative giornate sono state chiuse (#link(<uc-chiusura>)[UC-6]).],
+  [L’operatore consulta a video i riepiloghi giornalieri e mensili, oppure li esporta. Il riepilogo mensile comprende i titoli degli eventi del mese, gli abbonamenti emessi e, per ogni evento, anche i corrispettivi incassati nei mesi precedenti. L’operatore cerca un titolo per numero di carta e progressivo o per sigillo, e per giorno, evento, ordine di posto e tipologia, e può esportarlo. Le viste sono organizzate per giornata di emissione e per evento. Il sistema gestisce i periodi di inattività e ne consente la comunicazione. Il dettaglio dei titoli resta consultabile fino al sessantesimo giorno dopo l’evento. La generazione dei record è coperta dal prototipo, mentre la trasmissione dei riepiloghi a SIAE e i relativi termini sono fuori perimetro. Il riepilogo degli altri proventi e la cancellazione dei riepiloghi dopo due anni dalla trasmissione dipendono dai layout ufficiali (vedi la sezione sulle lacune).],
+  [I dati esportati corrispondono ai movimenti del log.],
+  requires: [#link(<uc-carta>)[UC-3], #link(<uc-chiusura>)[UC-6]],
+  alternative: [Se nel periodo richiesto non esistono movimenti, il sistema mostra un risultato vuoto (#link(<uc-riepiloghi-vuoto>)[UC-7.1]).],
+  diagram: "../../img/diagrams/uc-7.png") <uc-riepiloghi>
+
+#usecase("7.1", [Nessun movimento nel periodo], [Operatore di back-office.],
+  [Il sistema sta eseguendo la consultazione di riepiloghi e ricerca (#link(<uc-riepiloghi>)[UC-7]) e nel periodo o con i criteri indicati non risulta alcun movimento.],
+  [Il sistema segnala che non ci sono dati e non produce alcun riepilogo o file di esportazione.],
+  [Il log non cambia. L’operatore può modificare periodo o criteri e ripetere la richiesta.],
+  requires: [#link(<uc-riepiloghi>)[UC-7]]) <uc-riepiloghi-vuoto>
 
 === Vendita online white-label <uc-vendita-online>
 

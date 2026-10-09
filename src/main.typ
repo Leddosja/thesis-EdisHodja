@@ -15,7 +15,7 @@
 #set heading(numbering: "1.1")
 #set quote(block: true)
 #set figure.caption(position: bottom)
-#show figure.caption: set text(weight: "bold")
+#show figure.caption: it => text(weight: "bold")[#it.body]
 #show heading: set text(size: 21pt)
 
 #import "chapters/shared.typ": *
@@ -59,28 +59,13 @@
   #text(size: 9pt)[© #io, #date. Tutti i diritti riservati. #degree: "#titolo", #uni, #department, #facoltà.]
 ]
 
-#pagebreak()
-/*
-#align(right)[
-  #emph["Colui il quale ha inseguito e sconfitto i demoni Sem, che ora vagano per il mondo, domandandosi: «ma nu, chi sem?»"]\
-  #v(0.5em)
-  --- Il grande Pdor, figlio di Kmer, della tribu di Ishtar, della terra desolata dei Kfnir, uno degli ultimi sette saggi: Pfulur, Galer, Astaparigna, Susar, Param, Fusus e Tarim.
-]
-#v(2em)
-= Ringraziamenti <ringraziamenti>
-
-Desidero esprimere la mia gratitudine al professor #relatore, mio relatore, per l'aiuto e il sostegno che mi ha dato durante la stesura dell'elaborato.
-
-Vorrei anche ringraziare, con affetto, i miei genitori per il loro sostegno, il grande aiuto e la loro presenza in ogni momento durante gli anni di studio.
-
-Desidero poi ringraziare i miei amici per i bellissimi anni trascorsi insieme e le mille avventure vissute.
-
-#v(1em)
-#align(right)[#location, #date \\ #emph[#io]]
-*/
-
-#pagebreak()
 #set heading(numbering: none)
+
+#pagebreak()
+
+//#include "chapters/00-rigraziamenti.typ"
+
+#pagebreak()
 
 = Sommario <sommario>
 
@@ -94,27 +79,36 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 #pagebreak()
 = Indice <indice>
 #outline(title: none, depth: 5)
-/*
+
 #pagebreak()
 = Elenco delle figure <figure>
+#show outline.entry: it => {
+  let fig = it.element
+  link(
+    fig.location(),
+    it.indented(none, [#fig.caption.body #box(width: 1fr, repeat[.]) #it.page()]),
+  )
+}
+
 #outline(target: figure.where(kind: image), title: none)
 
+/*
 #pagebreak()
 = Elenco delle tabelle <tabelle>
 */
 
 #pagebreak()
-#include "chapters/00-glossario.typ"
+#include "chapters/01-glossario.typ"
 
 #pagebreak()
 #counter(page).update(1)
 #set page(numbering: "1.")
 #set heading(numbering: "1.")
 
-#include "chapters/01-introduzione.typ"
-#include "chapters/02-descrizione-stage.typ"
-// #include "chapters/03-analisi-requisiti.typ"
-// #include "chapters/04-progettazione-codifica.typ"
-// #include "chapters/05-verifica-validazione.typ"
-// #include "chapters/06-conclusioni.typ"
-// #include "chapters/07-bibliografia.typ"
+#include "chapters/02-introduzione.typ"
+#include "chapters/03-descrizione-stage.typ"
+ #include "chapters/04-analisi-requisiti.typ"
+// #include "chapters/05-progettazione-codifica.typ"
+// #include "chapters/06-verifica-validazione.typ"
+// #include "chapters/07-conclusioni.typ"
+// #include "chapters/08-bibliografia.typ"
