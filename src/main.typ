@@ -108,7 +108,7 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 #include "chapters/02-introduzione.typ"
 #include "chapters/03-descrizione-stage.typ"
  #include "chapters/04-analisi-requisiti.typ"
-// #include "chapters/05-progettazione-codifica.typ"
+ #include "chapters/05-progettazione-codifica.typ"
 // #include "chapters/06-verifica-validazione.typ"
 // #include "chapters/07-conclusioni.typ"
 // #include "chapters/08-bibliografia.typ"

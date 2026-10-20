@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="rsmdZ6SaubqFKEKktrSU" name="uc-1">
-        <mxGraphModel dx="652" dy="565" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="694" dy="568" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -250,7 +250,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="uc-6" id="gUwO4-u8090XsvFIAz_x">
-        <mxGraphModel dx="652" dy="565" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="652" dy="534" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="S9xJHijO1E9pFdJRnbe--0"/>
                 <mxCell id="S9xJHijO1E9pFdJRnbe--1" parent="S9xJHijO1E9pFdJRnbe--0"/>
@@ -306,7 +306,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="uc-7" id="-Im3btOLyv21POm9qCdQ">
-        <mxGraphModel dx="767" dy="665" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="640" dy="628" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="qwQ4RoS_XYfNpebtNstz-0"/>
                 <mxCell id="qwQ4RoS_XYfNpebtNstz-1" parent="qwQ4RoS_XYfNpebtNstz-0"/>
@@ -342,6 +342,71 @@
                 <mxCell id="qwQ4RoS_XYfNpebtNstz-11" connectable="0" parent="qwQ4RoS_XYfNpebtNstz-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;«extend»&lt;/span&gt;" vertex="1">
                     <mxGeometry relative="1" x="-0.1821" y="-2" as="geometry">
                         <mxPoint x="-32" y="-10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="uc-8" id="M0rPBAJW-7EBCfdQ_vma">
+        <mxGraphModel dx="686" dy="562" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+            <root>
+                <mxCell id="HVOT63fnlwDcVNuECWit-0"/>
+                <mxCell id="HVOT63fnlwDcVNuECWit-1" parent="HVOT63fnlwDcVNuECWit-0"/>
+                <mxCell id="HVOT63fnlwDcVNuECWit-2" parent="HVOT63fnlwDcVNuECWit-1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=default;verticalAlign=top;" value="Sistema di biglietteria" vertex="1">
+                    <mxGeometry height="300" width="450" x="246" y="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="HVOT63fnlwDcVNuECWit-3" parent="HVOT63fnlwDcVNuECWit-1" style="ellipse;whiteSpace=wrap;html=1;rounded=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="UC8:&lt;div&gt;Acquisto online&lt;/div&gt;" vertex="1">
+                    <mxGeometry height="90" width="260" x="338" y="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="HVOT63fnlwDcVNuECWit-4" edge="1" parent="HVOT63fnlwDcVNuECWit-1" source="HVOT63fnlwDcVNuECWit-5" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="HVOT63fnlwDcVNuECWit-3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HVOT63fnlwDcVNuECWit-5" parent="HVOT63fnlwDcVNuECWit-1" style="shape=umlActor;verticalLabelPosition=top;verticalAlign=bottom;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;labelPosition=center;" value="Utente non&lt;br&gt;identificato" vertex="1">
+                    <mxGeometry height="60" width="30" x="178" y="255" as="geometry"/>
+                </mxCell>
+                <mxCell id="HVOT63fnlwDcVNuECWit-6" edge="1" parent="HVOT63fnlwDcVNuECWit-1" source="HVOT63fnlwDcVNuECWit-7" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;verticalAlign=middle;">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="598" y="285" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="HVOT63fnlwDcVNuECWit-7" parent="HVOT63fnlwDcVNuECWit-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="Carta di attivazione&lt;br&gt;simulata" vertex="1">
+                    <mxGeometry height="60" width="30" x="738" y="255" as="geometry"/>
+                </mxCell>
+                <mxCell id="HVOT63fnlwDcVNuECWit-8" parent="HVOT63fnlwDcVNuECWit-1" style="ellipse;whiteSpace=wrap;html=1;rounded=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="UC8.1:&lt;br&gt;Registrazione con&lt;br&gt;doppio riscontro" vertex="1">
+                    <mxGeometry height="84" width="198" x="263" y="370" as="geometry"/>
+                </mxCell>
+                <mxCell id="HVOT63fnlwDcVNuECWit-9" parent="HVOT63fnlwDcVNuECWit-1" style="ellipse;whiteSpace=wrap;html=1;rounded=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="UC8.2:&lt;br&gt;Accesso con&lt;br&gt;SPID simulato" vertex="1">
+                    <mxGeometry height="84" width="198" x="484" y="370" as="geometry"/>
+                </mxCell>
+                <mxCell id="HVOT63fnlwDcVNuECWit-10" edge="1" parent="HVOT63fnlwDcVNuECWit-1" source="HVOT63fnlwDcVNuECWit-8" style="edgeStyle=none;html=1;dashed=1;entryX=0.296;entryY=0.911;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" target="HVOT63fnlwDcVNuECWit-3">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="460" y="380" as="sourcePoint"/>
+                        <mxPoint x="498" y="335" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="HVOT63fnlwDcVNuECWit-11" connectable="0" parent="HVOT63fnlwDcVNuECWit-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;«extend»&lt;/span&gt;" vertex="1">
+                    <mxGeometry relative="1" x="-0.1821" y="-2" as="geometry">
+                        <mxPoint x="-32" y="-10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="HVOT63fnlwDcVNuECWit-12" edge="1" parent="HVOT63fnlwDcVNuECWit-1" source="HVOT63fnlwDcVNuECWit-9" style="edgeStyle=none;html=1;dashed=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.704;entryY=0.933;entryDx=0;entryDy=0;entryPerimeter=0;" target="HVOT63fnlwDcVNuECWit-3">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="676" y="380" as="sourcePoint"/>
+                        <mxPoint x="616" y="337" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="HVOT63fnlwDcVNuECWit-13" connectable="0" parent="HVOT63fnlwDcVNuECWit-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;«extend»&lt;/span&gt;" vertex="1">
+                    <mxGeometry relative="1" x="-0.1821" y="-2" as="geometry">
+                        <mxPoint x="23" y="-8" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="cUiwmY-nN2m_GuKBfOK6-0" parent="HVOT63fnlwDcVNuECWit-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;" value="Utente&lt;br&gt;identificato" vertex="1">
+                    <mxGeometry height="60" width="30" x="178" y="395" as="geometry"/>
+                </mxCell>
+                <mxCell id="wAYPABwqhsUtQAIdnrNd-0" edge="1" parent="HVOT63fnlwDcVNuECWit-1" source="cUiwmY-nN2m_GuKBfOK6-0" style="endArrow=block;endFill=0;endSize=12;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;align=center;" value="">
+                    <mxGeometry relative="1" width="160" as="geometry">
+                        <mxPoint x="378" y="340" as="sourcePoint"/>
+                        <mxPoint x="193" y="319.06" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
             </root>

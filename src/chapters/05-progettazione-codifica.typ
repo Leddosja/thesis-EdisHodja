@@ -3,7 +3,7 @@
 #pagebreak()
 = Progettazione e codifica <progettazione-codifica>
 
-Breve introduzione al capitolo.
+In questo capitolo vengono approfonditi gli strumenti 
 
 == Tecnologie e strumenti <tecnologie-strumenti>
 Di seguito viene data una panoramica delle tecnologie e strumenti utilizzati.

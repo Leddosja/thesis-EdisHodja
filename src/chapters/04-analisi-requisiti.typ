@@ -3,11 +3,11 @@
 
 #let status-table(rows, caption: none) = {
   table(
-    columns: (1.5cm, 7cm, 3cm, 3cm),
-    inset: 5pt,
+    columns: (2cm, 7cm, 3cm, 3cm),
+    inset: 6pt,
     stroke: 0.5pt + rgb("b8b8bd"),
     fill: (_, row) => if calc.odd(row) { rgb("f5f5f7") } else { white },
-    table.header([*ID*], [*Requisito*], [*Stato*], [*Use case*]),
+    table.header([*ID*], [*Requisito*], [*Stato*], [*Use Case*]),
     ..rows.flatten(),
   )
   if caption != none {
@@ -20,7 +20,7 @@
 
 = Analisi dei requisiti <analisi-requisiti>
 
-Questo capitolo raccoglie i requisiti del prototipo e li collega ai casi d’uso che li realizzano. La fonte principale è il documento di requisiti costruito dall’azienda a partire dalla normativa, organizzato in gruppi tematici. Ogni requisito conserva il codice della checklist aziendale, così che la matrice requisito → componente → test → evidenza del capitolo 5 usi gli stessi identificativi.
+Questo capitolo raccoglie i requisiti del prototipo e li collega ai casi d’uso che li realizzano. La fonte principale è il documento di requisiti costruito dall’azienda a partire dalla normativa, organizzato in gruppi tematici (A-N).
 
 == Fonti normative e perimetro <fonti-perimetro>
 
@@ -29,28 +29,28 @@ Il riferimento normativo è il D.M. 13 luglio 2000, con i provvedimenti dell’A
 Il perimetro è il sistema di emissione dei titoli di accesso previsto dall’art. 2, comma 1, lettera b), del D.M. 2000, con vendita online e controllo accessi. Il prototipo non è certificato, quindi la carta di attivazione, il sigillo fiscale, la firma e il supporto immodificabile sono simulati. Ogni requisito riceve uno stato secondo questi criteri:
 
 - *Nel prototipo*: il requisito è realizzato e verificabile con un test.
-- *Simulato*: il requisito è realizzato con una componente dichiarata simulata: carta, sigillo, firma, supporto, SPID o pagamento.
 - *Desiderabile* e *Facoltativo*: priorità del piano di lavoro (D e F), realizzate solo se il tempo lo consente.
-- *Da valutare*: il requisito dipende da un’informazione che non è ancora disponibile, come i layout dei tracciati.
-- *Fuori perimetro*: il requisito resta documentato ma non entra nello stage. La motivazione è nella tabella del gruppo o nella sezione sulle lacune.
+- *Fuori perimetro*: il requisito resta documentato ma non entra nello stage.
 
 La tabella seguente collega gli obiettivi del piano di lavoro ai gruppi di requisiti e ai casi d’uso.
 
 #table(
-  columns: (2.5cm, 5.5cm, 3.3cm, 3cm),
-  inset: 5pt,
+  columns: (2.5cm, 6.5cm, 3.5cm, 3cm),
+  inset: 7pt,
   stroke: 0.5pt + rgb("b8b8bd"),
   fill: (_, row) => if calc.odd(row) { rgb("f5f5f7") } else { white },
   table.header([*Obiettivo*], [*Oggetto*], [*Gruppi*], [*Use case*]),
+  [O01], [Analisi e matrice dei requisiti normativi], [Nessun gruppo normativo], [-],
   [O02], [Modello dati, carta simulata, stato del sistema], [A, B, C], [UC1–UC3],
   [O03], [Emissione, annullo, log e chiusura giornaliera], [C, D, E], [UC4–UC6],
   [O04], [Riepiloghi e funzioni di servizio], [F, G], [UC7],
+  [O05], [Test funzionali e relazione finale], [Nessun gruppo normativo], [-],
   [D01], [Vendita online white-label], [I], [UC8],
   [D02], [Nominatività, cambio nominativo, rimessa in vendita], [J], [UC9, UC10],
   [D03], [Render del titolo e stampa unica], [C11, L1, L2], [UC11],
   [D04], [Controllo accessi], [K], [UC12, UC13],
-  [F02], [Mancato funzionamento], [H], [UC15],
   [F01], [Wallet pass], [Vincolo N], [UC14],
+  [F02], [Mancato funzionamento], [H], [UC15],
   [F03], [Integrazione con il CRM RelAi], [Nessun gruppo normativo], [UC16],
 ) <tab-obiettivi>
 
@@ -221,9 +221,55 @@ Quest’area è il nucleo del prototipo in cui ogni operazione richiede una cart
 
 Lo storefront è un’unica applicazione, ma ogni organizzatore lo vede sul proprio dominio, con il proprio tema. Le regole di limite e di unicità valgono tra tutti i tenant.
 
-// FIGURA 5: diagramma dei casi d’uso UC8–UC11 (utente acquirente, con SPID e pagamento simulati come attori di supporto).
+#usecase(8, [Acquisto online], [Utente identificato.],
+  [Lo storefront dell’organizzatore è attivo e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’evento è configurato (#link(<uc-configurazione-evento>)[UC-1]) e i listini sono definiti (#link(<uc-locali-prezzi>)[UC-2]). L’utente è identificato tramite registrazione con doppio riscontro (#link(<uc-registrazione>)[UC-8.1]) o accesso SPID simulato (#link(<uc-spid>)[UC-8.2]).],
+  [L’utente supera il CAPTCHA prima della composizione del carrello, compone il carrello e paga con un metodo tracciabile, simulato nel prototipo. Il limite di dieci titoli per evento e utente vale a livello di sistema su tutti i tenant e anche con richieste simultanee. Al pagamento il sistema emette i titoli (#link(<uc-emissione>)[UC-4]). I titoli non sono rilasciati durante la sessione, ma inviati dopo la sua chiusura con il mezzo scelto dall’utente. Tutte le operazioni dell’utente identificato sono tracciate. La connessione HTTPS con almeno TLS 1.2 e la deroga per gli eventi con vendita online fino a 1.000 titoli sono da valutare, e per la nominatività obbligatoria sopra i 5.000 posti si rimanda alla sezione sulle lacune.],
+  [I titoli sono emessi e registrati nel log, l’acquisto è tracciato e i titoli sono inviati all’utente dopo la chiusura della sessione. Il titolo può essere stampato (#link(<uc-stampa>)[UC-11]), cambiato di nominativo (#link(<uc-cambio-nominativo>)[UC-9]) o rimesso in vendita (#link(<uc-rimessa>)[UC-10]).],
+  requires: [#link(<uc-carta>)[UC-3], #link(<uc-configurazione-evento>)[UC-1], #link(<uc-locali-prezzi>)[UC-2], #link(<uc-registrazione>)[UC-8.1] o #link(<uc-spid>)[UC-8.2]],
+  alternative: [Se il limite di dieci titoli è raggiunto, il carrello viene bloccato prima del pagamento (#link(<uc-acquisto-limite>)[UC-8.3]). Se il pagamento non va a buon fine, nessun titolo viene emesso (#link(<uc-acquisto-pagamento>)[UC-8.4]). Se il CAPTCHA non è superato, l’utente non può comporre il carrello (#link(<uc-acquisto-captcha>)[UC-8.5]).],
+  diagram: "../../img/diagrams/uc-8.png") <uc-acquisto>
 
-#usecase(8, [Acquisto online], [Utente acquirente.], [Lo storefront dell’organizzatore è attivo e l’utente ha superato la registrazione con doppio riscontro.], [L’utente supera il CAPTCHA, compone il carrello, paga con un metodo tracciato simulato e riceve il titolo al termine della sessione. Il limite di dieci titoli per evento e utente vale tra tutti i tenant.], [Il titolo è emesso nel sistema e l’acquisto è tracciato.], alternative: [Se il limite di dieci titoli è raggiunto, il carrello viene bloccato prima del pagamento.]) <uc-acquisto>
+#usecase("8.1", [Registrazione con doppio riscontro], [Utente non identificato.],
+  [Lo storefront dell’organizzatore è attivo e l’utente non è ancora identificato.],
+  [L’utente inserisce i dati anagrafici, l’indirizzo email, il numero di cellulare e il mezzo scelto per il riscontro. Il sistema invia un codice OTP simulato e l’utente lo inserisce per confermare la registrazione. Un cellulare può essere associato a un solo utente nell’intero sistema, su tutti i tenant.],
+  [L’utente è identificato e può procedere all’acquisto (#link(<uc-acquisto>)[UC-8]).],
+  alternative: [Se il cellulare è già associato a un altro utente, la registrazione è rifiutata (#link(<uc-registrazione-cellulare>)[UC-8.1.1]). Se il codice OTP è errato o scaduto, la registrazione non viene completata (#link(<uc-registrazione-otp>)[UC-8.1.2]).]) <uc-registrazione>
+
+#usecase("8.1.1", [Cellulare già associato], [Utente non identificato.],
+  [Il sistema sta eseguendo la registrazione (#link(<uc-registrazione>)[UC-8.1]) e il cellulare indicato è già associato a un altro utente, anche di un altro organizzatore.],
+  [Il sistema rifiuta la registrazione e segnala che il cellulare è già in uso, senza rivelare dati dell’altro utente.],
+  [Nessun utente viene creato. L’utente può indicare un altro numero.],
+  requires: [#link(<uc-registrazione>)[UC-8.1]]) <uc-registrazione-cellulare>
+
+#usecase("8.1.2", [Codice OTP errato o scaduto], [Utente non identificato.],
+  [Il sistema sta eseguendo la registrazione (#link(<uc-registrazione>)[UC-8.1]) e l’utente ha inserito un codice OTP errato o scaduto.],
+  [Il sistema rifiuta il codice e segnala l’errore.],
+  [L’utente non risulta identificato. Può richiedere un nuovo codice e ripetere la conferma.],
+  requires: [#link(<uc-registrazione>)[UC-8.1]]) <uc-registrazione-otp>
+
+#usecase("8.2", [Accesso con SPID simulato], [Utente non identificato.],
+  [Lo storefront dell’organizzatore è attivo e l’utente non è ancora identificato.],
+  [L’utente sceglie l’accesso tramite SPID, simulato nel prototipo, come alternativa alla registrazione. Il sistema riceve l’esito della simulazione e identifica l’utente.],
+  [L’utente è identificato e può procedere all’acquisto (#link(<uc-acquisto>)[UC-8]).],
+  diagram: none) <uc-spid>
+
+#usecase("8.3", [Limite di dieci titoli raggiunto], [Utente identificato.],
+  [Il sistema sta eseguendo l’acquisto online (#link(<uc-acquisto>)[UC-8]) e l’utente ha già raggiunto, anche su altri tenant, il limite di dieci titoli per quell’evento.],
+  [Il sistema blocca il carrello prima del pagamento e segnala il limite.],
+  [Nessun pagamento viene richiesto e nessun titolo viene emesso. Con richieste simultanee il limite resta rispettato.],
+  requires: [#link(<uc-acquisto>)[UC-8]]) <uc-acquisto-limite>
+
+#usecase("8.4", [Pagamento non riuscito], [Utente identificato.],
+  [Il sistema sta eseguendo l’acquisto online (#link(<uc-acquisto>)[UC-8]) e il pagamento simulato è rifiutato o non va a buon fine.],
+  [Il sistema segnala l’esito negativo e non procede all’emissione.],
+  [Nessun titolo viene emesso e nessun movimento viene scritto nel log. L’utente può ritentare con un altro metodo.],
+  requires: [#link(<uc-acquisto>)[UC-8]]) <uc-acquisto-pagamento>
+
+#usecase("8.5", [CAPTCHA non superato], [Utente identificato.],
+  [Il sistema sta eseguendo l’acquisto online (#link(<uc-acquisto>)[UC-8]) e l’utente non ha superato il CAPTCHA.],
+  [Il sistema non consente la composizione del carrello e propone un nuovo CAPTCHA.],
+  [Nessun carrello viene creato. L’utente può ripetere la prova.],
+  requires: [#link(<uc-acquisto>)[UC-8]]) <uc-acquisto-captcha>
 
 #usecase(9, [Cambio nominativo], [Utente acquirente.], [Il titolo è nominativo ed è di proprietà dell’utente.], [L’utente indica il nuovo nome e cognome. Il sistema annulla il titolo originario e ne emette uno nuovo, in un’unica operazione correlata.], [Il titolo originario è annullato, quello nuovo è valido e i due movimenti sono collegati.]) <uc-cambio-nominativo>
 
@@ -260,12 +306,12 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
 === Gruppo A: vincoli architetturali <gruppo-a>
 
 #status-table((
-  ([A1], [Il sistema non funziona senza la carta di attivazione: anagrafiche, emissione, log e riepiloghi sono bloccati], [Simulato], [UC3]),
-  ([A2], [PIN richiesto all’accensione e a ogni rimozione della carta], [Simulato], [UC3]),
-  ([A3], [Prima attivazione: memorizzazione di titolare, codice sistema e codice carta, controllo della firma, visualizzazione dei contatori], [Simulato], [UC3]),
+  ([A1], [Il sistema non funziona senza la carta di attivazione: anagrafiche, emissione, log e riepiloghi sono bloccati], [Nel prototipo], [UC3]),
+  ([A2], [PIN richiesto all’accensione e a ogni rimozione della carta], [Nel prototipo], [UC3]),
+  ([A3], [Prima attivazione: memorizzazione di titolare, codice sistema e codice carta, controllo della firma, visualizzazione dei contatori], [Nel prototipo], [UC3]),
   ([A4], [Nessuna funzione, palese o nascosta, aggira la carta o modifica log e titoli al di fuori del percorso previsto], [Nel prototipo], [Tutti]),
   ([A5], [Software fiscale, log e carte su componenti in Italia, in locali dichiarati, con custodi nominati], [Fuori perimetro], [–]),
-  ([A6], [Associazione univoca tra carta e sistema; i movimenti sigillati da una carta si registrano nel sistema che la ospita], [Simulato], [UC3]),
+  ([A6], [Associazione univoca tra carta e sistema; i movimenti sigillati da una carta si registrano nel sistema che la ospita], [Nel prototipo], [UC3]),
 ), caption: [Requisiti del gruppo A.]) <tab-gruppo-a>
 
 === Gruppo B: anagrafiche e configurazione <gruppo-b>
@@ -275,7 +321,7 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([B2], [Più organizzatori ed eventi in parallelo, anche per manifestazioni che attraversano la mezzanotte], [Nel prototipo], [UC1]),
   ([B3], [Codice locale assegnato da SIAE: acquisito e usato, non generato], [Nel prototipo], [UC2]),
   ([B4], [Comunicazione a SIAE degli organizzatori serviti, prima dell’inizio del servizio (§1.7.5 Allegato A del Provv. 2002)], [Fuori perimetro], [–]),
-), caption: [Requisiti del gruppo B. B4 non compare nel piano di lavoro: la sua esclusione va confermata con il tutor.]) <tab-gruppo-b>
+), caption: [Requisiti del gruppo B.]) <tab-gruppo-b>
 
 === Gruppo C: emissione del titolo <gruppo-c>
 
@@ -286,9 +332,9 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([C4], [Abbonamenti con dicitura, numero di prestazioni, turno libero e ratei per turno fisso], [Nel prototipo], [UC4]),
   ([C5], [Titoli open registrati come abbonamenti con codice proprio, un evento abilitato e turno libero], [Nel prototipo], [UC4]),
   ([C6], [Gratuità e riduzioni evidenziate per la lettura immediata], [Nel prototipo], [UC4]),
-  ([C7], [Sigillo di 16 caratteri calcolato dalla carta su codice carta, data, ora, importo e progressivo], [Simulato], [UC4]),
+  ([C7], [Sigillo di 16 caratteri calcolato dalla carta su codice carta, data, ora, importo e progressivo], [Nel prototipo], [UC4]),
   ([C8], [Il numero della carta sostituisce il logotipo fiscale sul titolo], [Nel prototipo], [UC4]),
-  ([C9], [Incremento dei contatori a bordo della carta a ogni emissione], [Simulato], [UC3, UC4]),
+  ([C9], [Incremento dei contatori a bordo della carta a ogni emissione], [Nel prototipo], [UC3, UC4]),
   ([C10], [Registrazione in banca dati, memorie temporanee e log, corretta anche sotto carico], [Nel prototipo], [UC4]),
   ([C11], [Una sola stampa per titolo: ristampa e stampa multipla inibite, diritto consumato lato server], [Nel prototipo], [UC11]),
   ([C12], [Titoli nominativi con nome e cognome, senza altri dati personali nella lista unica], [Nel prototipo], [UC4, UC12]),
@@ -301,7 +347,7 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([D1], [Annullo con causale entro il quinto giorno lavorativo successivo all’evento], [Nel prototipo], [UC5]),
   ([D2], [Titoli digitali annullabili fino all’inizio dell’evento], [Nel prototipo], [UC5]),
   ([D3], [Evento non effettuato: annullo entro i termini di versamento delle imposte], [Nel prototipo], [UC5]),
-  ([D4], [Annulli e rimborsi di titoli digitali solo con pagamenti tracciabili], [Simulato], [UC5, UC8]),
+  ([D4], [Annulli e rimborsi di titoli digitali solo con pagamenti tracciabili], [Nel prototipo], [UC5, UC8]),
   ([D5], [Annullo con record ANNULLATO completo dei dati del titolo originario, identificato da progressivo e sigillo], [Nel prototipo], [UC5]),
   ([D6], [Conservazione del titolo annullato, anche in forma informatica], [Nel prototipo], [UC5]),
 ), caption: [Requisiti del gruppo D.]) <tab-gruppo-d>
@@ -310,9 +356,9 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
 
 #status-table((
   ([E1], [Log con tutti i movimenti: emissioni, annullamenti e abbonamenti], [Nel prototipo], [UC6]),
-  ([E2], [Formato ASCII a campi fissi o XML; XML obbligatorio per i flussi dei Capi II e III del Provv. 2019], [Da valutare], [UC6]),
-  ([E3], [Registrazione su supporto immodificabile], [Simulato], [UC6]),
-  ([E4], [Certificato a inizio registrazione e firma digitale a fine giornata con chiave a bordo della carta], [Simulato], [UC6]),
+  ([E2], [Formato ASCII a campi fissi o XML; XML obbligatorio per i flussi dei Capi II e III del Provv. 2019], [Fuori perimetro], [UC6]),
+  ([E3], [Registrazione su supporto immodificabile], [Nel prototipo], [UC6]),
+  ([E4], [Certificato a inizio registrazione e firma digitale a fine giornata con chiave a bordo della carta], [Nel prototipo], [UC6]),
   ([E5], [Conservazione per 24 mesi dall’ultimo titolo, con funzioni di verifica e copia per il controllo], [Nel prototipo], [UC6]),
 ), caption: [Requisiti del gruppo E.]) <tab-gruppo-e>
 
@@ -321,12 +367,12 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
 #status-table((
   ([F1], [Riepilogo giornaliero: proventi per evento e ordine di posto, abbonamenti per organizzatore, ingressi per tipologia, sigillo], [Nel prototipo], [UC6, UC7]),
   ([F2], [Riepilogo mensile dei titoli: proventi per evento anche se incassati nei mesi precedenti, ratei per turno fisso], [Nel prototipo], [UC7]),
-  ([F3], [Riepilogo mensile degli altri proventi (record 8 e 9), se la funzione è dichiarata], [Da valutare], [UC7]),
-  ([F4], [Tracciati FLAT e XML, firma digitale, crittografia, codice di autenticazione, sequenza corretta dei record], [Simulato], [UC6, UC7]),
+  ([F3], [Riepilogo mensile degli altri proventi (record 8 e 9), se la funzione è dichiarata], [Fuori perimetro], [UC7]),
+  ([F4], [Tracciati FLAT e XML, firma digitale, crittografia, codice di autenticazione, sequenza corretta dei record], [Nel prototipo], [UC6, UC7]),
   ([F5], [Termini di trasmissione a SIAE per riepiloghi mensili e per evento], [Fuori perimetro], [–]),
   ([F6], [Stampa cartacea su A3 o A4 secondo i modelli C.1 e C.2], [Fuori perimetro], [–]),
   ([F7], [Gestione e comunicazione dei periodi di inattività], [Nel prototipo], [UC7]),
-), caption: [Requisiti del gruppo F. La trasmissione telematica non è nel piano di lavoro: la generazione dei record è coperta, l’invio no.]) <tab-gruppo-f>
+), caption: [Requisiti del gruppo F.]) <tab-gruppo-f>
 
 === Gruppo G: funzioni di servizio e conservazione <gruppo-g>
 
@@ -335,7 +381,7 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([G2], [Ricerca per numero di carta e progressivo, o per sigillo], [Nel prototipo], [UC7]),
   ([G3], [Viste per giornata di emissione e per evento, con ordine di posto e tipologia], [Nel prototipo], [UC7]),
   ([G4], [Cancellazione dei titoli consentita solo dopo 60 giorni dall’evento], [Nel prototipo], [UC7]),
-  ([G5], [Cancellazione dei riepiloghi consentita solo dopo due anni dalla trasmissione], [Da valutare], [UC7]),
+  ([G5], [Cancellazione dei riepiloghi consentita solo dopo due anni dalla trasmissione], [Fuori perimetro], [UC7]),
 ), caption: [Requisiti del gruppo G.]) <tab-gruppo-g>
 
 === Gruppo H: mancato funzionamento <gruppo-h>
@@ -352,18 +398,18 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([I1], [CAPTCHA prima della composizione del carrello], [Nel prototipo], [UC8]),
   ([I2], [Acquisto concluso solo da utente identificato], [Nel prototipo], [UC8]),
   ([I3], [Registrazione con dati anagrafici, email, cellulare e mezzo per il riscontro; cellulare associato a un solo utente nel sistema], [Nel prototipo], [UC8]),
-  ([I4], [SPID come alternativa alla registrazione], [Simulato], [UC8]),
+  ([I4], [SPID come alternativa alla registrazione], [Nel prototipo], [UC8]),
   ([I5], [Massimo dieci titoli per evento e utente, valido a livello di sistema su tutti i front-end], [Nel prototipo], [UC8]),
   ([I6], [Titolo non rilasciato a fine sessione, ma inviato con il mezzo scelto], [Nel prototipo], [UC8]),
   ([I7], [Tracciamento delle operazioni dell’utente identificato], [Nel prototipo], [UC8]),
-  ([I8], [Connessione HTTPS con almeno TLS 1.2], [Da valutare], [–]),
-  ([I9], [Deroga per eventi con vendita online fino a 1.000 titoli: bastano il CAPTCHA e le misure di sicurezza], [Da valutare], [UC8]),
+  ([I8], [Connessione HTTPS con almeno TLS 1.2], [Fuori perimetro], [–]),
+  ([I9], [Deroga per eventi con vendita online fino a 1.000 titoli: bastano il CAPTCHA e le misure di sicurezza], [Fuori perimetro], [UC8]),
 ), caption: [Requisiti del gruppo I.]) <tab-gruppo-i>
 
 === Gruppo J: nominatività, cambio e rimessa in vendita <gruppo-j>
 
 #status-table((
-  ([J1], [Titoli nominativi per impianti con capienza superiore a 5.000 posti, con esclusioni per tipologia di spettacolo], [Da valutare], [UC8, UC9]),
+  ([J1], [Titoli nominativi per impianti con capienza superiore a 5.000 posti, con esclusioni per tipologia di spettacolo], [Fuori perimetro], [UC8, UC9]),
   ([J2], [Accesso subordinato al riconoscimento personale: il titolo non vale per l’ingresso se il fruitore non coincide con il nominativo], [Nel prototipo], [UC12]),
   ([J3], [Cambio nominativo con annullo, nuovo titolo nominativo e correlazione tracciata], [Nel prototipo], [UC9]),
   ([J4], [Rimessa in vendita con le sole informazioni della vendita primaria, nella sezione del sito primario], [Nel prototipo], [UC10]),
