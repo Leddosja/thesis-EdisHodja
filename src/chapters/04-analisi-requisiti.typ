@@ -30,7 +30,7 @@ Il perimetro è il sistema di emissione dei titoli di accesso previsto dall’ar
 
 - *Nel prototipo*: il requisito è realizzato e verificabile con un test.
 - *Desiderabile* e *Facoltativo*: priorità del piano di lavoro (D e F).
-- *Fuori perimetro*: il requisito resta documentato ma non entra nel perimetro dello stage.
+- *Fuori perimetro*: il requisito resta documentato ma non entra nello stage.
 
 La tabella seguente collega gli obiettivi ai gruppi di requisiti e ai casi d’uso.
 
@@ -158,7 +158,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Nessun titolo viene registrato, nessun movimento viene scritto nel log e i contatori della carta non avanzano. L’operatore può completare i dati e ripetere l’emissione.]) <uc-emissione-dato>
 
 #usecase(5, [Annullamento del titolo], [Operatore],
-  [La carta simulata è valida e il sistema è pronto. Il titolo esiste ed è stato emesso nel sistema e compare all'interno della tabella.],
+  [La carta simulata è valida e il sistema è pronto. Il titolo esiste ed è stato emesso nel sistema.],
   [
     + L’operatore seleziona il titolo da annullare e indica la causale dell’annullo, scelta tra i dieci codici della tabella specificata dalla normativa.
     + Il sistema verifica che il termine previsto per quella causale non sia scaduto.
@@ -224,7 +224,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
 #usecase(8, [Registrazione del periodo di inattività], [Operatore],
   [Il sistema è in funzione (#link(<uc-carta>)[UC-3]).],
   [
-    + L’operatore registra l'intervallo di tempo del periodo di inattività durante il quale no verranno inviati i riepiloghi alla SIAE.
+    + L’operatore registra l'intervallo di tempo del periodo di inattività durante il quale non verranno inviati i riepiloghi alla SIAE.
     + Apre una voce nel registro delle trasmissioni, con data.
     + Durante il blocco, registra i biglietti venduti manualmente, per evento e tipologia.
   ],
@@ -300,7 +300,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
 #pagebreak()
 #usecase("10.1", [Cambio nominativo fuori termine], [Cliente],
   [Il cliente sta eseguendo il cambio nominativo e l’evento è già iniziato, oppure il titolo risulta già usato.],
-  [Il sistema rifiuta il cambio nominativo e segnala lo stesso limite temporale previsto per l’annullo dei titoli digitali siccome si tratta di un annullo seguito da nuova emissione.],
+  [Il sistema rifiuta il cambio nominativo e segnala lo stesso limite temporale previsto per l’annullo dei titoli digitali dato che si tratta di un annullo seguito da nuova emissione.],
   [Il titolo originario resta invariato e nessun nuovo titolo viene emesso.]) <uc-cambio-nominativo-termine>
 
 #usecase("10.2", [Proprietà del titolo non verificata], [Cliente],

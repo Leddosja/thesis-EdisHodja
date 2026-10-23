@@ -39,8 +39,8 @@ requires: none, secondary: none) = {
   block(spacing: 1.2em)[
     #show list: set block(spacing: 0.65em)
     #show enum: set block(spacing: 0em)
-    #v(0.5cm)
     #if diagram != none [
+      #v(0.5cm)
       #uc-diagram(diagram, caption-text: [Diagramma del caso d'uso UC#id.])
     ]
     \
