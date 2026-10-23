@@ -1,6 +1,6 @@
 #import "shared.typ": *
 
-= Glossario <glossario> \
+#heading(outlined: false)[Glossario] <glossario> \
 
 #block[
   #set par(first-line-indent: 0pt, justify: true)
