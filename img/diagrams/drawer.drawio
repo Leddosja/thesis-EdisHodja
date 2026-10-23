@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="rsmdZ6SaubqFKEKktrSU" name="uc-1">
-        <mxGraphModel dx="755" dy="829" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="1042" dy="702" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -520,7 +520,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="uc-14" id="uAArtaGScwrg08AONUm8">
-        <mxGraphModel dx="808" dy="887" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="625" dy="702" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="sPUTX4ri2TJ13ZYa3lIi-0"/>
                 <mxCell id="sPUTX4ri2TJ13ZYa3lIi-1" parent="sPUTX4ri2TJ13ZYa3lIi-0"/>
@@ -533,7 +533,7 @@
                 <mxCell id="sPUTX4ri2TJ13ZYa3lIi-4" edge="1" parent="sPUTX4ri2TJ13ZYa3lIi-1" source="sPUTX4ri2TJ13ZYa3lIi-5" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="sPUTX4ri2TJ13ZYa3lIi-3">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="sPUTX4ri2TJ13ZYa3lIi-5" parent="sPUTX4ri2TJ13ZYa3lIi-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;labelPosition=center;" value="Operatore&lt;br&gt;di back-office" vertex="1">
+                <mxCell id="sPUTX4ri2TJ13ZYa3lIi-5" parent="sPUTX4ri2TJ13ZYa3lIi-1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;rounded=0;strokeColor=default;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fillColor=default;labelPosition=center;" value="Cliente" vertex="1">
                     <mxGeometry height="60" width="30" x="178" y="255" as="geometry"/>
                 </mxCell>
             </root>
