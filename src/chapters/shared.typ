@@ -35,9 +35,7 @@
 #let usecase(id, title, actors, pre, description, post, alternative: none, diagram: none, 
 requires: none, secondary: none) = {
   
-  heading(level: if type(id) == int { 3 } else { 4 }, numbering: none)[     
-  #v(1em)
-  #line(length: 100%, stroke: 0.5pt + luma(150)) UC #id: #title]
+  heading(level: if type(id) == int { 3 } else { 4 }, numbering: none)[UC #id: #title]
   block(spacing: 2em)[
 
     #if diagram != none [
