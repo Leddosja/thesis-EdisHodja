@@ -19,34 +19,44 @@
   sem. Nulla consequat massa quis enim.
 ]
 
+#let tech-heading(name, logo) = heading(level: 3, numbering: none, outlined: false)[
+  #box(baseline: 30%, image(logo, height: 0.85cm)) #h(0.2em) #text(size: 0.5cm, weight: "bold")[#name]
+]
+
 #let uc-diagram(path, caption-text: "Diagramma dei Casi d'Uso dell'intero sistema.") = {
   figure(
-    image(path, width: 85%),
+    image(path, width: 90%),
     caption: [#caption-text],
     kind: image,
     supplement: [Figura],
   )
 }
 
-#let usecase(id, title, actors, pre, description, post, alternative: none, diagram: none, requires: none) = {
-  block(spacing: 2em)[
-    #text(size: 0.5cm, weight: "bold")[UC #id: #title]
-    \ \
+#let usecase(id, title, actors, pre, description, post, alternative: none, diagram: none, 
+requires: none, secondary: none) = {
+  v(0.5cm)
+  heading(level: if type(id) == int { 3 } else { 4 }, numbering: none)[UC #id: #title]
+  block(spacing: 1.2em)[
+    #show list: set block(spacing: 0.65em)
+    #show enum: set block(spacing: 0em)
     #if diagram != none [
+      #v(0.5cm)
       #uc-diagram(diagram, caption-text: [Diagramma del caso d'uso UC#id.])
     ]
     \
     - *Attori principali:* #actors \
+    #if secondary != none [
+      - *Attori secondari* #secondary \
+      ]
     - *Precondizioni:* #pre \
     - *Descrizione:* #description \
     - *Postcondizioni:* #post \
     #if requires != none [
       - *Dipendenze:* #requires \
     ]
-    - *Scenario alternativo:* #alternative
-
-    #v(1em)
-    #line(length: 100%, stroke: 0.5pt + luma(150))
+    #if alternative != none [
+      - *Scenario alternativo:* #alternative \
+    ]
   ]
 }
 
@@ -57,26 +67,27 @@
     *Descrizione:* #description.
 
     *Soluzione:* #solution.
-
-    #if probabilita != none or impatto != none [
-      #v(0.3em)
-      #align(center)[
-        #table(
-          columns: (5cm, 5cm),
-          inset: 5pt,
-          align: center,
-          stroke: 0.5pt + rgb("b8b8bd"),
-          fill: (_, row) => if row == 0 { rgb("f5f5f7") } else { white },
-          table.header([*Probabilità*], [*Impatto*]),
-          [#probabilita], [#impatto],
-        )
-      ]
-    ]
   ]
 }
 
+#let risk-table(rows, caption: none) = {
+  let body = table(
+    columns: (2cm, 7cm, 3.2cm, 2.75cm),
+    inset: 10pt,
+    stroke: 0.5pt + rgb("b8b8bd"),
+    fill: (_, row) => if calc.odd(row) { rgb("f5f5f7") } else { white },
+    table.header([*ID*], [*Rischio*], [*Probabilità*], [*Impatto*]),
+    ..rows.flatten(),
+  )
+  if caption != none {
+    figure(body, caption: caption, kind: table, supplement: [Tabella])
+  } else {
+    body
+  }
+}
+
 #let requirement-table(rows, caption: none) = {
-  table(
+  let body = table(
     columns: (2.25cm, 1fr, 2.25cm),
     inset: 6pt,
     stroke: 0.5pt + rgb("b8b8bd"),
@@ -85,6 +96,8 @@
     ..rows.flatten(),
   )
   if caption != none {
-    align(center)[#emph(caption)]
+    figure(body, caption: emph(caption), kind: table, supplement: [Tabella])
+  } else {
+    body
   }
 }
