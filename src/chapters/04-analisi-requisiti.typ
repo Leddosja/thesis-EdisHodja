@@ -10,7 +10,7 @@
     ..rows.flatten(),
   )
   if caption != none {
-    figure(body, caption: emph(caption), kind: table, supplement: [Tabella])
+    figure(body, caption: caption, kind: table, supplement: [Tabella])
   } else {
     body
   }
@@ -65,7 +65,6 @@ Un attore è una persona o un sistema esterno che interagisce con il sistema. Ci
 - *Addetto al varco*: la persona all’ingresso dell’evento che legge il codice del titolo e fa passare il cliente.
 
 #pagebreak()
-
 == Casi d’uso <casi-uso>
 
 Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descrive le funzioni offerte da un sistema così come le vedono gli attori che lo usano. Ogni caso d’uso ha un identificativo, e quelli di dettaglio lo estendono in modo gerarchico.
@@ -100,7 +99,6 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Nessun evento viene creato. L’operatore può correggere le date e ripetere la configurazione.]) <uc-configurazione-evento-date>
 
 #pagebreak()
-
 #usecase(2, [Configurazione delle anagrafiche], [Operatore],
   [L’operatore è autenticato, la carta simulata è valida e il sistema è pronto. L’operatore dispone del codice locale assegnato da SIAE.],
   [
@@ -112,8 +110,8 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Organizzatori, locali e listini sono disponibili per la configurazione degli eventi (#link(<uc-configurazione-evento>)[UC-1]), per l’emissione (#link(<uc-emissione>)[UC-4]) e per la vendita online (#link(<uc-acquisto>)[UC-9]).],
   alternative: [Se il codice locale è già in uso, il sistema rifiuta il salvataggio e segnala il conflitto (#link(<uc-locali-prezzi-codice>)[UC-2.1]).],
   diagram: "../../img/diagrams/uc-2.png") <uc-locali-prezzi> 
-#pagebreak()
 
+#pagebreak()
 #usecase("2.1", [Codice locale non valido], [Operatore],
   [Il sistema sta eseguendo la gestione di organizzatori, locali e prezzi e l’operatore ha indicato un codice locale già assegnato a un altro locale.],
   [Il sistema rifiuta il salvataggio e segnala il conflitto, indicando il locale che usa già quel codice.],
@@ -142,7 +140,6 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Lo stato del sistema resta bloccato e nessuna funzione di anagrafica, emissione, annullo, log e riepilogo è utilizzabile.]) <uc-carta-assente>
 
 #pagebreak()
-
 #usecase(4, [Emissione del titolo], [Operatore],
   [La carta simulata è valida, il sistema è pronto e l’evento è configurato.],
   [
@@ -154,6 +151,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Il titolo è registrato con progressivo e sigillo e il movimento è scritto nel log, anche se il titolo non è stato stampato. Il titolo può essere annullato (#link(<uc-annullo>)[UC-5]) e rientra nella chiusura giornaliera (#link(<uc-chiusura>)[UC-6]).],
   alternative: [Se un dato obbligatorio manca, l’emissione non viene completata (#link(<uc-emissione-dato>)[UC-4.1]).], diagram: "../../img/diagrams/uc-4.png") <uc-emissione>
 
+#pagebreak()
 #usecase("4.1", [Dati del titolo incompleti], [Operatore],
   [L'operatore sta eseguendo l’emissione del titolo e non ha indicato uno dei dati obbligatori previsti.],
   [Il sistema rifiuta l’emissione e indica quale dato manca.],
@@ -181,7 +179,6 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Nessun nuovo record ANNULLATO viene creato e il log non cambia.]) <uc-annullo-gia>
 
 #pagebreak()
-
 #usecase(6, [Generazione del log giornaliero], [Operatore],
   [La carta simulata è valida e il sistema è pronto. Sono presenti movimenti non ancora chiusi nella giornata fiscale, prodotti da emissioni e annulli.],
   [
@@ -195,7 +192,6 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   diagram: "../../img/diagrams/uc-6.png") <uc-chiusura>
 
 #pagebreak()
-
 #usecase("6.1", [Digest non corrispondente], [Operatore],
   [L'operatore sta eseguendo la chiusura giornaliera e il digest letto dal supporto simulato non coincide con quello calcolato.],
   [Il sistema interrompe la chiusura e segnala l’errore di verifica.],
@@ -206,6 +202,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Il sistema non genera alcun record e segnala che non ci sono movimenti da chiudere.],
   [Nessuna firma viene calcolata e il log non cambia.]) <uc-chiusura-vuota>
 
+#pagebreak()
 #usecase(7, [Consultazione dei riepiloghi], [Operatore],
   [La carta simulata è valida e il sistema è pronto. Esistono movimenti registrati nel periodo richiesto e le relative giornate sono state chiuse (#link(<uc-chiusura>)[UC-6]).],
   [
@@ -218,12 +215,11 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   alternative: [Se nel periodo richiesto non esistono movimenti, il sistema mostra un risultato vuoto (#link(<uc-riepiloghi-vuoto>)[UC-7.1]).],
   diagram: "../../img/diagrams/uc-7.png") <uc-riepiloghi>
 
+#pagebreak()
 #usecase("7.1", [Ricerca senza risultati], [Operatore],
   [L'operatore sta consultando i riepiloghi e seleziona il periodo senza alcun movimento.],
   [Il sistema segnala che non ci sono dati e non produce alcun riepilogo o file di esportazione.],
   [Il log non cambia e l’operatore può modificare periodo e ripetere la richiesta.]) <uc-riepiloghi-vuoto>
-
-#pagebreak()
 
 #usecase(8, [Registrazione del periodo di inattività], [Operatore],
   [Il sistema è in funzione (#link(<uc-carta>)[UC-3]).],
@@ -233,8 +229,6 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
     + Durante il blocco, registra i biglietti venduti manualmente, per evento e tipologia.
   ],
   [Il periodo di inattività è registrato e il contatore dei giorni di fermo è aggiornato.], diagram: "../../img/diagrams/uc-8.png") <uc-guasto>
-
-#pagebreak()
 
 #usecase(9, [Acquisto dei titoli online], [Cliente],
   [Lo storefront dell’organizzatore è attivo e il sistema è pronto. L’evento è configurato e i listini sono definiti. Il cliente si è già identificato, con la registrazione a doppio riscontro o con l’accesso SPID.],
@@ -259,6 +253,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   alternative: [Se il cellulare è già associato a un altro cliente, la registrazione è rifiutata (#link(<uc-registrazione-cellulare>)[UC-9.1.1]). Se il codice OTP è errato o scaduto, la registrazione non viene completata (#link(<uc-registrazione-otp>)[UC-9.1.2]).],
   diagram: "../../img/diagrams/uc-9.1.png") <uc-registrazione>
 
+#pagebreak()
 #usecase("9.1.1", [Cellulare non disponibile], [Cliente],
   [Il cliente sta effettuando la registrazione e il cellulare indicato è già associato ad un altro cliente.],
   [Il sistema rifiuta la registrazione e segnala che il cellulare è già in uso.],
@@ -275,6 +270,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Il cliente è identificato e può procedere all’acquisto.],
   diagram: none) <uc-spid>
 
+#pagebreak()
 #usecase("9.3", [Limite titoli raggiunto], [Cliente],
   [Il cliente sta effettuando l’acquisto online e ha già raggiunto, anche su altri organizzatori, il limite di dieci titoli per quell’evento.],
   [Il sistema blocca il carrello prima del pagamento e segnala il limite.],
@@ -290,6 +286,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Il sistema non consente la composizione del carrello e propone un nuovo CAPTCHA.],
   [Nessun carrello viene creato e il cliente può ripetere la prova.]) <uc-acquisto-captcha>
 
+#pagebreak()
 #usecase(10, [Modifica dell’intestatario], [Cliente],
   [Il titolo è nominativo, di proprietà del cliente, ed è stato acquistato.],
   [
@@ -300,18 +297,18 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Il titolo originario è annullato, quello nuovo è valido e i due movimenti sono correlati.],
   alternative: [Se l’evento è già iniziato, o il titolo è già stato usato al varco, il cambio nominativo viene rifiutato (#link(<uc-cambio-nominativo-termine>)[UC-10.1]). Se il titolo indicato non risulta di proprietà del cliente che ha fatto la richiesta, l’operazione viene rifiutata (#link(<uc-cambio-nominativo-proprieta>)[UC-10.2]).], diagram: "../../img/diagrams/uc-10.png") <uc-cambio-nominativo>
 
+#pagebreak()
 #usecase("10.1", [Cambio nominativo fuori termine], [Cliente],
   [Il cliente sta eseguendo il cambio nominativo e l’evento è già iniziato, oppure il titolo risulta già usato.],
   [Il sistema rifiuta il cambio nominativo e segnala lo stesso limite temporale previsto per l’annullo dei titoli digitali siccome si tratta di un annullo seguito da nuova emissione.],
   [Il titolo originario resta invariato e nessun nuovo titolo viene emesso.]) <uc-cambio-nominativo-termine>
-
-#pagebreak()
 
 #usecase("10.2", [Proprietà del titolo non verificata], [Cliente],
   [Il cliente sta eseguendo il cambio nominativo e il titolo indicato non risulta di proprietà del cliente che ha fatto la richiesta.],
   [Il sistema rifiuta l’operazione e segnala che il titolo non è disponibile per questa richiesta.],
   [Nessun titolo viene annullato né emesso.]) <uc-cambio-nominativo-proprieta>
 
+#pagebreak()
 #usecase(11, [Pubblicazione per la rivendita], [Cliente],
   [Il titolo è stato acquistato sul sito dell’organizzatore (#link(<uc-acquisto>)[UC-9]) e non è ancora stato usato.],
   [
@@ -321,6 +318,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   ],
   [Il titolo è disponibile per un nuovo acquirente, con annullo e nuova emissione correlati.], diagram: "../../img/diagrams/uc-11.png") <uc-rimessa>
 
+#pagebreak()
 #usecase(12, [Lettura del titolo al varco], [Addetto al varco],
   [L’evento è attivo e la lista unica dei titoli validi per l’evento è caricata, comprensiva degli eventuali titoli importati da altri sistemi (#link(<uc-configurazione-evento>)[UC-1]).],
   [
@@ -331,6 +329,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [L’accesso è registrato, il titolo non è più utilizzabile e il riepilogo degli accessi si aggiorna.],
   alternative: [Se il titolo non è nella lista, o è già stato usato, il varco mostra un esito negativo e non registra l’accesso.], diagram: "../../img/diagrams/uc-12.png") <uc-varco>
 
+#pagebreak()
 #usecase(13, [Disattivazione manuale del titolo], [Operatore],
   [Il titolo esiste nella lista dell’evento (#link(<uc-varco>)[UC-12]).],
   [
@@ -341,7 +340,6 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Il titolo non può più essere usato al varco.], diagram: "../../img/diagrams/uc-13.png") <uc-invalidazione>
 
 #pagebreak()
-
 #usecase(14, [Generazione del wallet pass], [Cliente],
   [Il titolo è valido (#link(<uc-acquisto>)[UC-9]) e il cliente ha chiesto il pass.],
   [

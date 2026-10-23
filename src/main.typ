@@ -95,8 +95,10 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 
 #pagebreak()
 #heading(outlined: false)[Elenco delle tabelle] <tabelle>
-
 #outline(target: figure.where(kind: table), title: none)
+
+#pagebreak()
+#include "chapters/01-glossario.typ"
 
 #pagebreak()
 #counter(page).update(1)
@@ -109,5 +111,4 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 // #include "chapters/05-progettazione-codifica.typ"
 // #include "chapters/06-verifica-validazione.typ"
 // #include "chapters/07-conclusioni.typ"
-// #include "chapters/01-glossario.typ"
 // #include "chapters/08-bibliografia.typ"

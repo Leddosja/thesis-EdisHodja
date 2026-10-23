@@ -36,7 +36,6 @@ La verifica si divide in due gruppi di test. I test funzionali seguono i flussi 
 I test di concorrenza riproducono richieste simultanee sui vincoli che non devono cedere: una sola stampa per titolo, limite di dieci titoli per evento e utente, unicità del cellulare a livello di sistema e scansioni contemporanee al varco. Un vincolo di questo tipo si verifica solo quando più richieste arrivano nello stesso momento, quindi un test sequenziale non basta a dimostrarlo.
 
 #pagebreak()
-
 == Analisi preventiva dei rischi <analisi-rischi>
 
 Durante la fase di analisi iniziale sono stati individuati alcuni rischi legati alla natura normativa e tecnica del progetto. Per ciascuno è stata individuata una strategia di mitigazione.
@@ -45,9 +44,7 @@ Durante la fase di analisi iniziale sono stati individuati alcuni rischi legati 
 
 #risk(2, [Interpretazione della normativa], [i testi del D.M. 13 luglio 2000 e dei provvedimenti dell’Agenzia delle Entrate sono scritti in modo generico su alcuni punti e possono essere letti in più modi], [condividere ogni interpretazione dubbia con il tutor aziendale #tutor prima di tradurla in codice, tramite gli incontri settimanali o il canale Telegram], probabilita: [Media], impatto: [Medio]) <risk-interpretazione-normativa>
 
-
 #risk(3, [Difetti di concorrenza sui vincoli critici], [vincoli come la singola stampa per titolo, il limite di dieci titoli per evento e utente e l’unicità del cellulare devono reggere a richieste simultanee, e un errore di progettazione emergerebbe solo sotto carico concorrente], [dedicare una settimana del piano a test di concorrenza mirati sui vincoli critici, oltre ai test funzionali sequenziali descritti nella sezione precedente], probabilita: [Media], impatto: [Alto]) <risk-concorrenza>
-
 
 #risk(4, [Dipendenze tra le settimane del piano], [alcune funzionalità dipendono da quelle delle settimane precedenti, per esempio il log registra i movimenti prodotti dall’emissione e il controllo accessi legge titoli che devono già esistere, quindi un ritardo in una settimana si propaga alle successive], [seguire l’ordine di sviluppo stabilito nel piano e verificare l’avanzamento negli incontri di inizio e fine settimana con il tutor, in modo da intercettare presto eventuali ritardi], probabilita: [Media], impatto: [Medio]) <risk-dipendenze-settimane>
 

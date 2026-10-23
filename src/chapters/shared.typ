@@ -34,10 +34,12 @@
 
 #let usecase(id, title, actors, pre, description, post, alternative: none, diagram: none, 
 requires: none, secondary: none) = {
-  
+  v(0.5cm)
   heading(level: if type(id) == int { 3 } else { 4 }, numbering: none)[UC #id: #title]
-  block(spacing: 2em)[
-
+  block(spacing: 1.2em)[
+    #show list: set block(spacing: 0.65em)
+    #show enum: set block(spacing: 0em)
+    #v(0.5cm)
     #if diagram != none [
       #uc-diagram(diagram, caption-text: [Diagramma del caso d'uso UC#id.])
     ]
@@ -70,8 +72,8 @@ requires: none, secondary: none) = {
 
 #let risk-table(rows, caption: none) = {
   let body = table(
-    columns: (2cm, 8cm, 3.2cm, 2.75cm),
-    inset: 7pt,
+    columns: (2cm, 7cm, 3.2cm, 2.75cm),
+    inset: 10pt,
     stroke: 0.5pt + rgb("b8b8bd"),
     fill: (_, row) => if calc.odd(row) { rgb("f5f5f7") } else { white },
     table.header([*ID*], [*Rischio*], [*Probabilità*], [*Impatto*]),
