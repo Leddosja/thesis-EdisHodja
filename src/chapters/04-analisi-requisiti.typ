@@ -1,8 +1,7 @@
 #import "shared.typ": *
 
-
 #let status-table(rows, caption: none) = {
-  table(
+  let body = table(
     columns: (2cm, 7cm, 3cm, 3cm),
     inset: 6pt,
     stroke: 0.5pt + rgb("b8b8bd"),
@@ -11,10 +10,11 @@
     ..rows.flatten(),
   )
   if caption != none {
-    align(center)[#emph(caption)]
+    figure(body, caption: emph(caption), kind: table, supplement: [Tabella])
+  } else {
+    body
   }
 }
-
 
 #pagebreak()
 
@@ -29,12 +29,12 @@ Il riferimento normativo è il D.M. 13 luglio 2000, con i provvedimenti dell’A
 Il perimetro è il sistema di emissione dei titoli di accesso previsto dall’art. 2, comma 1, lettera b), del D.M. 2000, con vendita online e controllo accessi. Il prototipo non è certificato, quindi la carta di attivazione, il sigillo fiscale, la firma e il supporto immodificabile sono simulati. Ogni requisito riceve uno stato secondo questi criteri:
 
 - *Nel prototipo*: il requisito è realizzato e verificabile con un test.
-- *Desiderabile* e *Facoltativo*: priorità del piano di lavoro (D e F), realizzate solo se il tempo lo consente.
-- *Fuori perimetro*: il requisito resta documentato ma non entra nello stage.
+- *Desiderabile* e *Facoltativo*: priorità del piano di lavoro (D e F).
+- *Fuori perimetro*: il requisito resta documentato ma non entra nel perimetro dello stage.
 
-La tabella seguente collega gli obiettivi del piano di lavoro ai gruppi di requisiti e ai casi d’uso.
+La tabella seguente collega gli obiettivi ai gruppi di requisiti e ai casi d’uso.
 
-#table(
+#figure(table(
   columns: (2.5cm, 6.5cm, 3.5cm, 3cm),
   inset: 7pt,
   stroke: 0.5pt + rgb("b8b8bd"),
@@ -45,265 +45,320 @@ La tabella seguente collega gli obiettivi del piano di lavoro ai gruppi di requi
   [O03], [Emissione, annullo, log e chiusura giornaliera], [C, D, E], [UC4–UC6],
   [O04], [Riepiloghi e funzioni di servizio], [F, G], [UC7],
   [O05], [Test funzionali e relazione finale], [Nessun gruppo normativo], [-],
-  [D01], [Vendita online white-label], [I], [UC8],
-  [D02], [Nominatività, cambio nominativo, rimessa in vendita], [J], [UC9, UC10],
-  [D03], [Render del titolo e stampa unica], [C11, L1, L2], [UC11],
+  [D01], [Vendita online white-label], [I], [UC9],
+  [D02], [Nominatività, cambio nominativo, rimessa in vendita], [J], [UC10, UC11],
+  [D03], [Render del titolo e stampa unica], [C11, L1, L2], [UC9],
   [D04], [Controllo accessi], [K], [UC12, UC13],
   [F01], [Wallet pass], [Vincolo N], [UC14],
-  [F02], [Mancato funzionamento], [H], [UC15],
-  [F03], [Integrazione con il CRM RelAi], [Nessun gruppo normativo], [UC16],
-) <tab-obiettivi>
+  [F02], [Mancato funzionamento], [H], [UC8],
+  [F03], [Integrazione con il CRM RelAi], [Nessun gruppo normativo], [-],
+), caption: [Obiettivi collegati a gruppi di requisiti e casi d’uso.], kind: table, supplement: [Tabella]) <tab-obiettivi>
 
 == Attori <attori>
 
-Un attore è una persona o un sistema esterno che interagisce con il sistema. Ciò che il progetto può controllare e realizzare fa parte del sistema e non è un attore. Per questo la carta di attivazione, il pagamento e lo SPID, che il prototipo simula internamente, non sono attori: compaiono nelle precondizioni e nelle descrizioni, e le loro interfacce restano compatibili con una futura sostituzione con i componenti reali.
+Un attore è una persona o un sistema esterno che interagisce con il sistema. Ciò che il progetto può controllare e realizzare fa parte del sistema e non è un attore. Per questo la carta di attivazione, il pagamento e lo SPID, che il prototipo simula internamente, non sono attori: compaiono nelle precondizioni e nelle descrizioni, e le loro interfacce restano compatibili con una futura sostituzione con i componenti reali. #v(0.3cm)
 
-Gli attori primari avviano un caso d’uso per raggiungere un proprio obiettivo. Gli attori secondari sono sistemi esterni da cui il sistema dipende per completare un caso d’uso, ma che non lo avviano.
+*Attori principali*
 
-*Attori primari*
+- *Operatore di back-office*: la persona dell’organizzatore o dell’azienda che usa il sistema da dietro le quinte. Configura organizzatori, locali, eventi e prezzi, gestisce la carta simulata, emette e annulla titoli, chiude la giornata e consulta i riepiloghi.
+- *Cliente*: la persona che compra un biglietto sullo storefront online. All’inizio è solo un visitatore e può soltanto registrarsi o accedere con SPID simulato; da quel momento è lo stesso attore, ora identificato, e può acquistare, cambiare il nominativo di un titolo, rimetterlo in vendita e stamparlo. Non è diviso in due attori distinti: l’unica differenza è se ha già completato l’identificazione, ed è questa la precondizione che distingue i casi d’uso riservati all’acquisto da quelli aperti a chiunque visiti lo storefront.
+- *Addetto al varco*: la persona all’ingresso dell’evento che legge il codice del titolo e fa passare il cliente.
 
-- *Operatore di back-office*: configura organizzatori, locali, eventi e prezzi, gestisce la carta simulata, emette e annulla titoli, chiude la giornata e consulta i riepiloghi.
-- *Utente non identificato*: visitatore dello storefront di un organizzatore che non ha ancora completato la registrazione con doppio riscontro né l’accesso tramite SPID, simulato nel prototipo. Può solo registrarsi o accedere.
-- *Utente identificato*: specializza l’utente non identificato. Acquista titoli, cambia il nominativo, rimette in vendita e stampa il titolo. L’acquisto è consentito solo a un utente identificato.
-- *Addetto al varco*: legge il codice del titolo all’ingresso e registra l’accesso.
-
-*Attori secondari*
-
-- *CRM RelAi*: sistema aziendale esterno con cui il prototipo scambia organizzatori, eventi, vendite e presenze. Il collegamento è facoltativo.
-- *Apple Wallet e Google Wallet*: servizi esterni che ricevono il pass del titolo. Sono previsti solo se l’attività facoltativa sul wallet pass entra nel perimetro.
-
-L’organizzatore non è un attore: i suoi dati sono configurati dall’operatore e per il prototipo è un _tenant_.
+#pagebreak()
 
 == Casi d’uso <casi-uso>
 
 Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descrive le funzioni offerte da un sistema così come le vedono gli attori che lo usano. Ogni caso d’uso ha un identificativo, e quelli di dettaglio lo estendono in modo gerarchico.
 
-Nei diagrammi si usano queste convenzioni:
-- l’associazione tra attore e caso d’uso è una linea continua non direzionata;
-- «include» è una freccia tratteggiata dal caso d’uso base verso quello incluso, eseguito sempre;
-- «extend» è una freccia tratteggiata dal caso d’uso di estensione verso quello esteso, usata per modellare errori e rifiuti, che sono descritti anche nello scenario alternativo;
-- la generalizzazione tra attori è una freccia con triangolo vuoto, dall’attore più specifico a quello più generale.
+#show heading.where(level: 3): it => text(size: 0.5cm, weight: "bold")[
+  #if it.numbering != none [#counter(heading).display(it.numbering) ]#it.body
+]
+#show heading.where(level: 4): it => text(size: 0.5cm, weight: "bold")[
+  #if it.numbering != none [#counter(heading).display(it.numbering) ]#it.body
+]
 
-Le precondizioni, come la carta valida e lo stato pronto del sistema, non sono modellate con «include»: sono condizioni già vere quando l’operazione parte.
-
-#show heading.where(level: 3): set text(size: 16pt)
-
-=== Configurazione: organizzatori, locali, eventi e prezzi <uc-configurazione>
-
-Prima di emettere un titolo, il sistema deve conoscere l’organizzatore, il locale e l’evento. I prezzi e le tabelle di sistema sono configurati nella stessa fase.
-
-#usecase(1, [Configurazione dell’evento], [Operatore di back-office.],
-  [L’operatore è autenticato, la carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’organizzatore è registrato e il locale è già definito (#link(<uc-locali-prezzi>)[UC-2]).],
-  [L’operatore crea un evento associato a un locale e a un organizzatore, con date e tipologie di titolo. Sono ammessi eventi che attraversano la mezzanotte e possono coesistere più eventi di più organizzatori.],
-  [L’evento è disponibile per l’emissione (#link(<uc-emissione>)[UC-4]), per la vendita online (#link(<uc-acquisto>)[UC-8]) e per il controllo accessi (#link(<uc-varco>)[UC-12]).],
-  requires: [#link(<uc-carta>)[UC-3], #link(<uc-locali-prezzi>)[UC-2]],
+#usecase(1, [Inserimento dell’evento], [Operatore],
+  [L’operatore è autenticato, la carta simulata è valida e il sistema è pronto. L’organizzatore è registrato e il locale è già definito.],
+  [
+    + L’operatore apre la creazione di un nuovo evento.
+    + Sceglie l’organizzatore e il locale, già registrati nel sistema.
+    + Indica date e orari dell’evento, anche a cavallo di mezzanotte, e le tipologie di titolo previste.
+    + Conferma: l’evento è salvato e resta disponibile insieme a quelli degli altri organizzatori già attivi nello stesso periodo.
+  ],
+  [L’evento è disponibile per l’emissione (#link(<uc-emissione>)[UC-4]), per la vendita online (#link(<uc-acquisto>)[UC-9]) e per il controllo accessi (#link(<uc-varco>)[UC-12]).],
   alternative: [Se il locale o l’organizzatore non esistono, il sistema rifiuta il salvataggio e indica il motivo (#link(<uc-configurazione-evento-locale>)[UC-1.1]). Se le date sono incoerenti, il sistema rifiuta il salvataggio e segnala l’incongruenza (#link(<uc-configurazione-evento-date>)[UC-1.2]).],
   diagram: "../../img/diagrams/uc-1.png") <uc-configurazione-evento>
 
-#usecase("1.1", [Locale o organizzatore non trovato], [Operatore di back-office.],
-  [Il sistema sta eseguendo la configurazione dell’evento (#link(<uc-configurazione-evento>)[UC-1]) e l’operatore ha indicato un locale o un organizzatore non registrato.],
+#usecase("1.1", [Validazione locale e organizzatore fallita], [Operatore],
+  [Il sistema sta eseguendo la configurazione dell’evento e l’operatore ha indicato un locale o un organizzatore non registrato.],
   [Il sistema rifiuta il salvataggio e indica quale dei due dati non è stato trovato.],
-  [Nessun evento viene creato. L’operatore può correggere il dato o registrarlo (#link(<uc-locali-prezzi>)[UC-2]).],
-  requires: [#link(<uc-configurazione-evento>)[UC-1]]) <uc-configurazione-evento-locale>
+  [Nessun evento viene creato. L’operatore può correggere il dato o registrarlo.]) <uc-configurazione-evento-locale>
 
-#usecase("1.2", [Date incoerenti], [Operatore di back-office.],
-  [Il sistema sta eseguendo la configurazione dell’evento (#link(<uc-configurazione-evento>)[UC-1]) e l’operatore ha indicato date non coerenti, per esempio una data e ora di fine precedente a quella di inizio.],
-  [Il sistema rifiuta il salvataggio e segnala l’incongruenza. Un evento che attraversa la mezzanotte, con la fine nel giorno successivo all’inizio, non è un’incongruenza e viene accettato.],
-  [Nessun evento viene creato. L’operatore può correggere le date e ripetere la configurazione.],
-  requires: [#link(<uc-configurazione-evento>)[UC-1]]) <uc-configurazione-evento-date>
+#usecase("1.2", [Validazione date evento fallita], [Operatore],
+  [Il sistema sta eseguendo la configurazione dell’evento e l’operatore ha indicato date non coerenti, per esempio una data e ora di fine precedente a quella di inizio.],
+  [Il sistema rifiuta il salvataggio e segnala l’incongruenza.],
+  [Nessun evento viene creato. L’operatore può correggere le date e ripetere la configurazione.]) <uc-configurazione-evento-date>
 
-#usecase(2, [Gestione di organizzatori, locali e prezzi], [Operatore di back-office.],
-  [L’operatore è autenticato, la carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’operatore dispone del codice locale assegnato da SIAE.],
-  [L’operatore registra gli organizzatori e definisce i locali, ciascuno con il proprio codice locale, e i listini, separando prevendita e prestazioni accessorie dal titolo principale.],
-  [Organizzatori, locali e listini sono disponibili per la configurazione degli eventi (#link(<uc-configurazione-evento>)[UC-1]), per l’emissione (#link(<uc-emissione>)[UC-4]) e per la vendita online (#link(<uc-acquisto>)[UC-8]).],
-  requires: [#link(<uc-carta>)[UC-3]],
+#pagebreak()
+
+#usecase(2, [Configurazione delle anagrafiche], [Operatore],
+  [L’operatore è autenticato, la carta simulata è valida e il sistema è pronto. L’operatore dispone del codice locale assegnato da SIAE.],
+  [
+    + L’operatore registra un nuovo organizzatore, cliente dell’azienda che venderà titoli sul proprio dominio white-label.
+    + Per ogni locale usato dall’organizzatore, inserisce il codice locale assegnato da SIAE.
+    + Definisce il listino dell’evento, tenendo separati il prezzo del titolo, la prevendita e le eventuali prestazioni accessorie.
+    + Conferma e salva i dati che sono pronti per essere usati in un evento.
+  ],
+  [Organizzatori, locali e listini sono disponibili per la configurazione degli eventi (#link(<uc-configurazione-evento>)[UC-1]), per l’emissione (#link(<uc-emissione>)[UC-4]) e per la vendita online (#link(<uc-acquisto>)[UC-9]).],
   alternative: [Se il codice locale è già in uso, il sistema rifiuta il salvataggio e segnala il conflitto (#link(<uc-locali-prezzi-codice>)[UC-2.1]).],
-  diagram: "../../img/diagrams/uc-2.png") <uc-locali-prezzi>
+  diagram: "../../img/diagrams/uc-2.png") <uc-locali-prezzi> 
+#pagebreak()
 
-#usecase("2.1", [Codice locale già in uso], [Operatore di back-office.],
-  [Il sistema sta eseguendo la gestione di organizzatori, locali e prezzi (#link(<uc-locali-prezzi>)[UC-2]) e l’operatore ha indicato un codice locale già assegnato a un altro locale.],
-  [Il sistema rifiuta il salvataggio e segnala il conflitto, indicando il locale che usa già quel codice. Il codice locale è acquisito da SIAE e non viene mai generato dal sistema.],
-  [Nessun locale viene creato o modificato. L’operatore può correggere il codice e ripetere l’operazione.],
-  requires: [#link(<uc-locali-prezzi>)[UC-2]]) <uc-locali-prezzi-codice>
+#usecase("2.1", [Codice locale non valido], [Operatore],
+  [Il sistema sta eseguendo la gestione di organizzatori, locali e prezzi e l’operatore ha indicato un codice locale già assegnato a un altro locale.],
+  [Il sistema rifiuta il salvataggio e segnala il conflitto, indicando il locale che usa già quel codice.],
+  [Nessun locale viene creato o modificato. L’operatore può correggere il codice e ripetere l’operazione.]) <uc-locali-prezzi-codice>
 
-=== Area fiscale: carta, emissione, annullo, log e riepiloghi <uc-fiscale>
-
-Quest’area è il nucleo del prototipo in cui ogni operazione richiede una carta valida e viene scritta nel log in modo serializzato.
-
-#usecase(3, [Gestione della carta simulata], [Operatore di back-office.],
+#usecase(3, [Inizializzazione della carta simulata], [Operatore],
   [La carta simulata è inserita nel sistema e l’operatore conosce il PIN.],
-  [All’accensione, e a ogni rimozione della carta, il sistema richiede il PIN. Alla prima attivazione memorizza titolare, codice sistema e codice carta, controlla la firma e mostra i contatori. Il sistema legge poi contatori, progressivo e sigillo simulati, verifica che la carta sia associata a questo sistema e porta lo stato a pronto.],
-  [Lo stato del sistema riflette la carta presente. Solo con lo stato pronto sono utilizzabili #link(<uc-locali-prezzi>)[UC-2], #link(<uc-configurazione-evento>)[UC-1], #link(<uc-emissione>)[UC-4], #link(<uc-annullo>)[UC-5], #link(<uc-chiusura>)[UC-6] e #link(<uc-riepiloghi>)[UC-7]. Il blocco per guasto è gestito da #link(<uc-guasto>)[UC-15].],
-  alternative: [Se il PIN è errato, il sistema resta bloccato (#link(<uc-carta-pin>)[UC-3.1]). Se la carta è assente o non è associata a questo sistema, il sistema resta bloccato (#link(<uc-carta-assente>)[UC-3.2]).],
-  diagram: "../../img/diagrams/uc-3.png") <uc-carta>
+  [
+    + Il sistema si accende, o la carta viene rimossa e reinserita: in entrambi i casi chiede il PIN.
+    + L’operatore inserisce il PIN.
+    + Se è la prima attivazione della carta, il sistema registra titolare, codice sistema e codice carta, e controlla la firma.
+    + Il sistema legge contatori, progressivo e sigillo simulati sulla carta, verifica che sia associata a questo sistema e mostra i contatori a schermo.
+    + Lo stato passa a pronto: tutte le funzioni che richiedono la carta diventano utilizzabili.
+  ],
+  [Lo stato del sistema riflette la carta presente.],
+  alternative: [Se il PIN è errato, il sistema resta bloccato (#link(<uc-carta-pin>)[UC-3.1]). Se la carta è assente o non è associata a questo sistema, il sistema resta bloccato (#link(<uc-carta-assente>)[UC-3.2]).], diagram: "../../img/diagrams/uc-3.png") <uc-carta>
 
-#usecase("3.1", [PIN errato], [Operatore di back-office.],
-  [Il sistema sta eseguendo la gestione della carta simulata (#link(<uc-carta>)[UC-3]) e l’operatore ha inserito un PIN non corretto.],
+#usecase("3.1", [Inserimento PIN non valido], [Operatore],
+  [Il sistema sta eseguendo la gestione della carta simulata e l’operatore ha inserito un PIN non corretto.],
   [Il sistema rifiuta il PIN, segnala l’errore e non legge i dati della carta.],
-  [Lo stato del sistema resta bloccato. Tutte le funzioni di anagrafica, emissione, annullo, log e riepilogo restano non utilizzabili finché non viene inserito il PIN corretto.],
-  requires: [#link(<uc-carta>)[UC-3]]) <uc-carta-pin>
+  [Lo stato del sistema resta bloccato.]) <uc-carta-pin>
 
-#usecase("3.2", [Carta assente o non associata], [Operatore di back-office.],
-  [Il sistema sta eseguendo la gestione della carta simulata (#link(<uc-carta>)[UC-3]) e la carta è assente, non valida o associata a un altro sistema.],
+#usecase("3.2", [Verifica carta fallita], [Operatore],
+  [Il sistema sta eseguendo la gestione della carta simulata e la carta è assente, non valida o associata ad un altro sistema.],
   [Il sistema rileva l’anomalia e segnala il motivo. Un movimento sigillato da una carta si registra solo nel sistema che la ospita.],
-  [Lo stato del sistema resta bloccato e nessuna funzione di anagrafica, emissione, annullo, log e riepilogo è utilizzabile.],
-  requires: [#link(<uc-carta>)[UC-3]]) <uc-carta-assente>
+  [Lo stato del sistema resta bloccato e nessuna funzione di anagrafica, emissione, annullo, log e riepilogo è utilizzabile.]) <uc-carta-assente>
 
-#usecase(4, [Emissione del titolo], [Operatore di back-office.],
-  [La carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’evento è configurato (#link(<uc-configurazione-evento>)[UC-1]) e i listini sono definiti (#link(<uc-locali-prezzi>)[UC-2]).],
-  [L’operatore emette un titolo con i dati obbligatori dell’art. 3 del D.M. 13/7/2000, comprese le diciture per la vendita per conto di terzi, il numero della carta al posto del logotipo fiscale e il codice di otto caratteri del soggetto richiedente il sigillo. Il titolo è emesso al momento del pagamento, salvo le emissioni anticipate previste dalla norma. Sono gestiti i titoli gratuiti e ridotti con causale, gli abbonamenti a turno fisso e libero, con la dicitura «abbonato» sul titolo di ciascuna prestazione, e i titoli open. Per i titoli nominativi sono registrati nome e cognome. La carta simulata calcola il sigillo e incrementa i contatori, e gli importi sono espressi in euro con due cifre decimali.],
+#pagebreak()
+
+#usecase(4, [Emissione del titolo], [Operatore],
+  [La carta simulata è valida, il sistema è pronto e l’evento è configurato.],
+  [
+    + L’operatore sceglie l’evento, l’ordine di posto e la tipologia di titolo (intero, ridotto o gratuito con causale).
+    + Il sistema emette il titolo al momento del pagamento, salvo i casi in cui la norma ammette un’emissione anticipata, e vi scrive tutti i dati obbligatori previsti.
+    + La carta simulata calcola il sigillo del titolo e incrementa i propri contatori.
+    + Il titolo viene registrato con il proprio progressivo e importo in euro, con due cifre decimali stando allo standard richiesto dalla normativa.
+  ],
   [Il titolo è registrato con progressivo e sigillo e il movimento è scritto nel log, anche se il titolo non è stato stampato. Il titolo può essere annullato (#link(<uc-annullo>)[UC-5]) e rientra nella chiusura giornaliera (#link(<uc-chiusura>)[UC-6]).],
-  requires: [#link(<uc-carta>)[UC-3], #link(<uc-configurazione-evento>)[UC-1], #link(<uc-locali-prezzi>)[UC-2]],
-  alternative: [Se un dato obbligatorio manca, l’emissione non viene completata (#link(<uc-emissione-dato>)[UC-4.1]).],
-  diagram: "../../img/diagrams/uc-4.png") <uc-emissione>
+  alternative: [Se un dato obbligatorio manca, l’emissione non viene completata (#link(<uc-emissione-dato>)[UC-4.1]).], diagram: "../../img/diagrams/uc-4.png") <uc-emissione>
 
-#usecase("4.1", [Dato obbligatorio mancante], [Operatore di back-office.],
-  [Il sistema sta eseguendo l’emissione del titolo (#link(<uc-emissione>)[UC-4]) e l’operatore non ha indicato uno dei dati obbligatori previsti dall’art. 3 del D.M. 13/7/2000.],
+#usecase("4.1", [Dati del titolo incompleti], [Operatore],
+  [L'operatore sta eseguendo l’emissione del titolo e non ha indicato uno dei dati obbligatori previsti.],
   [Il sistema rifiuta l’emissione e indica quale dato manca.],
-  [Nessun titolo viene registrato, nessun movimento viene scritto nel log e i contatori della carta non avanzano. L’operatore può completare i dati e ripetere l’emissione.],
-  requires: [#link(<uc-emissione>)[UC-4]]) <uc-emissione-dato>
+  [Nessun titolo viene registrato, nessun movimento viene scritto nel log e i contatori della carta non avanzano. L’operatore può completare i dati e ripetere l’emissione.]) <uc-emissione-dato>
 
-#usecase(5, [Annullo del titolo], [Operatore di back-office.],
-  [La carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). Il titolo esiste ed è stato emesso nel sistema (#link(<uc-emissione>)[UC-4]).],
-  [L’operatore annulla il titolo indicando una causale, scelta tra i codici da 001 a 010. Il sistema verifica i termini previsti: l’annullo è immediato per errore o mancato rilascio, entro il quinto giorno lavorativo successivo all’evento negli altri casi, entro l’inizio dell’evento per gli altri titoli digitali e, se l’evento non è stato effettuato, prima del termine di versamento dell’imposta. Genera il record ANNULLATO con i dati del titolo originario, un proprio progressivo e un proprio sigillo, e il riferimento al titolo originario. Per i titoli digitali, annulli e rimborsi sono ammessi solo con pagamenti tracciabili, simulati nel prototipo.],
-  [Il titolo risulta annullato e viene conservato, anche in forma informatica. I due movimenti sono correlati nel log e rientrano nella chiusura giornaliera (#link(<uc-chiusura>)[UC-6]). La lista del varco si aggiorna (#link(<uc-varco>)[UC-12]) e l’eventuale wallet pass è revocato (#link(<uc-wallet>)[UC-14]).],
-  requires: [#link(<uc-carta>)[UC-3], #link(<uc-emissione>)[UC-4]],
-  alternative: [Se il termine di annullo è scaduto, l’operazione viene rifiutata (#link(<uc-annullo-termine>)[UC-5.1]). Se il titolo è già annullato, l’operazione viene rifiutata (#link(<uc-annullo-gia>)[UC-5.2]).],
+#usecase(5, [Annullamento del titolo], [Operatore],
+  [La carta simulata è valida e il sistema è pronto. Il titolo esiste ed è stato emesso nel sistema e compare all'interno della tabella.],
+  [
+    + L’operatore seleziona il titolo da annullare e indica la causale dell’annullo, scelta tra i dieci codici della tabella specificata dalla normativa.
+    + Il sistema verifica che il termine previsto per quella causale non sia scaduto.
+    + Genera un nuovo record ANNULLATO, con il proprio progressivo e sigillo, che riporta i dati del titolo originario.
+  ],
+  [Il titolo risulta annullato e viene conservato. I due movimenti sono correlati nel log e rientrano nella chiusura giornaliera (#link(<uc-chiusura>)[UC-6]). La lista di ingresso si aggiorna (#link(<uc-varco>)[UC-12]) e il wallet pass viene revocato (#link(<uc-wallet>)[UC-14]).],
+  alternative: [Se il termine di annullo è scaduto (#link(<uc-annullo-termine>)[UC-5.1]) o il titolo è già annullato (#link(<uc-annullo-gia>)[UC-5.2]), l’operazione viene rifiutata.],
   diagram: "../../img/diagrams/uc-5.png") <uc-annullo>
 
-#usecase("5.1", [Termine di annullo scaduto], [Operatore di back-office.],
-  [Il sistema sta eseguendo l’annullo del titolo (#link(<uc-annullo>)[UC-5]) e il termine previsto per la causale indicata è scaduto.],
+#usecase("5.1", [Annullamento fuori termine], [Operatore],
+  [L'operatore sta eseguendo l’annullo del titolo e il termine previsto per la causale indicata è scaduto.],
   [Il sistema rifiuta l’annullo e indica il termine non rispettato.],
-  [Il titolo resta valido, nessun record ANNULLATO viene creato e nessun movimento viene scritto nel log.],
-  requires: [#link(<uc-annullo>)[UC-5]]) <uc-annullo-termine>
+  [Il titolo resta valido, nessun record ANNULLATO viene creato e nessun movimento viene scritto nel log.]) <uc-annullo-termine>
 
-#usecase("5.2", [Titolo già annullato], [Operatore di back-office.],
-  [Il sistema sta eseguendo l’annullo del titolo (#link(<uc-annullo>)[UC-5]) e il titolo risulta già annullato.],
+#usecase("5.2", [Titolo non annullabile], [Operatore],
+  [L'operatore sta eseguendo l’annullo del titolo e il titolo risulta già annullato.],
   [Il sistema rifiuta l’operazione e segnala che il titolo è già annullato.],
-  [Nessun nuovo record ANNULLATO viene creato e il log non cambia.],
-  requires: [#link(<uc-annullo>)[UC-5]]) <uc-annullo-gia>
+  [Nessun nuovo record ANNULLATO viene creato e il log non cambia.]) <uc-annullo-gia>
 
-#usecase(6, [Chiusura giornaliera e log], [Operatore di back-office.],
-  [La carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). Sono presenti movimenti non ancora chiusi nella giornata fiscale, prodotti da emissioni (#link(<uc-emissione>)[UC-4]) e annulli (#link(<uc-annullo>)[UC-5]).],
-  [Il sistema genera i record del log in formato ASCII a campi fissi e XML, aggiorna la catena di impronte e chiude la giornata con la firma digitale simulata, calcolata con la chiave della carta. Il log è registrato, firmato e reso non riscrivibile per ogni giornata in cui sono emessi titoli. Il totale giornaliero è memorizzato su supporto simulato non riscrivibile e può essere ricostruito dopo la perdita della memoria di lavoro. Alla chiusura il sistema produce il riepilogo giornaliero. Il log è conservato per 24 mesi dall’ultimo titolo, con funzioni di verifica e copia per il controllo. La conformità dei tracciati dipende dai layout ufficiali (vedi la sezione sulle lacune).],
-  [La giornata è chiusa e il supporto simulato contiene il digest verificato. I movimenti chiusi sono consultabili tramite i riepiloghi (#link(<uc-riepiloghi>)[UC-7]).],
-  requires: [#link(<uc-carta>)[UC-3], #link(<uc-emissione>)[UC-4], #link(<uc-annullo>)[UC-5]],
+#pagebreak()
+
+#usecase(6, [Generazione del log giornaliero], [Operatore],
+  [La carta simulata è valida e il sistema è pronto. Sono presenti movimenti non ancora chiusi nella giornata fiscale, prodotti da emissioni e annulli.],
+  [
+    + L’operatore avvia la chiusura della giornata fiscale, a fine servizio.
+    + Il sistema genera i record del log del giorno, nei due formati (ASCII a campi fissi e XML), e aggiorna la catena di impronte che li collega.
+    + Firma digitalmente la giornata con la chiave della carta simulata e scrive il risultato su un supporto simulato non riscrivibile.
+    + Produce il riepilogo giornaliero e lo rende disponibile insieme al log, conservato per i successivi 24 mesi.
+  ],
+  [La giornata è chiusa, il supporto simulato contiene il digest verificato e i movimenti chiusi sono consultabili tramite i riepiloghi giornalieri.],
   alternative: [Se la verifica del digest sul supporto simulato fallisce, la giornata non risulta chiusa (#link(<uc-chiusura-digest>)[UC-6.1]). Se non ci sono movimenti da chiudere, il sistema non genera alcun record (#link(<uc-chiusura-vuota>)[UC-6.2]).],
   diagram: "../../img/diagrams/uc-6.png") <uc-chiusura>
 
-#usecase("6.1", [Verifica del digest fallita], [Operatore di back-office.],
-  [Il sistema sta eseguendo la chiusura giornaliera (#link(<uc-chiusura>)[UC-6]) e il digest letto dal supporto simulato non coincide con quello calcolato.],
+#pagebreak()
+
+#usecase("6.1", [Digest non corrispondente], [Operatore],
+  [L'operatore sta eseguendo la chiusura giornaliera e il digest letto dal supporto simulato non coincide con quello calcolato.],
   [Il sistema interrompe la chiusura e segnala l’errore di verifica.],
-  [La giornata non risulta chiusa e i movimenti registrati restano invariati. L’operatore può ripetere la chiusura dopo aver risolto l’anomalia.],
-  requires: [#link(<uc-chiusura>)[UC-6]]) <uc-chiusura-digest>
+  [La giornata non risulta chiusa e i movimenti registrati restano invariati.]) <uc-chiusura-digest>
 
-#usecase("6.2", [Nessun movimento da chiudere], [Operatore di back-office.],
-  [Il sistema sta eseguendo la chiusura giornaliera (#link(<uc-chiusura>)[UC-6]) e nella giornata fiscale non risultano movimenti non ancora chiusi.],
+#usecase("6.2", [Giornata senza movimenti], [Operatore],
+  [Il sistema sta eseguendo la chiusura giornaliera e nella giornata fiscale non risultano movimenti non ancora chiusi.],
   [Il sistema non genera alcun record e segnala che non ci sono movimenti da chiudere.],
-  [Nessuna firma viene calcolata e il log non cambia.],
-  requires: [#link(<uc-chiusura>)[UC-6]]) <uc-chiusura-vuota>
+  [Nessuna firma viene calcolata e il log non cambia.]) <uc-chiusura-vuota>
 
-#usecase(7, [Riepiloghi e ricerca], [Operatore di back-office.],
-  [La carta simulata è valida e il sistema è pronto (#link(<uc-carta>)[UC-3]). Esistono movimenti registrati nel periodo richiesto e le relative giornate sono state chiuse (#link(<uc-chiusura>)[UC-6]).],
-  [L’operatore consulta a video i riepiloghi giornalieri e mensili, oppure li esporta. Il riepilogo mensile comprende i titoli degli eventi del mese, gli abbonamenti emessi e, per ogni evento, anche i corrispettivi incassati nei mesi precedenti. L’operatore cerca un titolo per numero di carta e progressivo o per sigillo, e per giorno, evento, ordine di posto e tipologia, e può esportarlo. Le viste sono organizzate per giornata di emissione e per evento. Il sistema gestisce i periodi di inattività e ne consente la comunicazione. Il dettaglio dei titoli resta consultabile fino al sessantesimo giorno dopo l’evento. La generazione dei record è coperta dal prototipo, mentre la trasmissione dei riepiloghi a SIAE e i relativi termini sono fuori perimetro. Il riepilogo degli altri proventi e la cancellazione dei riepiloghi dopo due anni dalla trasmissione dipendono dai layout ufficiali (vedi la sezione sulle lacune).],
+#usecase(7, [Consultazione dei riepiloghi], [Operatore],
+  [La carta simulata è valida e il sistema è pronto. Esistono movimenti registrati nel periodo richiesto e le relative giornate sono state chiuse (#link(<uc-chiusura>)[UC-6]).],
+  [
+    + L’operatore apre i riepiloghi giornalieri o mensili, oppure cerca un titolo specifico per numero di carta e progressivo, oppure per sigillo.
+    + Può anche filtrare per giorno, evento, ordine di posto o tipologia, con viste organizzate per giornata di emissione e per evento.
+    + Il sistema restituisce a video i risultati, incluso il riepilogo mensile con i corrispettivi di ogni evento anche se incassati in mesi precedenti, e l’operatore può esportarli.
+    + Il dettaglio dei singoli titoli resta consultabile fino al sessantesimo giorno dopo l’evento.
+  ],
   [I dati esportati corrispondono ai movimenti del log.],
-  requires: [#link(<uc-carta>)[UC-3], #link(<uc-chiusura>)[UC-6]],
   alternative: [Se nel periodo richiesto non esistono movimenti, il sistema mostra un risultato vuoto (#link(<uc-riepiloghi-vuoto>)[UC-7.1]).],
   diagram: "../../img/diagrams/uc-7.png") <uc-riepiloghi>
 
-#usecase("7.1", [Nessun movimento nel periodo], [Operatore di back-office.],
-  [Il sistema sta eseguendo la consultazione di riepiloghi e ricerca (#link(<uc-riepiloghi>)[UC-7]) e nel periodo o con i criteri indicati non risulta alcun movimento.],
+#usecase("7.1", [Ricerca senza risultati], [Operatore],
+  [L'operatore sta consultando i riepiloghi e seleziona il periodo senza alcun movimento.],
   [Il sistema segnala che non ci sono dati e non produce alcun riepilogo o file di esportazione.],
-  [Il log non cambia. L’operatore può modificare periodo o criteri e ripetere la richiesta.],
-  requires: [#link(<uc-riepiloghi>)[UC-7]]) <uc-riepiloghi-vuoto>
+  [Il log non cambia e l’operatore può modificare periodo e ripetere la richiesta.]) <uc-riepiloghi-vuoto>
 
-=== Vendita online white-label <uc-vendita-online>
+#pagebreak()
 
-Lo storefront è un’unica applicazione, ma ogni organizzatore lo vede sul proprio dominio, con il proprio tema. Le regole di limite e di unicità valgono tra tutti i tenant.
+#usecase(8, [Registrazione del periodo di inattività], [Operatore],
+  [Il sistema è in funzione (#link(<uc-carta>)[UC-3]).],
+  [
+    + L’operatore registra l'intervallo di tempo del periodo di inattività durante il quale no verranno inviati i riepiloghi alla SIAE.
+    + Apre una voce nel registro delle trasmissioni, con data.
+    + Durante il blocco, registra i biglietti venduti manualmente, per evento e tipologia.
+  ],
+  [Il periodo di inattività è registrato e il contatore dei giorni di fermo è aggiornato.], diagram: "../../img/diagrams/uc-8.png") <uc-guasto>
 
-#usecase(8, [Acquisto online], [Utente identificato.],
-  [Lo storefront dell’organizzatore è attivo e il sistema è pronto (#link(<uc-carta>)[UC-3]). L’evento è configurato (#link(<uc-configurazione-evento>)[UC-1]) e i listini sono definiti (#link(<uc-locali-prezzi>)[UC-2]). L’utente è identificato tramite registrazione con doppio riscontro (#link(<uc-registrazione>)[UC-8.1]) o accesso SPID simulato (#link(<uc-spid>)[UC-8.2]).],
-  [L’utente supera il CAPTCHA prima della composizione del carrello, compone il carrello e paga con un metodo tracciabile, simulato nel prototipo. Il limite di dieci titoli per evento e utente vale a livello di sistema su tutti i tenant e anche con richieste simultanee. Al pagamento il sistema emette i titoli (#link(<uc-emissione>)[UC-4]). I titoli non sono rilasciati durante la sessione, ma inviati dopo la sua chiusura con il mezzo scelto dall’utente. Tutte le operazioni dell’utente identificato sono tracciate. La connessione HTTPS con almeno TLS 1.2 e la deroga per gli eventi con vendita online fino a 1.000 titoli sono da valutare, e per la nominatività obbligatoria sopra i 5.000 posti si rimanda alla sezione sulle lacune.],
-  [I titoli sono emessi e registrati nel log, l’acquisto è tracciato e i titoli sono inviati all’utente dopo la chiusura della sessione. Il titolo può essere stampato (#link(<uc-stampa>)[UC-11]), cambiato di nominativo (#link(<uc-cambio-nominativo>)[UC-9]) o rimesso in vendita (#link(<uc-rimessa>)[UC-10]).],
-  requires: [#link(<uc-carta>)[UC-3], #link(<uc-configurazione-evento>)[UC-1], #link(<uc-locali-prezzi>)[UC-2], #link(<uc-registrazione>)[UC-8.1] o #link(<uc-spid>)[UC-8.2]],
-  alternative: [Se il limite di dieci titoli è raggiunto, il carrello viene bloccato prima del pagamento (#link(<uc-acquisto-limite>)[UC-8.3]). Se il pagamento non va a buon fine, nessun titolo viene emesso (#link(<uc-acquisto-pagamento>)[UC-8.4]). Se il CAPTCHA non è superato, l’utente non può comporre il carrello (#link(<uc-acquisto-captcha>)[UC-8.5]).],
-  diagram: "../../img/diagrams/uc-8.png") <uc-acquisto>
+#pagebreak()
 
-#usecase("8.1", [Registrazione con doppio riscontro], [Utente non identificato.],
-  [Lo storefront dell’organizzatore è attivo e l’utente non è ancora identificato.],
-  [L’utente inserisce i dati anagrafici, l’indirizzo email, il numero di cellulare e il mezzo scelto per il riscontro. Il sistema invia un codice OTP simulato e l’utente lo inserisce per confermare la registrazione. Un cellulare può essere associato a un solo utente nell’intero sistema, su tutti i tenant.],
-  [L’utente è identificato e può procedere all’acquisto (#link(<uc-acquisto>)[UC-8]).],
-  alternative: [Se il cellulare è già associato a un altro utente, la registrazione è rifiutata (#link(<uc-registrazione-cellulare>)[UC-8.1.1]). Se il codice OTP è errato o scaduto, la registrazione non viene completata (#link(<uc-registrazione-otp>)[UC-8.1.2]).]) <uc-registrazione>
+#usecase(9, [Acquisto dei titoli online], [Cliente],
+  [Lo storefront dell’organizzatore è attivo e il sistema è pronto. L’evento è configurato e i listini sono definiti. Il cliente si è già identificato, con la registrazione a doppio riscontro o con l’accesso SPID.],
+  [
+    + Il cliente supera il CAPTCHA e compone il carrello, scegliendo evento, ordine di posto e quantità, fino al limite di dieci titoli per evento, rispettato a livello di sistema anche tra organizzatori diversi.
+    + Paga con un metodo tracciabile, simulato nel prototipo.
+    + Al pagamento andato a buon fine, il sistema emette i titoli.
+    + I titoli vengono consegnati solo dopo la chiusura della sessione di acquisto.
+  ],
+  [I titoli sono emessi e registrati nel log, l’acquisto è tracciato e i titoli sono inviati al cliente dopo la chiusura della sessione, pronti per essere stampati dall’area personale.],
+  alternative: [Se il limite di dieci titoli è raggiunto, il carrello viene bloccato prima del pagamento (#link(<uc-acquisto-limite>)[UC-9.3]). Se il pagamento non va a buon fine, nessun titolo viene emesso (#link(<uc-acquisto-pagamento>)[UC-9.4]). Se il CAPTCHA non è superato, il cliente non può comporre il carrello (#link(<uc-acquisto-captcha>)[UC-9.5]).],
+  diagram: "../../img/diagrams/uc-9.png") <uc-acquisto>
 
-#usecase("8.1.1", [Cellulare già associato], [Utente non identificato.],
-  [Il sistema sta eseguendo la registrazione (#link(<uc-registrazione>)[UC-8.1]) e il cellulare indicato è già associato a un altro utente, anche di un altro organizzatore.],
-  [Il sistema rifiuta la registrazione e segnala che il cellulare è già in uso, senza rivelare dati dell’altro utente.],
-  [Nessun utente viene creato. L’utente può indicare un altro numero.],
-  requires: [#link(<uc-registrazione>)[UC-8.1]]) <uc-registrazione-cellulare>
+#usecase("9.1", [Creazione dell’account cliente], [Cliente],
+  [Lo storefront dell’organizzatore è attivo e il cliente non si è ancora identificato.],
+  [
+    + Il cliente compila i propri dati anagrafici, l’indirizzo email, il numero di cellulare e il mezzo scelto per ricevere il codice di conferma.
+    + Il sistema invia un codice OTP simulato.
+    + Il cliente lo inserisce per confermare la registrazione e il sistema verifica che il cellulare non sia già associato ad un altro cliente.
+  ],
+  [Il cliente è identificato e può procedere all’acquisto.],
+  alternative: [Se il cellulare è già associato a un altro cliente, la registrazione è rifiutata (#link(<uc-registrazione-cellulare>)[UC-9.1.1]). Se il codice OTP è errato o scaduto, la registrazione non viene completata (#link(<uc-registrazione-otp>)[UC-9.1.2]).],
+  diagram: "../../img/diagrams/uc-9.1.png") <uc-registrazione>
 
-#usecase("8.1.2", [Codice OTP errato o scaduto], [Utente non identificato.],
-  [Il sistema sta eseguendo la registrazione (#link(<uc-registrazione>)[UC-8.1]) e l’utente ha inserito un codice OTP errato o scaduto.],
+#usecase("9.1.1", [Cellulare non disponibile], [Cliente],
+  [Il cliente sta effettuando la registrazione e il cellulare indicato è già associato ad un altro cliente.],
+  [Il sistema rifiuta la registrazione e segnala che il cellulare è già in uso.],
+  [Nessun cliente viene creato e il cliente può indicare un altro numero.]) <uc-registrazione-cellulare>
+
+#usecase("9.1.2", [Verifica OTP fallita], [Cliente],
+  [Il cliente sta effettuando la registrazione e ha inserito un codice OTP errato o scaduto.],
   [Il sistema rifiuta il codice e segnala l’errore.],
-  [L’utente non risulta identificato. Può richiedere un nuovo codice e ripetere la conferma.],
-  requires: [#link(<uc-registrazione>)[UC-8.1]]) <uc-registrazione-otp>
+  [Il cliente non risulta identificato e può richiedere un nuovo codice.]) <uc-registrazione-otp>
 
-#usecase("8.2", [Accesso con SPID simulato], [Utente non identificato.],
-  [Lo storefront dell’organizzatore è attivo e l’utente non è ancora identificato.],
-  [L’utente sceglie l’accesso tramite SPID, simulato nel prototipo, come alternativa alla registrazione. Il sistema riceve l’esito della simulazione e identifica l’utente.],
-  [L’utente è identificato e può procedere all’acquisto (#link(<uc-acquisto>)[UC-8]).],
+#usecase("9.2", [Autenticazione SPID simulata], [Cliente],
+  [Lo storefront dell’organizzatore è attivo e il cliente non si è ancora identificato.],
+  [Il cliente sceglie l’accesso tramite SPID, simulato nel prototipo, come alternativa alla registrazione.],
+  [Il cliente è identificato e può procedere all’acquisto.],
   diagram: none) <uc-spid>
 
-#usecase("8.3", [Limite di dieci titoli raggiunto], [Utente identificato.],
-  [Il sistema sta eseguendo l’acquisto online (#link(<uc-acquisto>)[UC-8]) e l’utente ha già raggiunto, anche su altri tenant, il limite di dieci titoli per quell’evento.],
+#usecase("9.3", [Limite titoli raggiunto], [Cliente],
+  [Il cliente sta effettuando l’acquisto online e ha già raggiunto, anche su altri organizzatori, il limite di dieci titoli per quell’evento.],
   [Il sistema blocca il carrello prima del pagamento e segnala il limite.],
-  [Nessun pagamento viene richiesto e nessun titolo viene emesso. Con richieste simultanee il limite resta rispettato.],
-  requires: [#link(<uc-acquisto>)[UC-8]]) <uc-acquisto-limite>
+  [Nessun pagamento viene richiesto e nessun titolo viene emesso.]) <uc-acquisto-limite>
 
-#usecase("8.4", [Pagamento non riuscito], [Utente identificato.],
-  [Il sistema sta eseguendo l’acquisto online (#link(<uc-acquisto>)[UC-8]) e il pagamento simulato è rifiutato o non va a buon fine.],
+#usecase("9.4", [Transazione non completata], [Cliente],
+  [Il cliente sta effettuando l’acquisto online e il pagamento simulato è rifiutato.],
   [Il sistema segnala l’esito negativo e non procede all’emissione.],
-  [Nessun titolo viene emesso e nessun movimento viene scritto nel log. L’utente può ritentare con un altro metodo.],
-  requires: [#link(<uc-acquisto>)[UC-8]]) <uc-acquisto-pagamento>
+  [Nessun titolo viene emesso e nessun movimento viene scritto nel log.]) <uc-acquisto-pagamento>
 
-#usecase("8.5", [CAPTCHA non superato], [Utente identificato.],
-  [Il sistema sta eseguendo l’acquisto online (#link(<uc-acquisto>)[UC-8]) e l’utente non ha superato il CAPTCHA.],
+#usecase("9.5", [CAPTCHA non valido], [Cliente],
+  [Il cliente sta effettuando l’acquisto online e non ha superato il CAPTCHA.],
   [Il sistema non consente la composizione del carrello e propone un nuovo CAPTCHA.],
-  [Nessun carrello viene creato. L’utente può ripetere la prova.],
-  requires: [#link(<uc-acquisto>)[UC-8]]) <uc-acquisto-captcha>
+  [Nessun carrello viene creato e il cliente può ripetere la prova.]) <uc-acquisto-captcha>
 
-#usecase(9, [Cambio nominativo], [Utente acquirente.], [Il titolo è nominativo ed è di proprietà dell’utente.], [L’utente indica il nuovo nome e cognome. Il sistema annulla il titolo originario e ne emette uno nuovo, in un’unica operazione correlata.], [Il titolo originario è annullato, quello nuovo è valido e i due movimenti sono collegati.]) <uc-cambio-nominativo>
+#usecase(10, [Modifica dell’intestatario], [Cliente],
+  [Il titolo è nominativo, di proprietà del cliente, ed è stato acquistato.],
+  [
+    + Il cliente apre il titolo dalla propria area personale e indica il nuovo nome e cognome dell’intestatario.
+    + Il sistema annulla il titolo originario ed emette un nuovo titolo con il nuovo nominativo.
+    + Collega i due movimenti nel log, così da poterli ricostruire insieme.
+  ],
+  [Il titolo originario è annullato, quello nuovo è valido e i due movimenti sono correlati.],
+  alternative: [Se l’evento è già iniziato, o il titolo è già stato usato al varco, il cambio nominativo viene rifiutato (#link(<uc-cambio-nominativo-termine>)[UC-10.1]). Se il titolo indicato non risulta di proprietà del cliente che ha fatto la richiesta, l’operazione viene rifiutata (#link(<uc-cambio-nominativo-proprieta>)[UC-10.2]).], diagram: "../../img/diagrams/uc-10.png") <uc-cambio-nominativo>
 
-#usecase(10, [Rimessa in vendita], [Utente acquirente.], [Il titolo è stato acquistato sul sito primario e non è ancora stato usato.], [L’utente rimette in vendita il titolo. Il titolo compare nella sezione del sito primario con le sole informazioni della vendita primaria, insieme a modalità, tempi e costi.], [Il titolo è disponibile per un nuovo acquirente, con annullo e nuova emissione correlati.]) <uc-rimessa>
+#usecase("10.1", [Cambio nominativo fuori termine], [Cliente],
+  [Il cliente sta eseguendo il cambio nominativo e l’evento è già iniziato, oppure il titolo risulta già usato.],
+  [Il sistema rifiuta il cambio nominativo e segnala lo stesso limite temporale previsto per l’annullo dei titoli digitali siccome si tratta di un annullo seguito da nuova emissione.],
+  [Il titolo originario resta invariato e nessun nuovo titolo viene emesso.]) <uc-cambio-nominativo-termine>
 
-#usecase(11, [Stampa del titolo a casa], [Utente acquirente.], [Il titolo è nominativo e la vendita è conclusa.], [L’utente stampa il render centrale del titolo, che riporta i dati minimi previsti. Il diritto di stampa viene consumato in modo atomico.], [Il diritto di stampa è esaurito: una seconda stampa non è possibile.], alternative: [Se due richieste di stampa arrivano insieme, una sola viene accettata.]) <uc-stampa>
+#pagebreak()
 
-// FIGURA 6: diagramma dei casi d’uso UC12–UC13 (addetto al varco e operatore).
+#usecase("10.2", [Proprietà del titolo non verificata], [Cliente],
+  [Il cliente sta eseguendo il cambio nominativo e il titolo indicato non risulta di proprietà del cliente che ha fatto la richiesta.],
+  [Il sistema rifiuta l’operazione e segnala che il titolo non è disponibile per questa richiesta.],
+  [Nessun titolo viene annullato né emesso.]) <uc-cambio-nominativo-proprieta>
 
-=== Controllo accessi <uc-accessi>
+#usecase(11, [Pubblicazione per la rivendita], [Cliente],
+  [Il titolo è stato acquistato sul sito dell’organizzatore (#link(<uc-acquisto>)[UC-9]) e non è ancora stato usato.],
+  [
+    + Il cliente sceglie di rimettere in vendita un proprio titolo.
+    + Il sistema lo pubblica nella sezione del sito primario dedicata alla rivendita, mostrando ai nuovi acquirenti le sole informazioni della vendita primaria, insieme a modalità, tempi e costi dell’operazione.
+    + Quando un altro cliente lo acquista, il sistema annulla il titolo del venditore ed emette un nuovo titolo per l’acquirente.
+  ],
+  [Il titolo è disponibile per un nuovo acquirente, con annullo e nuova emissione correlati.], diagram: "../../img/diagrams/uc-11.png") <uc-rimessa>
 
-Il varco lavora su una lista unica per evento. Un titolo già usato non può essere riutilizzato, e la lista si aggiorna in tempo reale dopo annullo, cambio nominativo o rimessa in vendita.
+#usecase(12, [Lettura del titolo al varco], [Addetto al varco],
+  [L’evento è attivo e la lista unica dei titoli validi per l’evento è caricata, comprensiva degli eventuali titoli importati da altri sistemi (#link(<uc-configurazione-evento>)[UC-1]).],
+  [
+    + L’addetto legge il codice del titolo presentato dal cliente.
+    + Il sistema verifica che il titolo sia nella lista e non sia già stato usato.
+    + Registra l’accesso in tempo reale e blocca ogni lettura successiva dello stesso titolo.
+  ],
+  [L’accesso è registrato, il titolo non è più utilizzabile e il riepilogo degli accessi si aggiorna.],
+  alternative: [Se il titolo non è nella lista, o è già stato usato, il varco mostra un esito negativo e non registra l’accesso.], diagram: "../../img/diagrams/uc-12.png") <uc-varco>
 
-#usecase(12, [Controllo accesso al varco], [Addetto al varco.], [L’evento è attivo e la lista dei titoli validi è caricata.], [L’addetto legge il codice del titolo. Il sistema registra l’accesso e blocca ogni lettura successiva dello stesso titolo.], [L’accesso è registrato e il titolo non è più utilizzabile.], alternative: [Se il titolo non è nella lista, il varco mostra un esito negativo senza registrare l’accesso.]) <uc-varco>
+#usecase(13, [Disattivazione manuale del titolo], [Operatore],
+  [Il titolo esiste nella lista dell’evento (#link(<uc-varco>)[UC-12]).],
+  [
+    + L’operatore individua il titolo da invalidare, per esempio in caso di smarrimento o frode segnalata.
+    + Conferma l’invalidazione manuale.
+    + Il sistema toglie il titolo dalla lista valida, con effetto immediato al varco.
+  ],
+  [Il titolo non può più essere usato al varco.], diagram: "../../img/diagrams/uc-13.png") <uc-invalidazione>
 
-#usecase(13, [Invalidazione manuale], [Operatore di back-office.], [Il titolo esiste nella lista dell’evento.], [L’operatore invalida un titolo, per esempio in caso di smarrimento o frode. Il titolo esce dalla lista valida.], [Il titolo non può più essere usato al varco.]) <uc-invalidazione>
+#pagebreak()
 
-=== Funzioni facoltative <uc-opzionali>
+#usecase(14, [Generazione del wallet pass], [Cliente],
+  [Il titolo è valido (#link(<uc-acquisto>)[UC-9]) e il cliente ha chiesto il pass.],
+  [
+    + Il cliente chiede, dalla propria area personale, il pass per Apple Wallet o Google Wallet.
+    + Il sistema genera un pass con una credenziale opaca, priva di dati personali, e lo consegna al wallet scelto.
+    + A ogni annullo, cambio nominativo o rimessa in vendita del titolo, il sistema aggiorna o revoca il pass di conseguenza.
+  ],
+  [Il pass riflette lo stato corrente del titolo.], diagram: "../../img/diagrams/uc-14.png") <uc-wallet>
 
-Le funzioni che seguono sono previste dal piano solo se il tempo lo consente. Compaiono qui per fissare i confini del prototipo.
-
-// FIGURA 7: diagramma dei casi d’uso UC14–UC16, da inserire solo se le attività facoltative entrano nel perimetro finale.
-
-#usecase(14, [Emissione del wallet pass], [Utente acquirente, Operatore di back-office.], [Il titolo è valido e il titolare ha chiesto il pass.], [Il sistema genera un pass per Apple Wallet o Google Wallet con una credenziale opaca, priva di dati personali. Il pass viene aggiornato o revocato dopo annullo, cambio nominativo o rimessa in vendita.], [Il pass riflette lo stato del titolo.]) <uc-wallet>
-
-#usecase(15, [Gestione del mancato funzionamento], [Operatore di back-office.], [Il sistema è in funzione.], [L’operatore blocca il sistema e apre una voce nel registro dei guasti, con inizio e fine. Durante il blocco si registrano i biglietti manuali per evento e tipologia. Il contatore dei giorni di fermo genera un allarme al trentesimo giorno dell’anno solare.], [Il guasto è registrato e il contatore è aggiornato.]) <uc-guasto>
-
-#usecase(16, [Sincronizzazione con il CRM RelAi], [CRM RelAi, Operatore di back-office.], [Il collegamento con il CRM è configurato.], [Il sistema riceve organizzatori ed eventi dal CRM e restituisce i dati di vendita e di presenza, così che i pannelli di RelAi riflettano i titoli emessi e gli accessi registrati.], [I dati nel CRM sono allineati con il prototipo.]) <uc-crm>
-
+/*
 == Requisiti per gruppo <requisiti>
 
-Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una sintesi del requisito, lo stato e il caso d’uso che lo realizza. Il testo completo di ogni requisito resta nel documento aziendale.
+#show heading.where(level: 3): set text(size: 16pt)
 
-=== Gruppo A: vincoli architetturali <gruppo-a>
+Le tabelle seguono l’ordine della checklist fornita da #azienda e ogni riga riporta il codice, una sintesi del requisito, lo stato e il caso d’uso che lo realizza.
+
+#heading(level: 3, outlined: false)[Gruppo A: vincoli architetturali] <gruppo-a>
 
 #status-table((
   ([A1], [Il sistema non funziona senza la carta di attivazione: anagrafiche, emissione, log e riepiloghi sono bloccati], [Nel prototipo], [UC3]),
@@ -314,7 +369,7 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([A6], [Associazione univoca tra carta e sistema; i movimenti sigillati da una carta si registrano nel sistema che la ospita], [Nel prototipo], [UC3]),
 ), caption: [Requisiti del gruppo A.]) <tab-gruppo-a>
 
-=== Gruppo B: anagrafiche e configurazione <gruppo-b>
+#heading(level: 3, outlined: false)[Gruppo B: anagrafiche e configurazione] <gruppo-b>
 
 #status-table((
   ([B1], [Gestione di eventi, locali, organizzatori, tabelle di sistema e tabella dei prezzi], [Nel prototipo], [UC1, UC2]),
@@ -323,7 +378,7 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([B4], [Comunicazione a SIAE degli organizzatori serviti, prima dell’inizio del servizio (§1.7.5 Allegato A del Provv. 2002)], [Fuori perimetro], [–]),
 ), caption: [Requisiti del gruppo B.]) <tab-gruppo-b>
 
-=== Gruppo C: emissione del titolo <gruppo-c>
+#heading(level: 3, outlined: false)[Gruppo C: emissione del titolo] <gruppo-c>
 
 #status-table((
   ([C1], [Emissione completa quando il titolo è definito e registrato nel log, anche se non è stato stampato], [Nel prototipo], [UC4]),
@@ -336,23 +391,43 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([C8], [Il numero della carta sostituisce il logotipo fiscale sul titolo], [Nel prototipo], [UC4]),
   ([C9], [Incremento dei contatori a bordo della carta a ogni emissione], [Nel prototipo], [UC3, UC4]),
   ([C10], [Registrazione in banca dati, memorie temporanee e log, corretta anche sotto carico], [Nel prototipo], [UC4]),
-  ([C11], [Una sola stampa per titolo: ristampa e stampa multipla inibite, diritto consumato lato server], [Nel prototipo], [UC11]),
+  ([C11], [Una sola stampa per titolo: ristampa e stampa multipla inibite, diritto consumato lato server], [Nel prototipo], [UC9]),
   ([C12], [Titoli nominativi con nome e cognome, senza altri dati personali nella lista unica], [Nel prototipo], [UC4, UC12]),
   ([C13], [Importi in euro con due cifre decimali, coerenti con il tracciato], [Nel prototipo], [UC4]),
 ), caption: [Requisiti del gruppo C.]) <tab-gruppo-c>
 
-=== Gruppo D: annullamento <gruppo-d>
+#heading(level: 3, outlined: false)[Gruppo D: annullamento] <gruppo-d>
+
+L’annullo richiede sempre una causale, scelta tra i dieci codici definiti dalla documentazione normativa (#link(<tab-causali>)[tabella sottostante]). Il codice scelto determina anche il termine entro cui l’annullo è ammesso (D1–D3).
+
+#figure(table(
+  columns: (2cm, 1fr),
+  inset: 7pt,
+  stroke: 0.5pt + rgb("b8b8bd"),
+  fill: (_, row) => if calc.odd(row) { rgb("f5f5f7") } else { white },
+  table.header([*Codice*], [*Causale*]),
+  [001], [Errata compilazione],
+  [002], [Stampa non valida],
+  [003], [Transazione non completata],
+  [004], [Annullamento su richiesta del cliente],
+  [005], [Annullamento per motivi di servizio],
+  [006], [Annullamento evento],
+  [007], [Annullamento per cambio nominativo],
+  [008], [Annullamento per rivendita],
+  [009], [Annullamento per furto/smarrimento],
+  [010], [Annullamento per sostituzione contestuale con titolo diverso di importo uguale o superiore (upselling)],
+), caption: emph[Causali di annullo, da #raw("2019 All.B p.1 lett. i")], kind: table, supplement: [Tabella]) <tab-causali>
 
 #status-table((
   ([D1], [Annullo con causale entro il quinto giorno lavorativo successivo all’evento], [Nel prototipo], [UC5]),
   ([D2], [Titoli digitali annullabili fino all’inizio dell’evento], [Nel prototipo], [UC5]),
   ([D3], [Evento non effettuato: annullo entro i termini di versamento delle imposte], [Nel prototipo], [UC5]),
-  ([D4], [Annulli e rimborsi di titoli digitali solo con pagamenti tracciabili], [Nel prototipo], [UC5, UC8]),
+  ([D4], [Annulli e rimborsi di titoli digitali solo con pagamenti tracciabili], [Nel prototipo], [UC5, UC9]),
   ([D5], [Annullo con record ANNULLATO completo dei dati del titolo originario, identificato da progressivo e sigillo], [Nel prototipo], [UC5]),
   ([D6], [Conservazione del titolo annullato, anche in forma informatica], [Nel prototipo], [UC5]),
 ), caption: [Requisiti del gruppo D.]) <tab-gruppo-d>
 
-=== Gruppo E: log delle transazioni <gruppo-e>
+#heading(level: 3, outlined: false)[Gruppo E: log delle transazioni] <gruppo-e>
 
 #status-table((
   ([E1], [Log con tutti i movimenti: emissioni, annullamenti e abbonamenti], [Nel prototipo], [UC6]),
@@ -362,7 +437,7 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([E5], [Conservazione per 24 mesi dall’ultimo titolo, con funzioni di verifica e copia per il controllo], [Nel prototipo], [UC6]),
 ), caption: [Requisiti del gruppo E.]) <tab-gruppo-e>
 
-=== Gruppo F: riepiloghi e trasmissione <gruppo-f>
+#heading(level: 3, outlined: false)[Gruppo F: riepiloghi e trasmissione] <gruppo-f>
 
 #status-table((
   ([F1], [Riepilogo giornaliero: proventi per evento e ordine di posto, abbonamenti per organizzatore, ingressi per tipologia, sigillo], [Nel prototipo], [UC6, UC7]),
@@ -374,7 +449,7 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([F7], [Gestione e comunicazione dei periodi di inattività], [Nel prototipo], [UC7]),
 ), caption: [Requisiti del gruppo F.]) <tab-gruppo-f>
 
-=== Gruppo G: funzioni di servizio e conservazione <gruppo-g>
+#heading(level: 3, outlined: false)[Gruppo G: funzioni di servizio e conservazione] <gruppo-g>
 
 #status-table((
   ([G1], [Consultazione a video e su carta, o esportazione, di dettagli e riepiloghi aggiornati], [Nel prototipo], [UC7]),
@@ -384,39 +459,39 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([G5], [Cancellazione dei riepiloghi consentita solo dopo due anni dalla trasmissione], [Fuori perimetro], [UC7]),
 ), caption: [Requisiti del gruppo G.]) <tab-gruppo-g>
 
-=== Gruppo H: mancato funzionamento <gruppo-h>
+#heading(level: 3, outlined: false)[Gruppo H: mancato funzionamento] <gruppo-h>
 
 #status-table((
-  ([H1], [Blocco immediato, richiesta di manutenzione, annotazione sul libretto fiscale], [Facoltativo (F02)], [UC15]),
-  ([H2], [Registro di inizio e fine del guasto, totale dei biglietti manuali per evento e tipologia], [Facoltativo (F02)], [UC15]),
-  ([H3], [Contatore dei giorni di fermo con allarme al trentesimo giorno per anno solare], [Facoltativo (F02)], [UC15]),
+  ([H1], [Blocco immediato, richiesta di manutenzione, annotazione sul libretto fiscale], [Facoltativo (F02)], [UC8]),
+  ([H2], [Registro di inizio e fine del guasto, totale dei biglietti manuali per evento e tipologia], [Facoltativo (F02)], [UC8]),
+  ([H3], [Contatore dei giorni di fermo con allarme al trentesimo giorno per anno solare], [Facoltativo (F02)], [UC8]),
 ), caption: [Requisiti del gruppo H.]) <tab-gruppo-h>
 
-=== Gruppo I: vendita online <gruppo-i>
+#heading(level: 3, outlined: false)[Gruppo I: vendita online] <gruppo-i>
 
 #status-table((
-  ([I1], [CAPTCHA prima della composizione del carrello], [Nel prototipo], [UC8]),
-  ([I2], [Acquisto concluso solo da utente identificato], [Nel prototipo], [UC8]),
-  ([I3], [Registrazione con dati anagrafici, email, cellulare e mezzo per il riscontro; cellulare associato a un solo utente nel sistema], [Nel prototipo], [UC8]),
-  ([I4], [SPID come alternativa alla registrazione], [Nel prototipo], [UC8]),
-  ([I5], [Massimo dieci titoli per evento e utente, valido a livello di sistema su tutti i front-end], [Nel prototipo], [UC8]),
-  ([I6], [Titolo non rilasciato a fine sessione, ma inviato con il mezzo scelto], [Nel prototipo], [UC8]),
-  ([I7], [Tracciamento delle operazioni dell’utente identificato], [Nel prototipo], [UC8]),
+  ([I1], [CAPTCHA prima della composizione del carrello], [Nel prototipo], [UC9]),
+  ([I2], [Acquisto concluso solo da utente identificato], [Nel prototipo], [UC9]),
+  ([I3], [Registrazione con dati anagrafici, email, cellulare e mezzo per il riscontro; cellulare associato a un solo utente nel sistema], [Nel prototipo], [UC9]),
+  ([I4], [SPID come alternativa alla registrazione], [Nel prototipo], [UC9]),
+  ([I5], [Massimo dieci titoli per evento e utente, valido a livello di sistema su tutti i front-end], [Nel prototipo], [UC9]),
+  ([I6], [Titolo non rilasciato a fine sessione, ma inviato con il mezzo scelto], [Nel prototipo], [UC9]),
+  ([I7], [Tracciamento delle operazioni dell’utente identificato], [Nel prototipo], [UC9]),
   ([I8], [Connessione HTTPS con almeno TLS 1.2], [Fuori perimetro], [–]),
-  ([I9], [Deroga per eventi con vendita online fino a 1.000 titoli: bastano il CAPTCHA e le misure di sicurezza], [Fuori perimetro], [UC8]),
+  ([I9], [Deroga per eventi con vendita online fino a 1.000 titoli: bastano il CAPTCHA e le misure di sicurezza], [Fuori perimetro], [UC9]),
 ), caption: [Requisiti del gruppo I.]) <tab-gruppo-i>
 
-=== Gruppo J: nominatività, cambio e rimessa in vendita <gruppo-j>
+#heading(level: 3, outlined: false)[Gruppo J: nominatività, cambio e rimessa in vendita] <gruppo-j>
 
 #status-table((
-  ([J1], [Titoli nominativi per impianti con capienza superiore a 5.000 posti, con esclusioni per tipologia di spettacolo], [Fuori perimetro], [UC8, UC9]),
+  ([J1], [Titoli nominativi per impianti con capienza superiore a 5.000 posti, con esclusioni per tipologia di spettacolo], [Fuori perimetro], [UC9, UC10]),
   ([J2], [Accesso subordinato al riconoscimento personale: il titolo non vale per l’ingresso se il fruitore non coincide con il nominativo], [Nel prototipo], [UC12]),
-  ([J3], [Cambio nominativo con annullo, nuovo titolo nominativo e correlazione tracciata], [Nel prototipo], [UC9]),
-  ([J4], [Rimessa in vendita con le sole informazioni della vendita primaria, nella sezione del sito primario], [Nel prototipo], [UC10]),
-  ([J5], [Informativa chiara su modalità, tempi e costi delle due operazioni], [Nel prototipo], [UC9, UC10]),
+  ([J3], [Cambio nominativo con annullo, nuovo titolo nominativo e correlazione tracciata], [Nel prototipo], [UC10]),
+  ([J4], [Rimessa in vendita con le sole informazioni della vendita primaria, nella sezione del sito primario], [Nel prototipo], [UC11]),
+  ([J5], [Informativa chiara su modalità, tempi e costi delle due operazioni], [Nel prototipo], [UC10, UC11]),
 ), caption: [Requisiti del gruppo J.]) <tab-gruppo-j>
 
-=== Gruppo K: controllo accessi <gruppo-k>
+#heading(level: 3, outlined: false)[Gruppo K: controllo accessi] <gruppo-k>
 
 #status-table((
   ([K1], [Lista unica dei titoli validi per evento, anche emessi da più sistemi], [Desiderabile (D04)], [UC12]),
@@ -426,22 +501,11 @@ Le tabelle seguono l’ordine della checklist. Ogni riga riporta il codice, una 
   ([K5], [Il varco è componente del sistema certificato: va descritto nell’istanza e verificato in certificazione], [Fuori perimetro], [UC12]),
 ), caption: [Requisiti del gruppo K.]) <tab-gruppo-k>
 
-=== Gruppo L: output e supporti <gruppo-l>
+#heading(level: 3, outlined: false)[Gruppo L: output e supporti] <gruppo-l>
 
 #status-table((
-  ([L1], [Sul titolo stampato: numero di carta, progressivo, prezzo, data e ora di emissione, sigillo e nome dell’intestatario, se nominativo], [Nel prototipo], [UC11]),
-  ([L2], [Render del titolo generato centralmente; stampanti come terminali senza capacità di elaborazione], [Nel prototipo], [UC11]),
+  ([L1], [Sul titolo stampato: numero di carta, progressivo, prezzo, data e ora di emissione, sigillo e nome dell’intestatario, se nominativo], [Nel prototipo], [UC9]),
+  ([L2], [Render del titolo generato centralmente; stampanti come terminali senza capacità di elaborazione], [Nel prototipo], [UC9]),
   ([L3], [Nessun modello di stampante prescritto], [Fuori perimetro], [–]),
 ), caption: [Requisiti del gruppo L.]) <tab-gruppo-l>
-
-== Vincoli e lacune <lacune>
-
-Alcuni punti limitano il prototipo e vanno dichiarati nella relazione finale.
-
-+ *Layout dei tracciati.* I campi degli Allegati A, B e C del Provv. 23 luglio 2001 sono pubblicati come immagini, quindi il testo non si può estrarre. Il recupero passa dalla Gazzetta Ufficiale n. 212 del 12 settembre 2001 o da una richiesta a SIAE. Senza questi layout i requisiti E2, F3 e G5 restano da valutare.
-+ *Specifiche della carta.* Le modalità di interazione con la carta sono fornite da SIAE su richiesta (Provv. 2001, §3.2). Senza di esse non si calcola il sigillo reale né si firmano i riepiloghi: nel prototipo queste operazioni sono simulate.
-+ *Codice locale e trasmissione.* Il codice locale per ogni impianto e le modalità di trasmissione telematica vanno richiesti a SIAE. Queste informazioni vanno dichiarate già nella domanda di carta di attivazione.
-+ *Varianti dopo l’istanza.* Ogni variante che incide sul funzionamento fiscale richiede un’autorizzazione preventiva. Wallet pass, controllo accessi e canali di vendita vanno quindi inclusi nella prima istanza. Se restano fuori dalla domanda, il prototipo può mostrarli ma non può presentarli come conformi.
-+ *Termini dell’istanza.* L’istanza completa va presentata circa cinque settimane prima di una seduta della Commissione e in ogni caso almeno sessanta giorni prima dell’avvio in esercizio. Un esemplare del sistema deve restare disponibile all’Agenzia per i controlli.
-
-#show heading: set text(size: 21pt)
+*/

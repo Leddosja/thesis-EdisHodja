@@ -6,7 +6,7 @@
 
 #set page(
   paper: "a4",
-  margin: (top: 2.75cm, bottom: 2.75cm, left: 3.65cm, right: 3cm),
+  margin: (top: 2.75cm, bottom: 2.75cm, left: 3.50cm, right: 3cm),
   numbering: "i",
   number-align: center,
 )
@@ -16,6 +16,7 @@
 #set quote(block: true)
 #set figure.caption(position: bottom)
 #show figure.caption: it => text(weight: "bold")[#it.body]
+#show figure: set block(breakable: true)
 #show heading: set text(size: 21pt)
 
 #import "chapters/shared.typ": *
@@ -63,11 +64,11 @@
 
 #pagebreak()
 
-//#include "chapters/00-rigraziamenti.typ"
+/* #include "chapters/00-rigraziamenti.typ"
 
-#pagebreak()
+#pagebreak()*/
 
-= Sommario <sommario>
+#heading(outlined: false)[Sommario] <sommario>
 
 Il presente documento descrive il lavoro svolto durante il periodo di stage dal laureando #io presso l'azienda #azienda, della durata di circa 300 ore, svolte nel periodo che intercorre dal 28 settembre 2026 al 20 novembre 2026. Lo stage ha per oggetto la realizzazione di un prototipo di sistema di biglietteria automatizzata per la vendita online di titoli di accesso per conto di organizzatori terzi, in modalità white-label, destinato a integrarsi con il CRM aziendale RelAi. Il sistema deve rispettare i requisiti stabiliti dalla normativa AdE/SIAE.
 
@@ -77,11 +78,11 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 
 
 #pagebreak()
-= Indice <indice>
+#heading(outlined: false)[Indice] <indice>
 #outline(title: none, depth: 5)
 
 #pagebreak()
-= Elenco delle figure <figure>
+#heading(outlined: false)[Elenco delle figure] <figure>
 #show outline.entry: it => {
   let fig = it.element
   link(
@@ -92,13 +93,10 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 
 #outline(target: figure.where(kind: image), title: none)
 
-/*
 #pagebreak()
-= Elenco delle tabelle <tabelle>
-*/
+#heading(outlined: false)[Elenco delle tabelle] <tabelle>
 
-#pagebreak()
-#include "chapters/01-glossario.typ"
+#outline(target: figure.where(kind: table), title: none)
 
 #pagebreak()
 #counter(page).update(1)
@@ -108,7 +106,8 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 #include "chapters/02-introduzione.typ"
 #include "chapters/03-descrizione-stage.typ"
  #include "chapters/04-analisi-requisiti.typ"
- #include "chapters/05-progettazione-codifica.typ"
+// #include "chapters/05-progettazione-codifica.typ"
 // #include "chapters/06-verifica-validazione.typ"
 // #include "chapters/07-conclusioni.typ"
+// #include "chapters/01-glossario.typ"
 // #include "chapters/08-bibliografia.typ"

@@ -45,7 +45,6 @@ Durante la fase di analisi iniziale sono stati individuati alcuni rischi legati 
 
 #risk(2, [Interpretazione della normativa], [i testi del D.M. 13 luglio 2000 e dei provvedimenti dell’Agenzia delle Entrate sono scritti in modo generico su alcuni punti e possono essere letti in più modi], [condividere ogni interpretazione dubbia con il tutor aziendale #tutor prima di tradurla in codice, tramite gli incontri settimanali o il canale Telegram], probabilita: [Media], impatto: [Medio]) <risk-interpretazione-normativa>
 
-#pagebreak()
 
 #risk(3, [Difetti di concorrenza sui vincoli critici], [vincoli come la singola stampa per titolo, il limite di dieci titoli per evento e utente e l’unicità del cellulare devono reggere a richieste simultanee, e un errore di progettazione emergerebbe solo sotto carico concorrente], [dedicare una settimana del piano a test di concorrenza mirati sui vincoli critici, oltre ai test funzionali sequenziali descritti nella sezione precedente], probabilita: [Media], impatto: [Alto]) <risk-concorrenza>
 
@@ -53,3 +52,13 @@ Durante la fase di analisi iniziale sono stati individuati alcuni rischi legati 
 #risk(4, [Dipendenze tra le settimane del piano], [alcune funzionalità dipendono da quelle delle settimane precedenti, per esempio il log registra i movimenti prodotti dall’emissione e il controllo accessi legge titoli che devono già esistere, quindi un ritardo in una settimana si propaga alle successive], [seguire l’ordine di sviluppo stabilito nel piano e verificare l’avanzamento negli incontri di inizio e fine settimana con il tutor, in modo da intercettare presto eventuali ritardi], probabilita: [Media], impatto: [Medio]) <risk-dipendenze-settimane>
 
 #risk(5, [Tempo insufficiente per gli obiettivi non obbligatori], [le 300 ore disponibili sono ripartite tra obiettivi obbligatori, desiderabili e facoltativi, e un rallentamento sui primi riduce il tempo per gli altri], [dare priorità ai requisiti obbligatori O01–O05, poi ai desiderabili D01–D04 e infine ai facoltativi F01–F03, dichiarando nella relazione finale la copertura effettivamente raggiunta], probabilita: [Alta], impatto: [Basso]) <risk-priorita-obiettivi>
+
+La tabella seguente riepiloga probabilità e impatto di ciascun rischio.
+
+#risk-table((
+  ([1], [Carta di attivazione e specifiche SIAE non disponibili], [Alta], [Alto]),
+  ([2], [Interpretazione della normativa], [Media], [Medio]),
+  ([3], [Difetti di concorrenza sui vincoli critici], [Media], [Alto]),
+  ([4], [Dipendenze tra le settimane del piano], [Media], [Medio]),
+  ([5], [Tempo insufficiente per gli obiettivi non obbligatori], [Alta], [Basso]),
+), caption: [Matrice dei rischi: probabilità e impatto.]) <tab-rischi>
