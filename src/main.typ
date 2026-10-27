@@ -69,7 +69,7 @@
 #pagebreak()*/
 
 #heading(outlined: false)[Sommario] <sommario>
-
+#v(0.5cm)
 Il presente documento descrive il lavoro svolto durante il periodo di stage dal laureando #io presso l'azienda #azienda, della durata di circa 300 ore, svolte nel periodo che intercorre dal 28 settembre 2026 al 20 novembre 2026. Lo stage ha per oggetto la realizzazione di un prototipo di sistema di biglietteria automatizzata per la vendita online di titoli di accesso per conto di organizzatori terzi, in modalità white-label, destinato a integrarsi con il CRM aziendale RelAi. Il sistema deve rispettare i requisiti stabiliti dalla normativa AdE/SIAE.
 
 L'elaborato è stato redatto seguendo il piano di lavoro proposto dal tutor aziendale #tutor ed espone le procedure operative e metodologiche adoperate durante lo sviluppo del prodotto atteso. In particolare, descrive le modalità di apprendimento e di esecuzione delle attività, l'organizzazione del lavoro in settimane e il confronto periodico con il tutor, che comprende incontri settimanali e revisioni del codice.
@@ -79,10 +79,12 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 
 #pagebreak()
 #heading(outlined: false)[Indice] <indice>
+#v(0.5cm)
 #outline(title: none, depth: 5)
 
 #pagebreak()
 #heading(outlined: false)[Elenco delle figure] <figure>
+#v(0.5cm)
 #show outline.entry: it => {
   let fig = it.element
   link(
@@ -95,10 +97,10 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 
 #pagebreak()
 #heading(outlined: false)[Elenco delle tabelle] <tabelle>
+#v(0.5cm)
 #outline(target: figure.where(kind: table), title: none)
 
-#pagebreak()
-#include "chapters/01-glossario.typ"
+
 
 #pagebreak()
 #counter(page).update(1)
@@ -107,8 +109,9 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 
 #include "chapters/02-introduzione.typ"
 #include "chapters/03-descrizione-stage.typ"
- #include "chapters/04-analisi-requisiti.typ"
+#include "chapters/04-analisi-requisiti.typ"
 // #include "chapters/05-progettazione-codifica.typ"
 // #include "chapters/06-verifica-validazione.typ"
 // #include "chapters/07-conclusioni.typ"
-// #include "chapters/08-bibliografia.typ"
+#include "chapters/01-glossario.typ"
+#include "chapters/08-bibliografia.typ"

@@ -7,11 +7,11 @@ Questo capitolo descrive come il prototipo è stato costruito: lo stack tecnolog
 
 == Tecnologie e strumenti <tecnologie-strumenti>
 
-Di seguito viene data una panoramica delle tecnologie e degli strumenti utilizzati per la realizzazione del prototipo. Lo stack è quello già adottato da RelAi, l'applicazione ospitante — piattaforma CRM e loyalty multi-tenant di #azienda — in modo da integrare il modulo fiscale senza introdurre dipendenze aggiuntive né un ambiente di sviluppo separato da quello del resto del team.
+Di seguito viene data una panoramica delle tecnologie e degli strumenti utilizzati per la realizzazione del prototipo. Lo stack è quello già adottato da RelAi, l'applicazione ospitante con piattaforma CRM e loyalty multi-tenant di #azienda, in modo da integrare il modulo fiscale senza introdurre dipendenze aggiuntive né un ambiente di sviluppo separato da quello del resto del team.
 
 #tech-heading("PHP", "../../img/logos/php.svg") <tec-php>
 
-Linguaggio di programmazione lato server su cui è costruita l'intera applicazione (versione 8.5). La scelta non nasce da una necessità specifica del prototipo, ma dalla decisione aziendale di sviluppare la biglietteria fiscale all'interno del codebase già esistente di RelAi, per riutilizzarne l'infrastruttura (autenticazione, multi-tenant, pipeline di test e di integrazione continua). Tra le caratteristiche del linguaggio sfruttate nel prototipo:
+Linguaggio di programmazione lato server su cui è costruita l'intera applicazione. La scelta non nasce da una necessità specifica del prototipo, ma dalla decisione aziendale di sviluppare la biglietteria fiscale all'interno del codebase già esistente di RelAi, per riutilizzarne l'infrastruttura (autenticazione, multi-tenant, pipeline di test e di integrazione continua). Tra le caratteristiche del linguaggio sfruttate nel prototipo:
 
 - enum nativi con metodi propri, usati per codificare i tipi di titolo e le causali di annullamento secondo le tabelle del tracciato AdE/SIAE;
 - promozione delle proprietà nel costruttore, per ridurre il codice ripetitivo nei model e nei servizi di dominio;
@@ -20,34 +20,34 @@ Linguaggio di programmazione lato server su cui è costruita l'intera applicazio
 
 #tech-heading("Laravel", "../../img/logos/laravel.svg") <tec-laravel>
 
-Framework PHP full-stack (versione 13) che fornisce l'ORM (`Eloquent`), il sistema di migrazioni, la gestione delle code e la validazione. Nel modulo fiscale è stato impiegato soprattutto per: le migrazioni che definiscono lo schema _append-only_ delle tabelle fiscali, con trigger a livello di database che impediscono operazioni di `UPDATE` e `DELETE`; i model `Eloquent` di titoli, abbonamenti, transazioni e stato del sistema certificato; l'integrazione con lo _scheduler_ dei task per le chiusure di giornata.
+Framework PHP full-stack che fornisce l'ORM (`Eloquent`), il sistema di migrazioni, la gestione delle code e la validazione. Nel modulo fiscale è stato impiegato soprattutto per: le migrazioni che definiscono lo schema _append-only_ delle tabelle fiscali, con trigger a livello di database che impediscono operazioni di `UPDATE` e `DELETE`; i model `Eloquent` di titoli, abbonamenti, transazioni e stato del sistema certificato; l'integrazione con lo _scheduler_ dei task per le chiusure di giornata.
 
 #tech-heading("Filament", "../../img/logos/filament.svg") <tec-filament>
 
-Framework per la costruzione di pannelli amministrativi reattivi sopra Laravel (versione 5). È lo strato con cui l'operatore di back-office interagisce con il prototipo: la pagina `EmissioneTitolo` (emissione e annullo dei titoli), l'interfaccia per gli abbonamenti e quella dei riepiloghi giornalieri sono tutte pagine Filament, costruite riusando i componenti già presenti nel pannello di RelAi — tabelle, filtri, azioni con conferma — per restare coerenti con il resto dell'applicazione.
+Framework per la costruzione di pannelli amministrativi reattivi sopra Laravel. È lo strato con cui l'operatore di back-office interagisce: la pagina `EmissioneTitolo` (emissione e annullo dei titoli), l'interfaccia per gli abbonamenti e quella dei riepiloghi giornalieri sono tutte pagine Filament, costruite riusando i componenti già presenti nel pannello di RelAi per restare coerenti con il resto dell'applicazione.
 
 #tech-heading("Livewire", "../../img/logos/livewire.svg") <tec-livewire>
 
-Libreria (versione 4) che permette a Filament di aggiornare l'interfaccia via AJAX senza scrivere JavaScript dedicato: ogni pagina fiscale è di fatto un componente Livewire, con lo stato del form gestito lato server e sincronizzato nel browser.
+Libreria che permette a Filament di aggiornare l'interfaccia via AJAX senza scrivere JavaScript dedicato in cui ogni pagina fiscale è di fatto un componente Livewire, con lo stato del form gestito lato server e sincronizzato nel browser.
 
 #tech-heading("MariaDB", "../../img/logos/mariadb.svg") <tec-mariadb>
 
-Sistema di gestione di basi di dati relazionali (versione 11.4), adottato come unico storage del prototipo. È una scelta non prevista dal piano di lavoro iniziale, che indicava PostgreSQL, ma resa necessaria dalla volontà di lavorare sul database già in uso in azienda invece che su un'istanza separata. 
-\ Le tabelle fiscali sono progettate per essere _append-only_ — solo inserimento, mai modifica né cancellazione — tramite trigger SQL, per rispecchiare il vincolo di immodificabilità richiesto a un registratore telematico o a un sistema di emissione certificato.
+Sistema di gestione di basi di dati relazionali, adottato come unico storage del prototipo e già in uso in azienda con differenti tabelle riutilizzabili.
+\ Le tabelle fiscali sono progettate per essere _append-only_ — solo inserimento, mai modifica né cancellazione — tramite trigger SQL, per rispecchiare il vincolo di immodificabilità richiesto ad un sistema di emissione certificato.
 
 #tech-heading("DDEV", "../../img/logos/ddev.svg") <tec-ddev>
 
-Ambiente di sviluppo containerizzato (Docker) che fornisce web server, PHP, MariaDB, Redis e i servizi di supporto in locale, identico a quello usato dal resto del team di RelAi, così da poter eseguire la suite di test e il linting con gli stessi strumenti già in uso nel progetto ospitante.
+Ambiente di sviluppo containerizzato (Docker) che fornisce web server, PHP, MariaDB e i servizi di supporto in locale, identico a quello usato dal resto del team di RelAi, così da poter eseguire la suite di test e il linting con gli stessi strumenti già in uso nel progetto ospitante.
 
 #heading(level: 3, numbering: none, outlined: false)[
   #box(baseline: 15%, image("../../img/logos/pest.svg", height: 0.60cm)) #h(0.2em) #text(size: 0.5cm, weight: "bold")[Pest]
 ] <tec-pest>
 
-Framework di testing, costruito sopra PHPUnit, con cui è stata scritta la suite di test del modulo fiscale: test sulla macchina a stati del sistema certificato, sull'emissione e l'annullo dei titoli, sulla catena di impronte (hash) delle transazioni, sulla chiusura di un segmento di log e sulla generazione e validazione del tracciato XML, confrontata con il DTD del 2019. Ogni funzionalità è stata accompagnata da almeno un test automatico, secondo la convenzione già in uso nel progetto ospitante; la strategia di verifica e i relativi risultati sono ripresi nel capitolo dedicato a verifica e validazione.
+Framework di testing, costruito sopra PHPUnit, con cui è stata scritta la suite di test del modulo fiscale ed ogni funzionalità è stata accompagnata da almeno un test automatico, secondo la convenzione già in uso nel progetto RelAi.
 
 #tech-heading("Git", "../../img/logos/git.svg") <tec-git>
 
-Sistema di controllo di versione utilizzato per tracciare lo sviluppo incrementale del prototipo: il lavoro di stage è confluito in un unico ramo dedicato, con commit atomici e descrittivi per ogni singola funzionalità e revisionato periodicamente dal tutor aziendale #tutor tramite Gitea. Il ramo è integrato nella pipeline di integrazione continua già attiva sul progetto ospitante, che esegue formattazione del codice, analisi statica e suite di test a ogni push.
+Sistema di controllo di versione utilizzato per tracciare lo sviluppo incrementale del prototipo: il lavoro di stage è confluito in un unico ramo dedicato, con commit atomici e descrittivi per ogni singola funzionalità. Il ramo è integrato nella pipeline di integrazione continua già attiva sul progetto ospitante, che esegue formattazione del codice, analisi statica e suite di test ad ogni operazione di push.
 
 == Ciclo di vita del software <ciclo-vita-software>
 

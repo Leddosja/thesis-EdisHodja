@@ -1,5 +1,7 @@
 #import "shared.typ": *
 
+#pagebreak()
+
 #heading(outlined: false)[Glossario] <glossario> \
 
 #block[

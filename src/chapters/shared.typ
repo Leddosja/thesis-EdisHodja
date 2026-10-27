@@ -34,8 +34,8 @@
 
 #let usecase(id, title, actors, pre, description, post, alternative: none, diagram: none, 
 requires: none, secondary: none) = {
-  v(0.5cm)
-  heading(level: if type(id) == int { 3 } else { 4 }, numbering: none)[UC #id: #title]
+  let level = if type(id) == int { 3 } else if id.split(".").len() > 2 { 5 } else { 4 }
+  heading(level: level, numbering: none)[UC #id: #title]
   block(spacing: 1.2em)[
     #show list: set block(spacing: 0.65em)
     #show enum: set block(spacing: 0em)

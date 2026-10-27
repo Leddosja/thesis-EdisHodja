@@ -2,57 +2,63 @@
 
 #let status-table(rows, caption: none) = {
   let body = table(
-    columns: (2cm, 7cm, 3cm, 3cm),
+    columns: (2cm, 10cm, 3cm),
     inset: 6pt,
     stroke: 0.5pt + rgb("b8b8bd"),
     fill: (_, row) => if calc.odd(row) { rgb("f5f5f7") } else { white },
-    table.header([*ID*], [*Requisito*], [*Stato*], [*Use Case*]),
+    table.header([*ID*], [*Requisito*], [*Use Case*]),
     ..rows.flatten(),
   )
+  let wide = pad(left: -0.5cm)[#body]
   if caption != none {
-    figure(body, caption: caption, kind: table, supplement: [Tabella])
+    figure(wide, caption: caption, kind: table, supplement: [Tabella])
   } else {
-    body
+    wide
   }
+  v(1cm)
 }
 
 #pagebreak()
 
 = Analisi dei requisiti <analisi-requisiti>
 
-Questo capitolo raccoglie i requisiti del prototipo e li collega ai casi d’uso che li realizzano. La fonte principale è il documento di requisiti costruito dall’azienda a partire dalla normativa, organizzato in gruppi tematici (A-N).
+Questo capitolo raccoglie i requisiti del prototipo e li collega ai casi d’uso che li realizzano. La fonte primaria è la normativa fiscale AdE/SIAE sui sistemi di emissione dei titoli di accesso; l’azienda l’ha tradotta in un documento di requisiti organizzato in gruppi tematici (A-N).
 
 == Fonti normative e perimetro <fonti-perimetro>
 
-Il riferimento normativo è il D.M. 13 luglio 2000, con i provvedimenti dell’Agenzia delle Entrate del 23 luglio 2001, del 22 ottobre 2002, del 4 marzo 2008, n. 223774 del 2019 e n. 356768 del 2025. Si aggiunge la checklist dell’Agenzia del 2 dicembre 2002 per la certificazione dei sistemi di emissione.
+Il prototipo realizzato durante lo stage è un sistema di emissione di titoli di accesso per spettacoli ed eventi, con vendita online e controllo accessi. Poiché emette e registra titoli con valore fiscale, deve rispettare gli stessi obblighi previsti per i sistemi di biglietteria automatizzata già in uso sul mercato: è da questi obblighi, e non da scelte di progetto, che discende la maggior parte dei requisiti elencati in questo capitolo.
 
-Il perimetro è il sistema di emissione dei titoli di accesso previsto dall’art. 2, comma 1, lettera b), del D.M. 2000, con vendita online e controllo accessi. Il prototipo non è certificato, quindi la carta di attivazione, il sigillo fiscale, la firma e il supporto immodificabile sono simulati. Ogni requisito riceve uno stato secondo questi criteri:
+Il riferimento normativo principale è il D.M. 13 luglio 2000, che individua i dati obbligatori del titolo, le modalità di annullo e i formati del log. 
+ \ #azienda ha costruito il documento di requisiti verificando ogni punto rispetto all’articolo o al provvedimento che lo prevede.
 
-- *Nel prototipo*: il requisito è realizzato e verificabile con un test.
-- *Desiderabile* e *Facoltativo*: priorità del piano di lavoro (D e F).
-- *Fuori perimetro*: il requisito resta documentato ma non entra nello stage.
+Il perimetro è il sistema di emissione dei titoli di accesso previsto dall’art. 2 del D.M. 2000, con vendita online e controllo accessi. Il prototipo non è certificato, quindi la carta di attivazione, il sigillo fiscale, la firma e il supporto immodificabile sono simulati.
 
-La tabella seguente collega gli obiettivi ai gruppi di requisiti e ai casi d’uso.
+Ogni requisito ha una priorità, assegnata dal piano di lavoro proposto dal tutor aziendale:
 
-#figure(table(
-  columns: (2.5cm, 6.5cm, 3.5cm, 3cm),
+- *Obbligatorio*: necessario perché il prototipo sia un risultato accettabile del referente aziendale, #tutor.
+- *Desiderabile*: realizzato dopo gli obbligatori, se il tempo a disposizione lo consente.
+- *Facoltativo*: realizzato solo a margine.
+
+#pagebreak()
+La tabella seguente riassume i requisiti di sistema individuati, con la priorità, i gruppi normativi dell’azienda a cui corrispondono e i casi d’uso che li realizzano.
+
+#figure(pad(left: -1.25cm)[#table(
+  columns: (1.3cm, 7cm, 3.2cm, 3cm, 2.2cm),
   inset: 7pt,
   stroke: 0.5pt + rgb("b8b8bd"),
   fill: (_, row) => if calc.odd(row) { rgb("f5f5f7") } else { white },
-  table.header([*Obiettivo*], [*Oggetto*], [*Gruppi*], [*Use case*]),
-  [O01], [Analisi e matrice dei requisiti normativi], [Nessun gruppo normativo], [-],
-  [O02], [Modello dati, carta simulata, stato del sistema], [A, B, C], [UC1–UC3],
-  [O03], [Emissione, annullo, log e chiusura giornaliera], [C, D, E], [UC4–UC6],
-  [O04], [Riepiloghi e funzioni di servizio], [F, G], [UC7],
-  [O05], [Test funzionali e relazione finale], [Nessun gruppo normativo], [-],
-  [D01], [Vendita online white-label], [I], [UC9],
-  [D02], [Nominatività, cambio nominativo, rimessa in vendita], [J], [UC10, UC11],
-  [D03], [Render del titolo e stampa unica], [C11, L1, L2], [UC9],
-  [D04], [Controllo accessi], [K], [UC12, UC13],
-  [F01], [Wallet pass], [Vincolo N], [UC14],
-  [F02], [Mancato funzionamento], [H], [UC8],
-  [F03], [Integrazione con il CRM RelAi], [Nessun gruppo normativo], [-],
-), caption: [Obiettivi collegati a gruppi di requisiti e casi d’uso.], kind: table, supplement: [Tabella]) <tab-obiettivi>
+  table.header([*ID*], [*Requisito*], [*Priorità*], [*Gruppi*], [*Casi d’uso*]),
+  [O1], [Il sistema deve gestire il modello dati, la carta di attivazione simulata e lo stato operativo del sistema.], [Obbligatorio], [A, B, C], [UC1–UC3],
+  [O2], [Il sistema deve gestire l’emissione e l’annullamento dei titoli, il log delle transazioni e la chiusura giornaliera.], [Obbligatorio], [C, D, E], [UC4–UC6],
+  [O3], [Il sistema deve produrre i riepiloghi e le funzioni di servizio collegate.], [Obbligatorio], [F, G], [UC7],
+  [D1], [Il sistema deve permettere la vendita online in modalità white-label.], [Desiderabile], [I], [UC9],
+  [D2], [Il sistema deve gestire la nominatività dei titoli, il cambio nominativo e la rimessa in vendita.], [Desiderabile], [J], [UC10, UC11],
+  [D3], [Il sistema deve generare il render del titolo e garantirne la stampa unica.], [Desiderabile], [C11, L1, L2], [UC9],
+  [D4], [Il sistema deve supportare il controllo degli accessi.], [Desiderabile], [K], [UC12, UC13],
+  [F1], [Il sistema deve generare il wallet pass.], [Facoltativo], [Vincolo N], [UC14],
+  [F2], [Il sistema deve gestire il mancato funzionamento della carta di attivazione.], [Facoltativo], [H], [UC8],
+  [F3], [Il sistema deve integrarsi con il CRM aziendale RelAi.], [Facoltativo], [Nessun gruppo normativo], [–],
+)], caption: [Requisiti di sistema, con priorità, gruppi normativi di dettaglio e casi d’uso.], kind: table, supplement: [Tabella]) <tab-requisiti-sistema>
 
 == Attori <attori>
 
@@ -73,6 +79,9 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   #if it.numbering != none [#counter(heading).display(it.numbering) ]#it.body
 ]
 #show heading.where(level: 4): it => text(size: 0.5cm, weight: "bold")[
+  #if it.numbering != none [#counter(heading).display(it.numbering) ]#it.body
+]
+#show heading.where(level: 5): it => text(size: 0.5cm, weight: "bold")[
   #if it.numbering != none [#counter(heading).display(it.numbering) ]#it.body
 ]
 
@@ -242,6 +251,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   alternative: [Se il limite di dieci titoli è raggiunto, il carrello viene bloccato prima del pagamento (#link(<uc-acquisto-limite>)[UC-9.3]). Se il pagamento non va a buon fine, nessun titolo viene emesso (#link(<uc-acquisto-pagamento>)[UC-9.4]). Se il CAPTCHA non è superato, il cliente non può comporre il carrello (#link(<uc-acquisto-captcha>)[UC-9.5]).],
   diagram: "../../img/diagrams/uc-9.png") <uc-acquisto>
 
+#pagebreak()
 #usecase("9.1", [Creazione dell’account cliente], [Cliente],
   [Lo storefront dell’organizzatore è attivo e il cliente non si è ancora identificato.],
   [
@@ -349,54 +359,56 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   ],
   [Il pass riflette lo stato corrente del titolo.], diagram: "../../img/diagrams/uc-14.png") <uc-wallet>
 
-/*
+#pagebreak()
+
 == Requisiti per gruppo <requisiti>
 
 #show heading.where(level: 3): set text(size: 16pt)
 
-Le tabelle seguono l’ordine della checklist fornita da #azienda e ogni riga riporta il codice, una sintesi del requisito, lo stato e il caso d’uso che lo realizza.
+Le tabelle seguono l’ordine della checklist fornita da #azienda e ogni riga riporta il codice, una sintesi del requisito e il caso d’uso che lo realizza.
 
 #heading(level: 3, outlined: false)[Gruppo A: vincoli architetturali] <gruppo-a>
 
 #status-table((
-  ([A1], [Il sistema non funziona senza la carta di attivazione: anagrafiche, emissione, log e riepiloghi sono bloccati], [Nel prototipo], [UC3]),
-  ([A2], [PIN richiesto all’accensione e a ogni rimozione della carta], [Nel prototipo], [UC3]),
-  ([A3], [Prima attivazione: memorizzazione di titolare, codice sistema e codice carta, controllo della firma, visualizzazione dei contatori], [Nel prototipo], [UC3]),
-  ([A4], [Nessuna funzione, palese o nascosta, aggira la carta o modifica log e titoli al di fuori del percorso previsto], [Nel prototipo], [Tutti]),
-  ([A5], [Software fiscale, log e carte su componenti in Italia, in locali dichiarati, con custodi nominati], [Fuori perimetro], [–]),
-  ([A6], [Associazione univoca tra carta e sistema; i movimenti sigillati da una carta si registrano nel sistema che la ospita], [Nel prototipo], [UC3]),
+  ([A1], [Il sistema non funziona senza la carta di attivazione: anagrafiche, emissione, log e riepiloghi sono bloccati], [UC3]),
+  ([A2], [PIN richiesto all’accensione e a ogni rimozione della carta], [UC3]),
+  ([A3], [Prima attivazione: memorizzazione di titolare, codice sistema e codice carta, controllo della firma, visualizzazione dei contatori], [UC3]),
+  ([A4], [Nessuna funzione, palese o nascosta, aggira la carta o modifica log e titoli al di fuori del percorso previsto], [Tutti]),
+  ([A5], [Software fiscale, log e carte su componenti in Italia, in locali dichiarati, con custodi nominati], [–]),
+  ([A6], [Associazione univoca tra carta e sistema; i movimenti sigillati da una carta si registrano nel sistema che la ospita], [UC3]),
 ), caption: [Requisiti del gruppo A.]) <tab-gruppo-a>
 
 #heading(level: 3, outlined: false)[Gruppo B: anagrafiche e configurazione] <gruppo-b>
 
 #status-table((
-  ([B1], [Gestione di eventi, locali, organizzatori, tabelle di sistema e tabella dei prezzi], [Nel prototipo], [UC1, UC2]),
-  ([B2], [Più organizzatori ed eventi in parallelo, anche per manifestazioni che attraversano la mezzanotte], [Nel prototipo], [UC1]),
-  ([B3], [Codice locale assegnato da SIAE: acquisito e usato, non generato], [Nel prototipo], [UC2]),
-  ([B4], [Comunicazione a SIAE degli organizzatori serviti, prima dell’inizio del servizio (§1.7.5 Allegato A del Provv. 2002)], [Fuori perimetro], [–]),
+  ([B1], [Gestione di eventi, locali, organizzatori, tabelle di sistema e tabella dei prezzi], [UC1, UC2]),
+  ([B2], [Più organizzatori ed eventi in parallelo, anche per manifestazioni che attraversano la mezzanotte], [UC1]),
+  ([B3], [Codice locale assegnato da SIAE: acquisito e usato, non generato], [UC2]),
+  ([B4], [Comunicazione a SIAE degli organizzatori serviti, prima dell’inizio del servizio], [–]),
 ), caption: [Requisiti del gruppo B.]) <tab-gruppo-b>
 
 #heading(level: 3, outlined: false)[Gruppo C: emissione del titolo] <gruppo-c>
 
 #status-table((
-  ([C1], [Emissione completa quando il titolo è definito e registrato nel log, anche se non è stato stampato], [Nel prototipo], [UC4]),
-  ([C2], [Dati obbligatori dell’art. 3 del D.M. 2000: natura, data e ora, luogo, posto, corrispettivo, gratuità o riduzione con causale, prevendita e prestazioni accessorie separate, sigillo], [Nel prototipo], [UC4]),
-  ([C3], [Diciture per la vendita per conto di terzi e per la vendita da parte dell’organizzatore], [Nel prototipo], [UC4]),
-  ([C4], [Abbonamenti con dicitura, numero di prestazioni, turno libero e ratei per turno fisso], [Nel prototipo], [UC4]),
-  ([C5], [Titoli open registrati come abbonamenti con codice proprio, un evento abilitato e turno libero], [Nel prototipo], [UC4]),
-  ([C6], [Gratuità e riduzioni evidenziate per la lettura immediata], [Nel prototipo], [UC4]),
-  ([C7], [Sigillo di 16 caratteri calcolato dalla carta su codice carta, data, ora, importo e progressivo], [Nel prototipo], [UC4]),
-  ([C8], [Il numero della carta sostituisce il logotipo fiscale sul titolo], [Nel prototipo], [UC4]),
-  ([C9], [Incremento dei contatori a bordo della carta a ogni emissione], [Nel prototipo], [UC3, UC4]),
-  ([C10], [Registrazione in banca dati, memorie temporanee e log, corretta anche sotto carico], [Nel prototipo], [UC4]),
-  ([C11], [Una sola stampa per titolo: ristampa e stampa multipla inibite, diritto consumato lato server], [Nel prototipo], [UC9]),
-  ([C12], [Titoli nominativi con nome e cognome, senza altri dati personali nella lista unica], [Nel prototipo], [UC4, UC12]),
-  ([C13], [Importi in euro con due cifre decimali, coerenti con il tracciato], [Nel prototipo], [UC4]),
+  ([C1], [Emissione completa quando il titolo è definito e registrato nel log, anche se non è stato stampato], [UC4]),
+  ([C2], [Dati obbligatori dell’art. 3 del D.M. 2000: natura, data e ora, luogo, posto, corrispettivo, gratuità o riduzione con causale, prevendita e prestazioni accessorie separate, sigillo], [UC4]),
+  ([C3], [Diciture per la vendita per conto di terzi e per la vendita da parte dell’organizzatore], [UC4]),
+  ([C4], [Abbonamenti con dicitura, numero di prestazioni, turno libero e ratei per turno fisso], [UC4]),
+  ([C5], [Titoli open registrati come abbonamenti con codice proprio, un evento abilitato e turno libero], [UC4]),
+  ([C6], [Gratuità e riduzioni evidenziate per la lettura immediata], [UC4]),
+  ([C7], [Sigillo di 16 caratteri calcolato dalla carta su codice carta, data, ora, importo e progressivo], [UC4]),
+  ([C8], [Il numero della carta sostituisce il logotipo fiscale sul titolo], [UC4]),
+  ([C9], [Incremento dei contatori a bordo della carta a ogni emissione], [UC3, UC4]),
+  ([C10], [Registrazione in banca dati, memorie temporanee e log, corretta anche sotto carico], [UC4]),
+  ([C11], [Una sola stampa per titolo: ristampa e stampa multipla inibite, diritto consumato lato server], [UC9]),
+  ([C12], [Titoli nominativi con nome e cognome, senza altri dati personali nella lista unica], [UC4, UC12]),
+  ([C13], [Importi in euro con due cifre decimali, coerenti con il tracciato], [UC4]),
 ), caption: [Requisiti del gruppo C.]) <tab-gruppo-c>
 
+#pagebreak()
 #heading(level: 3, outlined: false)[Gruppo D: annullamento] <gruppo-d>
 
-L’annullo richiede sempre una causale, scelta tra i dieci codici definiti dalla documentazione normativa (#link(<tab-causali>)[tabella sottostante]). Il codice scelto determina anche il termine entro cui l’annullo è ammesso (D1–D3).
+L’annullo richiede sempre una causale, scelta tra i dieci codici definiti dalla documentazione normativa (#link(<tab-causali>)[tabella sottostante]).
 
 #figure(table(
   columns: (2cm, 1fr),
@@ -414,96 +426,97 @@ L’annullo richiede sempre una causale, scelta tra i dieci codici definiti dall
   [008], [Annullamento per rivendita],
   [009], [Annullamento per furto/smarrimento],
   [010], [Annullamento per sostituzione contestuale con titolo diverso di importo uguale o superiore (upselling)],
-), caption: emph[Causali di annullo, da #raw("2019 All.B p.1 lett. i")], kind: table, supplement: [Tabella]) <tab-causali>
+), caption: [Causali di annullo, da #raw("2019 All.B p.1 lett. i")], kind: table, supplement: [Tabella]) <tab-causali>
 
 #status-table((
-  ([D1], [Annullo con causale entro il quinto giorno lavorativo successivo all’evento], [Nel prototipo], [UC5]),
-  ([D2], [Titoli digitali annullabili fino all’inizio dell’evento], [Nel prototipo], [UC5]),
-  ([D3], [Evento non effettuato: annullo entro i termini di versamento delle imposte], [Nel prototipo], [UC5]),
-  ([D4], [Annulli e rimborsi di titoli digitali solo con pagamenti tracciabili], [Nel prototipo], [UC5, UC9]),
-  ([D5], [Annullo con record ANNULLATO completo dei dati del titolo originario, identificato da progressivo e sigillo], [Nel prototipo], [UC5]),
-  ([D6], [Conservazione del titolo annullato, anche in forma informatica], [Nel prototipo], [UC5]),
+  ([D1], [Annullo con causale entro il quinto giorno lavorativo successivo all’evento], [UC5]),
+  ([D2], [Titoli digitali annullabili fino all’inizio dell’evento], [UC5]),
+  ([D3], [Evento non effettuato: annullo entro i termini di versamento delle imposte], [UC5]),
+  ([D4], [Annulli e rimborsi di titoli digitali solo con pagamenti tracciabili], [UC5, UC9]),
+  ([D5], [Annullo con record ANNULLATO completo dei dati del titolo originario, identificato da progressivo e sigillo], [UC5]),
+  ([D6], [Conservazione del titolo annullato, anche in forma informatica], [UC5]),
 ), caption: [Requisiti del gruppo D.]) <tab-gruppo-d>
 
+#pagebreak()
 #heading(level: 3, outlined: false)[Gruppo E: log delle transazioni] <gruppo-e>
 
 #status-table((
-  ([E1], [Log con tutti i movimenti: emissioni, annullamenti e abbonamenti], [Nel prototipo], [UC6]),
-  ([E2], [Formato ASCII a campi fissi o XML; XML obbligatorio per i flussi dei Capi II e III del Provv. 2019], [Fuori perimetro], [UC6]),
-  ([E3], [Registrazione su supporto immodificabile], [Nel prototipo], [UC6]),
-  ([E4], [Certificato a inizio registrazione e firma digitale a fine giornata con chiave a bordo della carta], [Nel prototipo], [UC6]),
-  ([E5], [Conservazione per 24 mesi dall’ultimo titolo, con funzioni di verifica e copia per il controllo], [Nel prototipo], [UC6]),
+  ([E1], [Log con tutti i movimenti: emissioni, annullamenti e abbonamenti], [UC6]),
+  ([E2], [Formato ASCII a campi fissi o XML; XML obbligatorio per i flussi dei Capi II e III del Provv. 2019], [UC6]),
+  ([E3], [Registrazione su supporto immodificabile], [UC6]),
+  ([E4], [Certificato a inizio registrazione e firma digitale a fine giornata con chiave a bordo della carta], [UC6]),
+  ([E5], [Conservazione per 24 mesi dall’ultimo titolo, con funzioni di verifica e copia per il controllo], [UC6]),
 ), caption: [Requisiti del gruppo E.]) <tab-gruppo-e>
 
 #heading(level: 3, outlined: false)[Gruppo F: riepiloghi e trasmissione] <gruppo-f>
 
 #status-table((
-  ([F1], [Riepilogo giornaliero: proventi per evento e ordine di posto, abbonamenti per organizzatore, ingressi per tipologia, sigillo], [Nel prototipo], [UC6, UC7]),
-  ([F2], [Riepilogo mensile dei titoli: proventi per evento anche se incassati nei mesi precedenti, ratei per turno fisso], [Nel prototipo], [UC7]),
-  ([F3], [Riepilogo mensile degli altri proventi (record 8 e 9), se la funzione è dichiarata], [Fuori perimetro], [UC7]),
-  ([F4], [Tracciati FLAT e XML, firma digitale, crittografia, codice di autenticazione, sequenza corretta dei record], [Nel prototipo], [UC6, UC7]),
-  ([F5], [Termini di trasmissione a SIAE per riepiloghi mensili e per evento], [Fuori perimetro], [–]),
-  ([F6], [Stampa cartacea su A3 o A4 secondo i modelli C.1 e C.2], [Fuori perimetro], [–]),
-  ([F7], [Gestione e comunicazione dei periodi di inattività], [Nel prototipo], [UC7]),
+  ([F1], [Riepilogo giornaliero: proventi per evento e ordine di posto, abbonamenti per organizzatore, ingressi per tipologia, sigillo], [UC6, UC7]),
+  ([F2], [Riepilogo mensile dei titoli: proventi per evento anche se incassati nei mesi precedenti, ratei per turno fisso], [UC7]),
+  ([F3], [Riepilogo mensile degli altri proventi (record 8 e 9), se la funzione è dichiarata], [UC7]),
+  ([F4], [Tracciati FLAT e XML, firma digitale, crittografia, codice di autenticazione, sequenza corretta dei record], [UC6, UC7]),
+  ([F5], [Termini di trasmissione a SIAE per riepiloghi mensili e per evento], [–]),
+  ([F6], [Stampa cartacea su A3 o A4 secondo i modelli C.1 e C.2], [–]),
+  ([F7], [Gestione e comunicazione dei periodi di inattività], [UC7]),
 ), caption: [Requisiti del gruppo F.]) <tab-gruppo-f>
 
 #heading(level: 3, outlined: false)[Gruppo G: funzioni di servizio e conservazione] <gruppo-g>
 
 #status-table((
-  ([G1], [Consultazione a video e su carta, o esportazione, di dettagli e riepiloghi aggiornati], [Nel prototipo], [UC7]),
-  ([G2], [Ricerca per numero di carta e progressivo, o per sigillo], [Nel prototipo], [UC7]),
-  ([G3], [Viste per giornata di emissione e per evento, con ordine di posto e tipologia], [Nel prototipo], [UC7]),
-  ([G4], [Cancellazione dei titoli consentita solo dopo 60 giorni dall’evento], [Nel prototipo], [UC7]),
-  ([G5], [Cancellazione dei riepiloghi consentita solo dopo due anni dalla trasmissione], [Fuori perimetro], [UC7]),
+  ([G1], [Consultazione a video e su carta, o esportazione, di dettagli e riepiloghi aggiornati], [UC7]),
+  ([G2], [Ricerca per numero di carta e progressivo, o per sigillo], [UC7]),
+  ([G3], [Viste per giornata di emissione e per evento, con ordine di posto e tipologia], [UC7]),
+  ([G4], [Cancellazione dei titoli consentita solo dopo 60 giorni dall’evento], [UC7]),
+  ([G5], [Cancellazione dei riepiloghi consentita solo dopo due anni dalla trasmissione], [UC7]),
 ), caption: [Requisiti del gruppo G.]) <tab-gruppo-g>
 
 #heading(level: 3, outlined: false)[Gruppo H: mancato funzionamento] <gruppo-h>
 
 #status-table((
-  ([H1], [Blocco immediato, richiesta di manutenzione, annotazione sul libretto fiscale], [Facoltativo (F02)], [UC8]),
-  ([H2], [Registro di inizio e fine del guasto, totale dei biglietti manuali per evento e tipologia], [Facoltativo (F02)], [UC8]),
-  ([H3], [Contatore dei giorni di fermo con allarme al trentesimo giorno per anno solare], [Facoltativo (F02)], [UC8]),
+  ([H1], [Blocco immediato, richiesta di manutenzione, annotazione sul libretto fiscale], [UC8]),
+  ([H2], [Registro di inizio e fine del guasto, totale dei biglietti manuali per evento e tipologia], [UC8]),
+  ([H3], [Contatore dei giorni di fermo con allarme al trentesimo giorno per anno solare], [UC8]),
 ), caption: [Requisiti del gruppo H.]) <tab-gruppo-h>
 
 #heading(level: 3, outlined: false)[Gruppo I: vendita online] <gruppo-i>
 
 #status-table((
-  ([I1], [CAPTCHA prima della composizione del carrello], [Nel prototipo], [UC9]),
-  ([I2], [Acquisto concluso solo da utente identificato], [Nel prototipo], [UC9]),
-  ([I3], [Registrazione con dati anagrafici, email, cellulare e mezzo per il riscontro; cellulare associato a un solo utente nel sistema], [Nel prototipo], [UC9]),
-  ([I4], [SPID come alternativa alla registrazione], [Nel prototipo], [UC9]),
-  ([I5], [Massimo dieci titoli per evento e utente, valido a livello di sistema su tutti i front-end], [Nel prototipo], [UC9]),
-  ([I6], [Titolo non rilasciato a fine sessione, ma inviato con il mezzo scelto], [Nel prototipo], [UC9]),
-  ([I7], [Tracciamento delle operazioni dell’utente identificato], [Nel prototipo], [UC9]),
-  ([I8], [Connessione HTTPS con almeno TLS 1.2], [Fuori perimetro], [–]),
-  ([I9], [Deroga per eventi con vendita online fino a 1.000 titoli: bastano il CAPTCHA e le misure di sicurezza], [Fuori perimetro], [UC9]),
+  ([I1], [CAPTCHA prima della composizione del carrello], [UC9]),
+  ([I2], [Acquisto concluso solo da utente identificato], [UC9]),
+  ([I3], [Registrazione con dati anagrafici, email, cellulare e mezzo per il riscontro; cellulare associato a un solo utente nel sistema], [UC9]),
+  ([I4], [SPID come alternativa alla registrazione], [UC9]),
+  ([I5], [Massimo dieci titoli per evento e utente, valido a livello di sistema su tutti i front-end], [UC9]),
+  ([I6], [Titolo non rilasciato a fine sessione, ma inviato con il mezzo scelto], [UC9]),
+  ([I7], [Tracciamento delle operazioni dell’utente identificato], [UC9]),
+  ([I8], [Connessione HTTPS con almeno TLS 1.2], [–]),
+  ([I9], [Deroga per eventi con vendita online fino a 1.000 titoli: bastano il CAPTCHA e le misure di sicurezza], [UC9]),
 ), caption: [Requisiti del gruppo I.]) <tab-gruppo-i>
 
 #heading(level: 3, outlined: false)[Gruppo J: nominatività, cambio e rimessa in vendita] <gruppo-j>
 
 #status-table((
-  ([J1], [Titoli nominativi per impianti con capienza superiore a 5.000 posti, con esclusioni per tipologia di spettacolo], [Fuori perimetro], [UC9, UC10]),
-  ([J2], [Accesso subordinato al riconoscimento personale: il titolo non vale per l’ingresso se il fruitore non coincide con il nominativo], [Nel prototipo], [UC12]),
-  ([J3], [Cambio nominativo con annullo, nuovo titolo nominativo e correlazione tracciata], [Nel prototipo], [UC10]),
-  ([J4], [Rimessa in vendita con le sole informazioni della vendita primaria, nella sezione del sito primario], [Nel prototipo], [UC11]),
-  ([J5], [Informativa chiara su modalità, tempi e costi delle due operazioni], [Nel prototipo], [UC10, UC11]),
+  ([J1], [Titoli nominativi per impianti con capienza superiore a 5.000 posti, con esclusioni per tipologia di spettacolo], [UC9, UC10]),
+  ([J2], [Accesso subordinato al riconoscimento personale: il titolo non vale per l’ingresso se il fruitore non coincide con il nominativo], [UC12]),
+  ([J3], [Cambio nominativo con annullo, nuovo titolo nominativo e correlazione tracciata], [UC10]),
+  ([J4], [Rimessa in vendita con le sole informazioni della vendita primaria, nella sezione del sito primario], [UC11]),
+  ([J5], [Informativa chiara su modalità, tempi e costi delle due operazioni], [UC10, UC11]),
 ), caption: [Requisiti del gruppo J.]) <tab-gruppo-j>
 
+#pagebreak()
 #heading(level: 3, outlined: false)[Gruppo K: controllo accessi] <gruppo-k>
 
 #status-table((
-  ([K1], [Lista unica dei titoli validi per evento, anche emessi da più sistemi], [Desiderabile (D04)], [UC12]),
-  ([K2], [Registrazione in tempo reale di ogni accesso], [Desiderabile (D04)], [UC12]),
-  ([K3], [Inibizione del riutilizzo dello stesso titolo], [Desiderabile (D04)], [UC12]),
-  ([K4], [Nella lista unica solo nome e cognome degli intestatari], [Desiderabile (D04)], [UC12]),
-  ([K5], [Il varco è componente del sistema certificato: va descritto nell’istanza e verificato in certificazione], [Fuori perimetro], [UC12]),
+  ([K1], [Lista unica dei titoli validi per evento, anche emessi da più sistemi], [UC12]),
+  ([K2], [Registrazione in tempo reale di ogni accesso], [UC12]),
+  ([K3], [Inibizione del riutilizzo dello stesso titolo], [UC12]),
+  ([K4], [Nella lista unica solo nome e cognome degli intestatari], [UC12]),
+  ([K5], [Il varco è componente del sistema certificato: va descritto nell’istanza e verificato in certificazione], [UC12]),
 ), caption: [Requisiti del gruppo K.]) <tab-gruppo-k>
 
 #heading(level: 3, outlined: false)[Gruppo L: output e supporti] <gruppo-l>
 
 #status-table((
-  ([L1], [Sul titolo stampato: numero di carta, progressivo, prezzo, data e ora di emissione, sigillo e nome dell’intestatario, se nominativo], [Nel prototipo], [UC9]),
-  ([L2], [Render del titolo generato centralmente; stampanti come terminali senza capacità di elaborazione], [Nel prototipo], [UC9]),
-  ([L3], [Nessun modello di stampante prescritto], [Fuori perimetro], [–]),
+  ([L1], [Sul titolo stampato: numero di carta, progressivo, prezzo, data e ora di emissione, sigillo e nome dell’intestatario, se nominativo], [UC9]),
+  ([L2], [Render del titolo generato centralmente; stampanti come terminali senza capacità di elaborazione], [UC9]),
+  ([L3], [Nessun modello di stampante prescritto], [–]),
 ), caption: [Requisiti del gruppo L.]) <tab-gruppo-l>
-*/
