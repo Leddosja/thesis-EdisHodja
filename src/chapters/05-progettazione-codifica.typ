@@ -59,6 +59,7 @@
   #grid(
     columns: (1fr, 1fr),
     column-gutter: 0.4cm,
+    align: horizon,
     figure(screenshot-frame(path-left), caption: caption-left),
     figure(screenshot-frame(path-right), caption: caption-right),
   )
@@ -66,11 +67,11 @@
 
 #pagebreak()
 = Progettazione e codifica <progettazione-codifica>
-
+#v(0.2cm)
 Questo capitolo descrive come il prototipo è stato costruito: lo stack tecnologico adottato, l'architettura del modulo fiscale e l'ordine in cui è stata realizzata, i design pattern applicati e un estratto della codifica.
 
 == Tecnologie e strumenti <tecnologie-strumenti>
-
+#v(0.2cm)
 Di seguito viene data una panoramica delle tecnologie e degli strumenti utilizzati per la realizzazione del prototipo. Lo stack è quello già adottato da RelAi, l'applicazione ospitante con piattaforma CRM e loyalty multi-tenant di #azienda, in modo da integrare il modulo fiscale senza introdurre dipendenze aggiuntive né un ambiente di sviluppo separato da quello del resto del team.
 
 #tech-heading("PHP", "../../img/logos/php.svg") <tec-php>
@@ -176,7 +177,7 @@ if ($comandoEsistente !== null) {
 #v(1cm)
 #pagebreak()
 Ogni movimento porta anche l'impronta di quello precedente, così che un'alterazione di un record già scritto si manifesti come una mancata corrispondenza nel record successivo (#link(<uc-chiusura-digest>)[UC-6.1]):
-
+#v(1cm)
 #phpcode(```php
 $improntaPrecedente = $segmento->last_record_digest;
 
@@ -190,7 +191,7 @@ $transazione = FiscalTransaction::create([
 #v(1cm)
 
 Lo stato del sistema certificato deve restare consistente anche sotto accessi concorrenti (#link(<uc-carta>)[UC-3]) e il backend lo garantisce con un _optimistic locking_ sul campo `version` dove il cambio di stato controlla che nessun altro l'abbia già modificato nel frattempo, altrimenti rifiuta e chiede di rileggere lo stato.
-
+#v(1cm)
 #phpcode(```php
 $righeAggiornate = DB::table('fiscal_core_states')
     ->where('system_id', $statoLetto->system_id)
@@ -206,7 +207,7 @@ if ($righeAggiornate === 0) {
 #pagebreak()
 
 Il valore fiscale di un titolo o di un movimento del log dipende dal fatto che, una volta scritto, non possa più essere alterato né cancellato fuori dal percorso previsto dal sistema. Il prototipo applica questo vincolo a livello di applicazione con un trait `Eloquent` condiviso da tutti i model dello stato persistente, che intercetta ogni tentativo di `UPDATE` o `DELETE` e lo blocca sollevando un'eccezione prima che raggiunga il database:
-
+#v(1cm)
 #phpcode(```php
 protected static function bootIsAppendOnly(): void
 {
@@ -285,8 +286,8 @@ Il cliente non accede al pannello Filament, riservato all'operatore, bensì inte
 Il cliente si identifica con SPID simulato oppure con nome, cognome e telefono. In caso l'utente non venisse identificato vengono richiesti ulteriori dati per effettuare la registrazione. Di seguito avviene la verifica via OTP e sceglie i biglietti dove il carrello è parte della stessa schermata e si aggiorna a ogni aggiunta mostrando il totale da pagare.
 #v(1.2cm)
 #screenshot-pair(
-  "../../img/screenshots/dati.png", [Figura 4: schermata di identificazione dell'utente],
-  "../../img/screenshots/biglietti.png", [Figura 5: schermata scelta dei biglietti disponibili],
+  "../../img/screenshots/dati.png", [Figura 4: Schermata di identificazione dell'utente],
+  "../../img/screenshots/biglietti.png", [Figura 5: Schermata scelta dei biglietti disponibili],
 ) <fig-storefront-dati-biglietti>
 #v(1fr)
 
@@ -295,8 +296,8 @@ Il cliente si identifica con SPID simulato oppure con nome, cognome e telefono. 
 Il pagamento è delegato a Stripe Checkout, che offre carta, Apple Pay, Satispay e il wallet Link e se non va a buon fine, nessun titolo viene emesso né scritto nel log. Confermato il pagamento, il titolo è consultabile fin da subito tramite un link firmato da token, senza bisogno di login: la vista del biglietto con il codice QR da presentare al varco, lo stesso QR in formato immagine e il PDF stampabile, serviti da un controller pubblico separato dal componente Livewire.
 #v(1.2cm)
 #screenshot-pair(
-  "../../img/screenshots/pagamento.png", [Figura 6: schermata del pagamento],
-  "../../img/screenshots/biglietto-emesso.png", [Figura 7: schermata del biglietto con QR code],
+  "../../img/screenshots/pagamento.png", [Figura 6: Schermata del pagamento],
+  "../../img/screenshots/biglietto-emesso.png", [Figura 7: Schermata del biglietto con QR code],
 ) <fig-storefront-pagamento-biglietto>
 #v(1.2cm)
 
@@ -307,7 +308,7 @@ Il pagamento è delegato a Stripe Checkout, che offre carta, Apple Pay, Satispay
 In entrambe le interfacce la pagina (o il componente) si limita a raccogliere e normalizzare l'input: la decisione se un'operazione è ammessa, e la sua esecuzione, spettano sempre al servizio di dominio sottostante. Non è una scelta di stile perché in un sistema di emissione certificato, verificare la conformità normativa si deve tradurre nel leggere un numero finito di classi in `App\Fiscal\Support`, non ogni schermata che può toccare un dato fiscale.
 
 Sul pannello di back-office le azioni Filament risolvono sistema, carta e segmento attivi tramite `FiscalEnvironment` e delegano l'operazione al servizio corrispondente, come mostra l'annullo di un titolo:
-
+#v(1cm)
 #phpcode(```php
 ->action(function (Title $record, array $data): void
 {
@@ -356,8 +357,8 @@ La formattazione dei singoli campi è centralizzata in `FixedWidthFormatter`, ch
 I due metodi restano separati perché `fields()` viene usato anche altrove: la pagina `EmissioneTitolo` lo chiama direttamente per mostrare il tracciato in una tabella, senza passare dalla stringa concatenata prodotta da `build()`.
 #v(0.8cm)
 
-#screenshot("../../img/patterns/builder.png", caption: [Figura 8: Builder Design Pattern]) <pattern-builder>
-
+#screenshot("../../img/patterns/builder.png", caption: [Figura 8: Builder]) <pattern-builder>
+#pagebreak()
 === Facade <pattern-facade>
 
 Il pattern strutturale *Facade* fornisce un'interfaccia unica per un sottosistema composto da più parti correlate. `FiscalEnvironment::active()` svolge questo ruolo andando a risolvere in un'unica chiamata il sistema certificato attivo, la carta di attivazione associata, verifica e aggiorna lo stato della macchina a stati, chiude i segmenti di log rimasti aperti da giornate precedenti e apre quello del giorno corrente.
@@ -365,7 +366,7 @@ Il pattern strutturale *Facade* fornisce un'interfaccia unica per un sottosistem
 Il metodo nasconde cinque classi (`CertifiedSystem`, `ActivationCard`, `SystemStateMachine`, `FiscalLogSegment`, `FiscalLogSegmentCloser`) ed è chiamato così com'è da quattordici punti diversi del codice. Senza la facciata, ognuno di quei punti dovrebbe ripetere la stessa sequenza di cinque controlli, con il rischio di sbagliarne l'ordine.
 #v(0.8cm)
 
-#screenshot("../../img/patterns/facade.png", caption: [Figura 9: Facade Design Pattern]) <pattern-facade>
+#screenshot("../../img/patterns/facade.png", caption: [Figura 9: Facade]) <pattern-facade>
 
 #pagebreak()
 === Command <pattern-command>
@@ -374,4 +375,4 @@ Il pattern comportamentale *Command* incapsula una richiesta come oggetto, invec
  La classe `FiscalWriter` non sa cosa sia un titolo o un abbonamento ma riceve un comando generico e scrive una riga di `fiscal_transactions` all'interno del database.
 #v(0.8cm)
 
-#screenshot("../../img/patterns/command.png", caption: [Figura 10: Command Design Pattern]) <pattern-command>
+#screenshot("../../img/patterns/command.png", caption: [Figura 10: Command]) <pattern-command>
