@@ -1,9 +1,73 @@
 #import "shared.typ": *
 
+#set raw(syntaxes: "../php-mini.sublime-syntax")
+
+#let phpcode(body, caption: none) = {
+  let listing = align(left, block(
+    fill: rgb("f7f7f9"),
+    stroke: 0.5pt + rgb("b8b8bd"),
+    radius: 4pt,
+    width: 100%,
+    inset: 10pt,
+    breakable: false,
+  )[
+    #show raw.where(block: true): it => {
+      set text(font: "DejaVu Sans Mono", size: 8.5pt)
+      set par(justify: false, first-line-indent: 0pt, leading: 1.85em)
+      grid(
+        columns: (1.4em, 1fr),
+        column-gutter: 10pt,
+        row-gutter: 4pt,
+        ..it.lines.map(line => (
+          align(right)[#text(fill: rgb("9a9aa5"), size: 8pt)[#line.number]],
+          align(left)[#line.body],
+        )).flatten()
+      )
+    }
+    #body
+  ])
+  figure(listing, caption: caption, kind: raw, supplement: [Listato])
+}
+
+#let screenshot(path, caption: none, pull-left: 1cm, pull-right: 1.5cm) = {
+  figure(
+    pad(left: -pull-left, right: -pull-right)[
+      #block(
+        fill: rgb("f7f7f9"),
+        stroke: 0.75pt + rgb("b8b8bd"),
+        radius: 6pt,
+        inset: 10pt,
+        width: 100%,
+        breakable: false,
+      )[#image(path, width: 100%)]
+    ],
+    caption: caption,
+  )
+}
+
+#let screenshot-frame(path) = block(
+  fill: rgb("f7f7f9"),
+  stroke: 0.75pt + rgb("b8b8bd"),
+  radius: 6pt,
+  inset: 10pt,
+  width: 100%,
+  breakable: false,
+)[#image(path, width: 100%)]
+
+#let screenshot-pair(path-left, caption-left, path-right, caption-right, pull-left: 2cm, pull-right: 2cm) = pad(left: -pull-left, right: -pull-right)[
+  #show figure.caption: none
+  #grid(
+    columns: (1fr, 1fr),
+    column-gutter: 0.4cm,
+    figure(screenshot-frame(path-left), caption: caption-left),
+    figure(screenshot-frame(path-right), caption: caption-right),
+  )
+]
+
 #pagebreak()
 = Progettazione e codifica <progettazione-codifica>
 
-Questo capitolo descrive come il prototipo è stato costruito: lo stack tecnologico adottato, il ciclo di vita seguito nello sviluppo, l'organizzazione del codice e i design pattern applicati.
+Questo capitolo descrive come il prototipo è stato costruito: lo stack tecnologico adottato, l'architettura del modulo fiscale e l'ordine in cui è stata realizzata, i design pattern applicati e un estratto della codifica.
 
 == Tecnologie e strumenti <tecnologie-strumenti>
 
@@ -18,9 +82,11 @@ Linguaggio di programmazione lato server su cui è costruita l'intera applicazio
 - dichiarazione esplicita dei tipi di ritorno e dei parametri, utile a individuare in anticipo un valore incoerente con il dato fiscale atteso;
 - classi `final` per i servizi di dominio, per impedirne l'estensione incontrollata e mantenere univoco il punto in cui un'operazione fiscale viene eseguita.
 
+#pagebreak()
+
 #tech-heading("Laravel", "../../img/logos/laravel.svg") <tec-laravel>
 
-Framework PHP full-stack che fornisce l'ORM (`Eloquent`), il sistema di migrazioni, la gestione delle code e la validazione. Nel modulo fiscale è stato impiegato soprattutto per: le migrazioni che definiscono lo schema _append-only_ delle tabelle fiscali, con trigger a livello di database che impediscono operazioni di `UPDATE` e `DELETE`; i model `Eloquent` di titoli, abbonamenti, transazioni e stato del sistema certificato; l'integrazione con lo _scheduler_ dei task per le chiusure di giornata.
+Framework PHP full-stack che fornisce l'ORM (`Eloquent`), il sistema di migrazioni, la gestione delle code e la validazione. Nel modulo fiscale è stato impiegato soprattutto per: le migrazioni che definiscono lo schema _append-only_ delle tabelle fiscali, con il vincolo imposto a livello applicativo contro operazioni di `UPDATE` e `DELETE`; i model `Eloquent` di titoli, abbonamenti, transazioni e stato del sistema certificato; l'integrazione con lo _scheduler_ dei task per le chiusure di giornata.
 
 #tech-heading("Filament", "../../img/logos/filament.svg") <tec-filament>
 
@@ -33,8 +99,8 @@ Libreria che permette a Filament di aggiornare l'interfaccia via AJAX senza scri
 #tech-heading("MariaDB", "../../img/logos/mariadb.svg") <tec-mariadb>
 
 Sistema di gestione di basi di dati relazionali, adottato come unico storage del prototipo e già in uso in azienda con differenti tabelle riutilizzabili.
-\ Le tabelle fiscali sono progettate per essere _append-only_ — solo inserimento, mai modifica né cancellazione — tramite trigger SQL, per rispecchiare il vincolo di immodificabilità richiesto ad un sistema di emissione certificato.
-
+\ Le tabelle fiscali sono progettate per essere _append-only_ — solo inserimento, mai modifica né cancellazione — per rispecchiare il vincolo di immodificabilità richiesto ad un sistema di emissione certificato.
+#pagebreak()
 #tech-heading("DDEV", "../../img/logos/ddev.svg") <tec-ddev>
 
 Ambiente di sviluppo containerizzato (Docker) che fornisce web server, PHP, MariaDB e i servizi di supporto in locale, identico a quello usato dal resto del team di RelAi, così da poter eseguire la suite di test e il linting con gli stessi strumenti già in uso nel progetto ospitante.
@@ -49,18 +115,13 @@ Framework di testing, costruito sopra PHPUnit, con cui è stata scritta la suite
 
 Sistema di controllo di versione utilizzato per tracciare lo sviluppo incrementale del prototipo: il lavoro di stage è confluito in un unico ramo dedicato, con commit atomici e descrittivi per ogni singola funzionalità. Il ramo è integrato nella pipeline di integrazione continua già attiva sul progetto ospitante, che esegue formattazione del codice, analisi statica e suite di test ad ogni operazione di push.
 
-== Ciclo di vita del software <ciclo-vita-software>
+#pagebreak()
+== Progettazione backend <progettazione-backend>
 
-Lo sviluppo del prototipo ha seguito un modello iterativo e incrementale scandito dagli obiettivi dello stage. Ogni obiettivo è stato scomposto in funzionalità più piccole, implementate una alla volta e integrate immediatamente nel ramo di lavoro, ciascuna accompagnata dal relativo test automatico prima di passare alla successiva.
+Il _backend_ riceve una richiesta, controlla se è lecita secondo le regole che il sistema deve rispettare, e solo se lo è la scrive in modo definitivo. È qui che la normativa diventa codice ed ogni articolo del #link(<dm2000>)[D.M. 2000] o dei provvedimenti AdE che impone un dato obbligatorio, un termine, un formato, si traduce in un controllo preciso in questa parte del sistema.
 
-L'ordine seguito è stato il seguente: prima il modello dati e la simulazione della carta di attivazione (#link(<uc-carta>)[UC-3]); poi il motore di emissione dei titoli (#link(<uc-emissione>)[UC-4]); poi la catena di hash per l'integrità delle transazioni; poi la chiusura di giornata (#link(<uc-chiusura>)[UC-6]); poi i tracciati di esportazione, nei due formati ASCII a campi fissi e XML; infine i riepiloghi e le funzioni di servizio, come la ricerca per sigillo o per carta e progressivo (#link(<uc-riepiloghi>)[UC-7]). L'ordine non è arbitrario: ricalca la stessa dipendenza funzionale già individuata nella pianificazione settimanale (sezione #link(<organizzazione-lavoro>)[3.2]), per cui il log registra i movimenti prodotti dall'emissione e i riepiloghi leggono movimenti che devono già esistere nel log.
-
-Questo approccio ha permesso di validare ogni blocco con un riscontro concreto — il test che passa, la pagina che si apre nel pannello — prima di costruirvi sopra il blocco successivo, riducendo il rischio di dover tornare indietro su assunzioni sbagliate quando il dominio normativo presentava ambiguità o dettagli scoperti solo durante l'implementazione, come nel caso discusso a proposito del #link(<risk-interpretazione-normativa>)[rischio 2] del Capitolo 3.
-
-== Progettazione <progettazione>
-
-Il modulo fiscale è organizzato in un namespace dedicato, `App\Fiscal`, separato dal resto dell'applicazione RelAi, con una struttura a sotto-namespace per responsabilità, riassunta nella tabella seguente e descritta nelle sezioni successive.
-
+Il backend del prototipo vive in un namespace dedicato, `App\Fiscal` la cui struttura è mostrata di seguito, tenuto separato dal resto dell'applicazione RelAi.
+#v(0.6cm)
 #table(
   columns: (4.75cm, 1fr),
   inset: 7pt,
@@ -69,79 +130,248 @@ Il modulo fiscale è organizzato in un namespace dedicato, `App\Fiscal`, separat
   table.header([*Namespace*], [*Responsabilità*]),
   [`App\Fiscal\Models`], [Stato persistente del sistema: sistema certificato, carta di attivazione, titoli, abbonamenti, transazioni, annullamenti.],
   [`App\Fiscal\Support`], [Servizi di dominio: emissione, annullo, macchina a stati del sistema certificato, scrittura idempotente, chiusura di segmento di log.],
-  [`App\Fiscal\Support\ Tracciato`], [Costruttori dei tracciati di esportazione ASCII e XML e relativa validazione contro il DTD 2019.],
+  [`App\Fiscal\Support\Tracciato`], [Costruttori dei tracciati di esportazione ASCII e XML e relativa validazione contro il DTD 2019.],
   [`App\Fiscal\Enums`], [Tabelle normative codificate come enum tipizzati.],
 ) <tab-namespace-fiscal>
+#v(0.6cm)
+I sotto-namespace sono stati implementati seguendo un modello iterativo e incrementale: ogni blocco è stato realizzato, accompagnato dal relativo test automatico prima di passare al successivo.
 
-=== `App\Fiscal\Models` <namespace-models>
+Il log registra infatti i movimenti prodotti dall'emissione, e i riepiloghi leggono movimenti che devono già esistere nel log e costruire i blocchi in quest'ordine ha permesso di validare ciascuno con un riscontro concreto prima di costruire sopra il successivo, riducendo il rischio di dover tornare indietro su assunzioni sbagliate quando il dominio normativo presentava ambiguità scoperte solo durante l'implementazione.
 
-Contiene i model `Eloquent` che rappresentano lo stato persistente del sistema: il sistema certificato (`CertifiedSystem`), la carta di attivazione (`ActivationCard`), lo stato corrente del motore fiscale (`FiscalCoreState`), i comandi e le transazioni fiscali (`FiscalCommand`, `FiscalTransaction`), i titoli e le loro componenti di importo (`Title`, `TitleAmountComponent`), gli abbonamenti (`Subscription`, `SubscriptionEntitlement`) e gli annullamenti (`Cancellation`). Le tabelle sottostanti sono progettate come _append-only_, con trigger di database che impediscono `UPDATE` e `DELETE` una volta scritta una riga, in modo da realizzare il requisito A4 (#link(<tab-gruppo-a>)[gruppo A]).
+#pagebreak()
+=== Meccanismi implementativi <meccanismi-implementativi>
 
-=== `App\Fiscal\Support` <namespace-support>
+I vincoli imposti dalla normativa — un dato non falsificabile, una richiesta che non va eseguita due volte, un log che non si può alterare senza lasciarne traccia, uno stato che resta coerente anche sotto richieste concorrenti — non restano principi astratti: diventano meccanismi precisi nel codice del backend. Le righe seguenti ne isolano cinque, ciascuno nel punto esatto del codice in cui agisce.
+#v(0.5cm)
 
-Contiene i servizi di dominio che implementano la logica applicativa: `TitleIssuer` (emissione di un titolo, #link(<uc-emissione>)[UC-4]), `SubscriptionIssuer` (emissione di un abbonamento), `CancellationIssuer` (annullamento, #link(<uc-annullo>)[UC-5]), `SystemStateMachine` (transizioni di stato del sistema certificato, #link(<uc-carta>)[UC-3]), `FiscalWriter` (scrittura idempotente delle transazioni fiscali), `FiscalLogSegmentCloser` (chiusura di un segmento di log con firma simulata, #link(<uc-chiusura>)[UC-6]), `CardSimulator` (simulazione della carta di attivazione) e `FiscalEnvironment` (configurazione dell'ambiente fiscale).
+Ogni transazione porta un sigillo fiscale non falsificabile (#link(<uc-emissione>)[UC-4]), ottenuto concatenando i dati della transazione, applicando una funzione di hash e prendendone i primi sedici caratteri:
 
-=== `App\Fiscal\Support\Tracciato` <namespace-tracciato>
+#phpcode(```php
+public function calculateSeal(ActivationCard $card, string $fiscalDate, string $fiscalTime, int $amountCents, int $progressive): string
+{
+    $canonico = implode('|', [$card->card_code, $fiscalDate, $fiscalTime, $amountCents, $progressive]);
+    return substr(hash('sha256', $canonico), 0, 16);
+}
+```, caption: [Calcolo del sigillo fiscale]) <listing-seal>
 
-Contiene i costruttori dei formati di esportazione richiesti dalla normativa: i record a campi fissi in formato ASCII (`HeaderRecordBuilder`, `TitleRecordBuilder`, `DailySummaryDocumentBuilder`, `EventRecordBuilder`, `EventDailySummaryBuilder`), il formattatore condiviso dei campi (`FixedWidthFormatter`, si veda il listato più avanti) e il tracciato alternativo in XML con relativa validazione contro il DTD 2019 (`TitleXmlBuilder`, `TitleXmlValidator`).
+#v(1cm)
 
-=== `App\Fiscal\Enums` <namespace-enums>
+La _chiave di idempotenza_ garantisce che una richiesta ripetuta, ad esempio un doppio click o un retry di rete, non venga eseguita due volte: se il comando è già noto, il backend non lo riscrive, ma restituisce l'esito della prima esecuzione.
 
-Contiene gli enum tipizzati che codificano le tabelle normative: `TitleTypeCode` (tipi di titolo, con metodi come `requiresCause()` per sapere se un tipo richiede obbligatoriamente una causale) e `CancellationCauseCode` (causali di annullamento, #link(<tab-causali>)[tabella delle causali]). Rappresentare queste tabelle come enum, invece che come stringhe libere o costanti sparse, fa sì che un valore non previsto dalla normativa sia un errore individuabile già in fase di analisi statica, non solo a runtime.
+#phpcode(```php
+$comandoEsistente = FiscalCommand::query()
+    ->where('system_id', $system->id)
+    ->where('idempotency_key', $idempotencyKey)
+    ->first();
 
-Lo strato di presentazione — la pagina Filament `App\Filament\Pages\EmissioneTitolo` e le pagine analoghe per abbonamenti e riepiloghi — resta volutamente sottile: raccoglie l'input dell'operatore e lo passa ai servizi di `App\Fiscal\Support`, senza contenere essa stessa la logica fiscale, nella stessa separazione tra backend e frontend già adottata nel resto dell'applicazione RelAi.
+if ($comandoEsistente !== null) {
+    return match ($comandoEsistente->status) {
+        'COMPLETED' => FiscalTransaction::findOrFail($comandoEsistente->result_fiscal_tx_id),
+        'PENDING' => throw new RuntimeException("Il comando {$idempotencyKey} è già in corso."),
+        'FAILED' => throw new RuntimeException("Il comando {$idempotencyKey} è già fallito: {$comandoEsistente->failure_code}"),
+    };
+}
+```, caption: [Verifica della chiave di idempotenza]) <listing-idempotenza>
 
-== Design Pattern utilizzati <design-pattern>
+#v(1cm)
+#pagebreak()
+Ogni movimento porta anche l'impronta di quello precedente, così che un'alterazione di un record già scritto si manifesti come una mancata corrispondenza nel record successivo (#link(<uc-chiusura-digest>)[UC-6.1]):
 
-L'architettura del modulo fiscale fa ricorso a diversi design pattern, scelti per rispondere ai vincoli imposti dalla normativa — immodificabilità dei dati, integrità del log, idempotenza delle scritture — più che per esigenze stilistiche. Di seguito vengono analizzati i principali, con riferimento al punto del codice in cui sono applicati.
+#phpcode(```php
+$improntaPrecedente = $segmento->last_record_digest;
 
-=== Domain Service (Service Layer) <pattern-domain-service>
+$transazione = FiscalTransaction::create([
+    // ...
+    'record_digest' => hash('sha256', $sigillo . $progressivo . $amountCents . $improntaPrecedente),
+    'previous_record_digest' => $improntaPrecedente,
+]);
+```, caption: [Concatenazione dell'impronta del movimento precedente]) <listing-hash-chain>
 
-Ogni operazione fiscale rilevante — emettere un titolo, emettere un abbonamento, annullare, chiudere un segmento di log — è incapsulata in una classe `final` dedicata (`TitleIssuer`, `SubscriptionIssuer`, `CancellationIssuer`, `FiscalLogSegmentCloser`) con un unico metodo pubblico che esegue l'intera operazione in modo atomico, piuttosto che distribuire la logica tra model e pagina Filament.
+#v(1cm)
 
-=== State machine con locking ottimistico <pattern-state-machine>
+Lo stato del sistema certificato deve restare consistente anche sotto accessi concorrenti (#link(<uc-carta>)[UC-3]) e il backend lo garantisce con un _optimistic locking_ sul campo `version` dove il cambio di stato controlla che nessun altro l'abbia già modificato nel frattempo, altrimenti rifiuta e chiede di rileggere lo stato.
 
-`SystemStateMachine` modella gli stati del sistema certificato (bloccato, pronto, ecc., #link(<uc-carta>)[UC-3]) e ne gestisce le transizioni con un numero di versione: la scrittura della nuova riga di stato avviene con un `UPDATE ... WHERE version = ?`, e se nessuna riga viene aggiornata — perché un'altra richiesta ha già cambiato lo stato — l'operazione fallisce esplicitamente invece di sovrascrivere silenziosamente un cambiamento concorrente. È lo stesso meccanismo richiamato a proposito del #link(<risk-concorrenza>)[rischio 3] nel Capitolo 3, ed è tra i punti coperti dai test di concorrenza.
+#phpcode(```php
+$righeAggiornate = DB::table('fiscal_core_states')
+    ->where('system_id', $statoLetto->system_id)
+    ->where('version', $statoLetto->version)
+    ->update([/* ... */ 'version' => $statoLetto->version + 1]);
 
-=== Idempotenza tramite chiave di richiesta <pattern-idempotenza>
+if ($righeAggiornate === 0) {
+    throw new RuntimeException("Lo stato del sistema {$statoLetto->system_id} è cambiato nel frattempo: rileggilo e riprova.");
+}
+```, caption: [Locking ottimistico sul campo `version`]) <listing-locking>
 
-`FiscalWriter` accetta una chiave di idempotenza per ogni comando fiscale: se la stessa richiesta viene inviata due volte, per esempio a seguito di un _retry_ di rete, la seconda esecuzione ritrova la transazione già scritta invece di duplicarla. Il pattern è necessario perché le tabelle fiscali sono _append-only_ e non possono essere corrette a posteriori.
+#v(1cm)
+#pagebreak()
 
-=== Catena di hash (tamper-evident log) <pattern-hash-chain>
+Il valore fiscale di un titolo o di un movimento del log dipende dal fatto che, una volta scritto, non possa più essere alterato né cancellato fuori dal percorso previsto dal sistema. Il prototipo applica questo vincolo a livello di applicazione con un trait `Eloquent` condiviso da tutti i model dello stato persistente, che intercetta ogni tentativo di `UPDATE` o `DELETE` e lo blocca sollevando un'eccezione prima che raggiunga il database:
 
-Le transazioni di un segmento di log sono collegate da un'impronta calcolata anche sull'hash della transazione precedente, così che un'alterazione o una rimozione di una riga rompa la catena per tutte le righe successive. È la tecnica con cui i registratori telematici garantiscono l'integrità del giornale di fondo, e nel prototipo realizza il requisito E3 (#link(<tab-gruppo-e>)[gruppo E]).
+#phpcode(```php
+protected static function bootIsAppendOnly(): void
+{
+    static::updating(function (self $model): void {
+        throw new RuntimeException(static::class . ' è append-only: UPDATE non è ammesso.');
+    });
+
+    static::deleting(function (self $model): void {
+        throw new RuntimeException(static::class . ' è append-only: DELETE non è ammesso.');
+    });
+}
+```, caption: [Vincolo append-only sui model]) <listing-append-only>
+
+#pagebreak()
+== Progettazione frontend <progettazione-frontend>
+
+Il prototipo deve rispondere a due esigenze diverse, affidate ai due attori: l'operatore di back-office, che gestisce eventi, titoli e abbonamenti per conto dell'organizzatore, e il cliente, che acquista un titolo sullo storefront online in modalità white-label.
+
+Il frontend del prototipo riflette questa distinzione in due interfacce separate con un pannello riservato all'operatore e uno storefront pubblico rivolto al cliente entrambe limitate a raccogliere l'input e a passarlo ai servizi di dominio di `App\Fiscal\Support`, senza contenere esse stesse logica fiscale.
+
+=== Pannello di back-office <frontend-backoffice>
+
+Il back-office non è un insieme di pagine separate, una per funzione, ma un'unica pagina Filament, `EmissioneTitolo`, organizzata in schede: l'operatore passa dall'una all'altra senza mai lasciare la pagina, mentre Livewire sostituisce solo il contenuto interessato. La scelta riduce la navigazione a un solo punto di ingresso e tiene vicine funzioni che condividono lo stesso contesto, come lo stesso evento e lo stesso organizzatore, invece di separarle in risorse Filament indipendenti.
+
+#table(
+  columns: (4.75cm, 1fr),
+  inset: 7pt,
+  stroke: 0.5pt + rgb("b8b8bd"),
+  fill: (_, row) => if calc.odd(row) { rgb("f5f5f7") } else { white },
+  table.header([*Scheda*], [*Contenuto*]),
+  [*Log titoli*], [Tabella dei titoli emessi, con le azioni di emissione, annullo e, sulla singola riga, cambio nominativo e rimessa in vendita su richiesta del cliente.],
+  [*Abbonamenti*], [Emissione e annullo degli abbonamenti, con la stessa logica dei log titoli.],
+  [*Riepiloghi*], [Consultazione dei riepiloghi giornalieri e mensili.],
+  [*Trasmissioni*], [Trasmissione dei moduli previsti dalla normativa, pronti per l'invio all'Agenzia delle Entrate e comunicazione dei periodi di inattività.],
+) <tab-pagine-filament>
+
+Ciascuna scheda è stata realizzata solo dopo che il servizio di dominio corrispondente era già stato implementato e validato dal relativo test.
+
+#pagebreak()
+#v(1fr)
+#heading(level: 4, numbering: none, outlined: false)[#text(size: 0.6cm, weight: "bold")[Log titoli]]
+#v(0.4cm)
+La #link(<fig-backoffice-log-titoli>)[figura seguente] mostra la scheda "Log titoli": sulla riga di un titolo valido, il menu delle azioni espone proprio "Cambia nominativo" e "Rimetti in vendita", le due operazioni su richiesta del cliente.
+
+Le tre schede riassuntive in alto (titoli validi, titoli annullati, valore complessivo) permettono all'operatore di verificare lo stato del registro senza contare le righe della tabella sottostante e il pulsante "Emetti titolo" apre la stessa form del caso d'uso #link(<uc-emissione>)[UC-4]\; il pulsante "Annulla", disponibile su ogni riga di eventi non annullati o non passati, chiede invece la causale tra i dieci codici previsti dalla normativa, coerentemente con il #link(<uc-annullo>)[UC-5].
+#v(1.2cm)
+#screenshot("../../img/screenshots/log-titoli.png", caption: [Figura 1: tab dei log dei titoli]) <fig-backoffice-log-titoli>
+#v(1fr)
+
+#pagebreak()
+#v(1fr)
+#heading(level: 4, numbering: none, outlined: false)[#text(size: 0.6cm, weight: "bold")[Riepiloghi]]
+#v(0.4cm)
+Nella scheda "Riepiloghi", l'operatore seleziona una giornata e vede i titoli e gli abbonamenti emessi e annullati per ciascun evento, insieme ai proventi e da qui scarica anche il documento di riepilogo e il modulo C.1, un'aggiunta richiesta dalla checklist di certificazione.
+
+È possibile alternare la vista giornaliera e quella mensile mantenendo la stessa tabella dove ogni riga riporta un singolo evento, non un totale aggregato per giornata: un organizzatore con più eventi lo stesso giorno compare quindi su più righe distinte, una per evento, così che il riepilogo resti tracciabile fino al singolo evento invece di nascondere il dettaglio dietro una somma.
+#v(1.2cm)
+#screenshot("../../img/screenshots/riepiloghi.png", caption: [Figura 2: tab dei riepiloghi giornalieri e mensili]) <fig-backoffice-riepiloghi>
+#v(1fr)
+
+#pagebreak()
+#v(1fr)
+#heading(level: 4, numbering: none, outlined: false)[#text(size: 0.6cm, weight: "bold")[Trasmissioni]]
+#v(0.4cm)
+La scheda "Trasmissioni", infine, raccoglie due cose distinte che la normativa tratta separatamente: la comunicazione preventiva a SIAE dei periodi di inattività del sistema (simulata), e il giornale fiscale, un segmento per ogni giornata di attività. Per ogni segmento chiuso l'interfaccia mostra se la catena di impronte è integra, la stessa verifica descritta a proposito della catena di hash, ricostruendola in lettura invece di limitarsi a fidarsi del dato salvato.
+#v(1.2cm)
+#screenshot("../../img/screenshots/trasmissioni.png", caption: [Figura 3: tab delle trasmissioni e giornale fiscale]) <fig-backoffice-trasmissioni>
+#v(1fr)
+#pagebreak()
+
+=== Interfaccia di vendita online <frontend-storefront>
+
+Il cliente non accede al pannello Filament, riservato all'operatore, bensì interagisce con un componente Livewire a pagina intera, `TicketPurchase`, raggiungibile su `/biglietteria-fiscale/{event}` senza autenticazione preventiva. A differenza del back-office, qui ogni fase dell'acquisto è gestita come stato interno dello stesso componente, non come scheda tra cui l'operatore sceglie liberamente bensì il cliente avanza in un unico ordine — verifica del CAPTCHA, dati anagrafici o SPID, conferma del codice OTP, scelta dei biglietti e pagamento, conferma finale con generazione del codice QR allegato al biglietto.
+
+#heading(level: 4, numbering: none, outlined: false)[#text(size: 0.6cm, weight: "bold")[Dati e biglietti]]
+Il cliente si identifica con SPID simulato oppure con nome, cognome e telefono. In caso l'utente non venisse identificato vengono richiesti ulteriori dati per effettuare la registrazione. Di seguito avviene la verifica via OTP e sceglie i biglietti dove il carrello è parte della stessa schermata e si aggiorna a ogni aggiunta mostrando il totale da pagare.
+#v(1.2cm)
+#screenshot-pair(
+  "../../img/screenshots/dati.png", [Figura 4: schermata di identificazione dell'utente],
+  "../../img/screenshots/biglietti.png", [Figura 5: schermata scelta dei biglietti disponibili],
+) <fig-storefront-dati-biglietti>
+#v(1fr)
+
+#heading(level: 4, numbering: none, outlined: false)[#text(size: 0.6cm, weight: "bold")[Pagamento e biglietto emesso]]
+#v(0.4cm)
+Il pagamento è delegato a Stripe Checkout, che offre carta, Apple Pay, Satispay e il wallet Link e se non va a buon fine, nessun titolo viene emesso né scritto nel log. Confermato il pagamento, il titolo è consultabile fin da subito tramite un link firmato da token, senza bisogno di login: la vista del biglietto con il codice QR da presentare al varco, lo stesso QR in formato immagine e il PDF stampabile, serviti da un controller pubblico separato dal componente Livewire.
+#v(1.2cm)
+#screenshot-pair(
+  "../../img/screenshots/pagamento.png", [Figura 6: schermata del pagamento],
+  "../../img/screenshots/biglietto-emesso.png", [Figura 7: schermata del biglietto con QR code],
+) <fig-storefront-pagamento-biglietto>
+#v(1.2cm)
+
+#pagebreak()
+
+=== Separazione tra presentazione e logica <frontend-pagina-servizio>
+
+In entrambe le interfacce la pagina (o il componente) si limita a raccogliere e normalizzare l'input: la decisione se un'operazione è ammessa, e la sua esecuzione, spettano sempre al servizio di dominio sottostante. Non è una scelta di stile perché in un sistema di emissione certificato, verificare la conformità normativa si deve tradurre nel leggere un numero finito di classi in `App\Fiscal\Support`, non ogni schermata che può toccare un dato fiscale.
+
+Sul pannello di back-office le azioni Filament risolvono sistema, carta e segmento attivi tramite `FiscalEnvironment` e delegano l'operazione al servizio corrispondente, come mostra l'annullo di un titolo:
+
+#phpcode(```php
+->action(function (Title $record, array $data): void
+{
+    try
+    {
+        [$sistema, $carta, $segmentoId] = app(FiscalEnvironment::class)->active();
+
+        app(CancellationIssuer::class)->cancelTitle(
+            system: $sistema,
+            card: $carta,
+            logSegmentId: $segmentoId,
+            idempotencyKey: (string) Str::uuid(),
+            originalTitle: $record,
+            causeCode: $data['causale'],
+            reasonText: $data['motivo'] ?? null,
+            requestedByUserId: auth()->id(),
+        );
+
+        Notification::make()->title("Titolo #{$record->id} annullato")->success()->send();
+    }
+    catch (Throwable $errore)
+    {
+        Notification::make()->title('Annullo rifiutato')->body($errore->getMessage())->danger()->send();
+    }
+})
+```, caption: [Azione Filament "Annulla"]) <listing-backoffice-delega>
+
+#pagebreak()
+La pagina non sa, e non deve sapere, quali causali escludano un titolo dall'annullo: quella regola vive in `CancellationIssuer`. Lo stesso schema regge l'emissione, il cambio nominativo, la rimessa in vendita e l'eliminazione, cambia solo il servizio invocato non la struttura della delega.\  Sullo storefront il principio è identico: `TicketPurchase` interroga `CaptchaVerifier`, `OtpChallenger`, `IdentifiedUserRegistrar`, `CartManager` e `PaymentEngine` a ogni passo del wizard, e si limita a reagire al loro esito aggiornando lo stato del componente, senza mai decidere da sé un importo o una capienza.
+
+Le due interfacce convergono così sullo stesso strato di servizi e sullo stesso scrittore `FiscalWriter` che non distingue se la richiesta arriva dal pannello back-office o da un passo del checkout online, e questo garantisce che la regola fiscale sia applicata una sola volta, indipendentemente da quale delle due interfacce la invochi.
+
+#pagebreak()
+
+== Design Pattern <design-pattern>
+
+Tre problemi si ripetono più volte nel modulo fiscale: costruire lo stesso oggetto in rappresentazioni diverse (un tracciato ASCII, un documento XML), nascondere dietro un'unica chiamata un'inizializzazione che coinvolge più classi correlate, e riconoscere un'operazione già eseguita invece di ripeterla. Le sezioni seguenti descrivono i tre design pattern con cui il modulo fiscale (`App\Fiscal`) risponde a ciascun problema.
 
 === Builder <pattern-builder>
 
-La generazione dei tracciati di esportazione — record ASCII a campi fissi, documento XML — è delegata a classi builder dedicate per ciascun tipo di record (`HeaderRecordBuilder`, `TitleRecordBuilder`, `DailySummaryDocumentBuilder`, `TitleXmlBuilder`), ciascuna responsabile di assemblare un solo tipo di output a partire dai model di dominio, con la formattazione dei singoli campi centralizzata in `FixedWidthFormatter` (metodi statici `alfa()`, `num()`, `data()`, `ora()` per i quattro formati di campo previsti dal tracciato, si veda il listato più avanti).
+Il pattern creazionale *Builder* separa la costruzione di un oggetto complesso dalla sua rappresentazione finale. Ogni tipo di record del tracciato AdE/SIAE ha una classe builder dedicata, da `HeaderRecordBuilder` ai builder dei riepiloghi e dell'export XML. Ciascuna classe espone due metodi: 
+- `fields()` restituisce l'elenco ordinato dei campi già formattati;
+- `build()` li concatena nella stringa a lunghezza fissa. 
+La formattazione dei singoli campi è centralizzata in `FixedWidthFormatter`, che non va riscritta in ogni builder.
 
-=== Enum tipizzato come tabella di lookup <pattern-enum-lookup>
+I due metodi restano separati perché `fields()` viene usato anche altrove: la pagina `EmissioneTitolo` lo chiama direttamente per mostrare il tracciato in una tabella, senza passare dalla stringa concatenata prodotta da `build()`.
+#v(0.8cm)
 
-`TitleTypeCode` e `CancellationCauseCode` sostituiscono le tabelle di codici della normativa con enum PHP dotati di metodi propri, per esempio `requiresCause()`, eliminando la necessità di tabelle di database separate per valori che non cambiano a runtime.
+#screenshot("../../img/patterns/builder.png", caption: [Figura 8: Builder Design Pattern]) <pattern-builder>
 
-=== Validazione a schema esterno <pattern-validazione-schema>
+=== Facade <pattern-facade>
 
-`TitleXmlValidator` convalida l'XML generato contro il DTD ufficiale (versione 2019), separando la responsabilità di costruire il documento (`TitleXmlBuilder`) da quella di verificarne la conformità (`TitleXmlValidator`).
+Il pattern strutturale *Facade* fornisce un'interfaccia unica per un sottosistema composto da più parti correlate. `FiscalEnvironment::active()` svolge questo ruolo andando a risolvere in un'unica chiamata il sistema certificato attivo, la carta di attivazione associata, verifica e aggiorna lo stato della macchina a stati, chiude i segmenti di log rimasti aperti da giornate precedenti e apre quello del giorno corrente.
 
-== Codifica <codifica>
+Il metodo nasconde cinque classi (`CertifiedSystem`, `ActivationCard`, `SystemStateMachine`, `FiscalLogSegment`, `FiscalLogSegmentCloser`) ed è chiamato così com'è da quattordici punti diversi del codice. Senza la facciata, ognuno di quei punti dovrebbe ripetere la stessa sequenza di cinque controlli, con il rischio di sbagliarne l'ordine.
+#v(0.8cm)
 
-Il blocco seguente riporta il formattatore condiviso dei campi a larghezza fissa, usato da tutti i builder del tracciato ASCII per produrre record conformi alle specifiche AdE/SIAE: un valore numerico viene allineato a destra e riempito di zeri fino alla larghezza prevista dal campo, mentre un valore che eccede la larghezza massima genera un'eccezione invece di essere troncato silenziosamente, per evitare che un dato fiscale venga scritto in forma incompleta.
+#screenshot("../../img/patterns/facade.png", caption: [Figura 9: Facade Design Pattern]) <pattern-facade>
 
-#figure(```php
-final class FixedWidthFormatter
-{
-    // Campo numerico allineato a destra, riempito di zeri
-    public static function num(int|string $value, int $width): string
-    {
-        $valore = (string) $value;
+#pagebreak()
+=== Command <pattern-command>
 
-        if (strlen($valore) > $width) {
-            throw new InvalidArgumentException(
-                "Il valore numerico '$valore' supera la larghezza massima di $width caratteri."
-            );
-        }
+Il pattern comportamentale *Command* incapsula una richiesta come oggetto, invece che come una semplice chiamata di metodo e questo permette di riconoscere se una richiesta è già stata eseguita. Ogni operazione fiscale passa attraverso `FiscalWriter::execute()` con un `commandType` che la identifica: `ISSUE_TITLE`, `ISSUE_SUBSCRIPTION`, `CANCEL_TITLE`, `CANCEL_SUBSCRIPTION`.\  Il comando è salvato come riga di `FiscalCommand`, con tipo, richiesta serializzata, impronta e stato (`PENDING`/`COMPLETED`/`FAILED`); è questa riga a decidere l'esito quando la stessa chiave di idempotenza arriva una seconda volta.\
+ La classe `FiscalWriter` non sa cosa sia un titolo o un abbonamento ma riceve un comando generico e scrive una riga di `fiscal_transactions` all'interno del database.
+#v(0.8cm)
 
-        return str_pad($valore, $width, '0', STR_PAD_LEFT);
-    }
-}
-```, caption: [Formattatore condiviso dei campi a larghezza fissa del tracciato ASCII.], kind: raw) <listing-fixedwidthformatter>
+#screenshot("../../img/patterns/command.png", caption: [Figura 10: Command Design Pattern]) <pattern-command>

@@ -28,10 +28,10 @@ Questo capitolo raccoglie i requisiti del prototipo e li collega ai casi d’uso
 
 Il prototipo realizzato durante lo stage è un sistema di emissione di titoli di accesso per spettacoli ed eventi, con vendita online e controllo accessi. Poiché emette e registra titoli con valore fiscale, deve rispettare gli stessi obblighi previsti per i sistemi di biglietteria automatizzata già in uso sul mercato: è da questi obblighi, e non da scelte di progetto, che discende la maggior parte dei requisiti elencati in questo capitolo.
 
-Il riferimento normativo principale è il D.M. 13 luglio 2000, che individua i dati obbligatori del titolo, le modalità di annullo e i formati del log. 
+Il riferimento normativo principale è il #link(<dm2000>)[D.M. 13 luglio 2000], che individua i dati obbligatori del titolo, le modalità di annullo e i formati del log.
  \ #azienda ha costruito il documento di requisiti verificando ogni punto rispetto all’articolo o al provvedimento che lo prevede.
 
-Il perimetro è il sistema di emissione dei titoli di accesso previsto dall’art. 2 del D.M. 2000, con vendita online e controllo accessi. Il prototipo non è certificato, quindi la carta di attivazione, il sigillo fiscale, la firma e il supporto immodificabile sono simulati.
+Il perimetro è il sistema di emissione dei titoli di accesso previsto dall’art. 2 del #link(<dm2000>)[D.M. 2000], con vendita online e controllo accessi. Il prototipo non è certificato, quindi la carta di attivazione, il sigillo fiscale, la firma e il supporto immodificabile sono simulati.
 
 Ogni requisito ha una priorità, assegnata dal piano di lavoro proposto dal tutor aziendale:
 
@@ -58,7 +58,7 @@ La tabella seguente riassume i requisiti di sistema individuati, con la priorit�
   [F1], [Il sistema deve generare il wallet pass.], [Facoltativo], [Vincolo N], [UC14],
   [F2], [Il sistema deve gestire il mancato funzionamento della carta di attivazione.], [Facoltativo], [H], [UC8],
   [F3], [Il sistema deve integrarsi con il CRM aziendale RelAi.], [Facoltativo], [Nessun gruppo normativo], [–],
-)], caption: [Requisiti di sistema, con priorità, gruppi normativi di dettaglio e casi d’uso.], kind: table, supplement: [Tabella]) <tab-requisiti-sistema>
+)], caption: [Requisiti di sistema, con priorità, gruppi normativi e casi d’uso.], kind: table, supplement: [Tabella]) <tab-requisiti-sistema>
 
 == Attori <attori>
 
@@ -391,7 +391,7 @@ Le tabelle seguono l’ordine della checklist fornita da #azienda e ogni riga ri
 
 #status-table((
   ([C1], [Emissione completa quando il titolo è definito e registrato nel log, anche se non è stato stampato], [UC4]),
-  ([C2], [Dati obbligatori dell’art. 3 del D.M. 2000: natura, data e ora, luogo, posto, corrispettivo, gratuità o riduzione con causale, prevendita e prestazioni accessorie separate, sigillo], [UC4]),
+  ([C2], [Dati obbligatori dell’art. 3 del #link(<dm2000>)[D.M. 2000]: natura, data e ora, luogo, posto, corrispettivo, gratuità o riduzione con causale, prevendita e prestazioni accessorie separate, sigillo], [UC4]),
   ([C3], [Diciture per la vendita per conto di terzi e per la vendita da parte dell’organizzatore], [UC4]),
   ([C4], [Abbonamenti con dicitura, numero di prestazioni, turno libero e ratei per turno fisso], [UC4]),
   ([C5], [Titoli open registrati come abbonamenti con codice proprio, un evento abilitato e turno libero], [UC4]),
@@ -426,7 +426,7 @@ L’annullo richiede sempre una causale, scelta tra i dieci codici definiti dall
   [008], [Annullamento per rivendita],
   [009], [Annullamento per furto/smarrimento],
   [010], [Annullamento per sostituzione contestuale con titolo diverso di importo uguale o superiore (upselling)],
-), caption: [Causali di annullo, da #raw("2019 All.B p.1 lett. i")], kind: table, supplement: [Tabella]) <tab-causali>
+), caption: [Causali di annullo, da 2019 All.B p.1 lett. i], kind: table, supplement: [Tabella]) <tab-causali>
 
 #status-table((
   ([D1], [Annullo con causale entro il quinto giorno lavorativo successivo all’evento], [UC5]),

@@ -1,0 +1,51 @@
+%YAML 1.2
+---
+name: PHP (mini)
+file_extensions: [php]
+scope: source.php
+
+contexts:
+  main:
+    - match: '//.*$'
+      scope: comment.line.double-slash.php
+    - match: '/\*'
+      push: block_comment
+    - match: '"'
+      push: double_string
+    - match: "'"
+      push: single_string
+    - match: '\$[a-zA-Z_][a-zA-Z0-9_]*'
+      scope: variable.other.php
+    - match: '\b(if|else|elseif|foreach|for|while|do|switch|case|match|break|continue|return|throw|try|catch|finally|new|use|as|extends|implements|instanceof|yield)\b'
+      scope: keyword.control.php
+    - match: '\b(public|private|protected|static|final|abstract|readonly)\b'
+      scope: storage.modifier.php
+    - match: '\b(class|interface|trait|function|enum|int|string|bool|float|array|void|mixed|object|self|callable|iterable)\b'
+      scope: storage.type.php
+    - match: '\b(true|false|null)\b'
+      scope: constant.language.php
+    - match: '\b\d+(\.\d+)?\b'
+      scope: constant.numeric.php
+    - match: '\b[A-Z][A-Za-z0-9_]*\b'
+      scope: support.class.php
+    - match: '\b[a-zA-Z_][a-zA-Z0-9_]*(?=\()'
+      scope: support.function.php
+
+  block_comment:
+    - meta_scope: comment.block.php
+    - match: '\*/'
+      pop: true
+
+  double_string:
+    - meta_scope: string.quoted.double.php
+    - match: '\\.'
+      scope: constant.character.escape.php
+    - match: '"'
+      pop: true
+
+  single_string:
+    - meta_scope: string.quoted.single.php
+    - match: "\\\\."
+      scope: constant.character.escape.php
+    - match: "'"
+      pop: true
