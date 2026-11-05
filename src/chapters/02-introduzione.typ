@@ -27,7 +27,7 @@ Tra le estensioni desiderabili sono previsti la vendita online _white-label_, la
 
 == Perimetro e vincoli
 
-Il riferimento normativo indicato nel piano comprende il D.M. 13 luglio 2000 e i provvedimenti dell’Agenzia delle Entrate del 23 luglio 2001, 22 ottobre 2002, 4 marzo 2008 e i numeri 223774/2019 e 356768/2025. La traduzione dei requisiti in funzionalità e verifiche è circoscritta al perimetro dello stage e sarà documentata nella matrice requisito, componente, test ed evidenza.
+Il riferimento normativo indicato nel piano comprende il #link(<dm2000>)[D.M. 13 luglio 2000] e i provvedimenti dell’Agenzia delle Entrate del #link(<prov2001>)[23 luglio 2001], #link(<prov2002-attivazione>)[22 ottobre 2002], #link(<prov2008>)[4 marzo 2008] e i numeri #link(<prov2019>)[223774/2019] e #link(<prov2025>)[356768/2025]. La traduzione dei requisiti in funzionalità e verifiche è circoscritta al perimetro dello stage e sarà documentata nella matrice requisito, componente, test ed evidenza.
 
 Le specifiche di interazione con la carta di attivazione sono fornite da SIAE su richiesta e il prototipo non è oggetto di certificazione durante lo stage. Di conseguenza, la carta di attivazione, il sigillo fiscale e il supporto immodificabile sono simulati e devono essere presentati come tali. La stessa cautela vale per le operazioni di firma indicate nel piano come simulate. Il prototipo ha quindi lo scopo di dimostrare i flussi _end-to-end_ previsti e di costituire una base tecnica per gli sviluppi successivi, non di attestare la conformità certificata del sistema definitivo.
 
