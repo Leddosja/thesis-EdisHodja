@@ -18,11 +18,11 @@
 // Bibliografia e sitografia, incluse direttamente nel file.
 = Bibliografia <bibliografia>
 
-#heading(level: 2, numbering: none)[Testi]
+#heading(level: 2, numbering: none, outlined: false)[Testi]
 
 #bookref([Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides. _Design Patterns: Elements of Reusable Object-Oriented Software_], descr: [Addison-Wesley, 1994]) <gof>
 
-#heading(level: 2, numbering: none)[Normativa] <normativa>
+#heading(level: 2, numbering: none, outlined: false)[Normativa] <normativa>
 
 #webref([Ministero delle Finanze. Decreto Ministeriale 13 luglio 2000], descr: [recante le caratteristiche dei misuratori fiscali e dei titoli di accesso per spettacoli e altre attività di intrattenimento], url: "https://www.agenziaentrate.gov.it/portale/documents/20143/275244/Decreto+del+13+07+2000_DM+13+luglio+2000.pdf/c53eee61-57b8-3f33-ee15-dfb4c7b19dc7", label: [agenziaentrate.gov.it]) <dm2000>
 
@@ -38,7 +38,7 @@
 
 #webref([Agenzia delle Entrate. Provvedimento n. 356768 del 25 settembre 2025], descr: [modifiche al provvedimento del Direttore dell'Agenzia delle Entrate n. 223774 del 27 giugno 2019], url: "https://www.agenziaentrate.gov.it/portale/documents/20143/9294995/provvedimento-del-25-settembre-2025.pdf/aee353e6-59da-0824-fdc0-ab3fedaae525", label: [agenziaentrate.gov.it]) <prov2025>
 
-#heading(level: 2, numbering: none)[Tecnologie e strumenti]
+#heading(level: 2, numbering: none, outlined: false)[Tecnologie e strumenti]
 
 #webref([PHP], descr: [documentazione ufficiale, "What is PHP?"], url: "https://www.php.net/manual/en/intro-whatis.php", label: [php.net], visited: "05/11/2026") <web-php>
 
