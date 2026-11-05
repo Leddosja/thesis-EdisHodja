@@ -293,7 +293,7 @@ Il cliente si identifica con SPID simulato oppure con nome, cognome e telefono. 
 
 #heading(level: 4, numbering: none, outlined: false)[#text(size: 0.6cm, weight: "bold")[Pagamento e biglietto emesso]]
 #v(0.4cm)
-Il pagamento è delegato a Stripe Checkout, che offre carta, Apple Pay, Satispay e il wallet Link e se non va a buon fine, nessun titolo viene emesso né scritto nel log. Confermato il pagamento, il titolo è consultabile fin da subito tramite un link firmato da token, senza bisogno di login: la vista del biglietto con il codice QR da presentare al varco, lo stesso QR in formato immagine e il PDF stampabile, serviti da un controller pubblico separato dal componente Livewire.
+Il pagamento è delegato a Stripe Checkout, che offre carta, Apple Pay, Satispay e il wallet Link e se non va a buon fine, nessun titolo viene emesso né scritto nel log. Confermato il pagamento, il titolo è consultabile tramite un link firmato da token, senza bisogno di login: la vista del biglietto con il codice QR da presentare al varco, lo stesso QR in formato immagine e il PDF stampabile, serviti da un controller pubblico separato dal componente Livewire.
 #v(1.2cm)
 #screenshot-pair(
   "../../img/screenshots/pagamento.png", [Figura 6: Schermata del pagamento],

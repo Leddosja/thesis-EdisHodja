@@ -14,7 +14,7 @@
 
   / API: _Application Programming Interface_. Insieme di procedure messe a disposizione di un programma per permettere la comunicazione con altri sistemi; nel prototipo è lo strumento con cui il CRM RelAi e lo storefront interrogano i servizi di emissione e controllo accessi.
 
-  / Append-only: proprietà di una tabella del database il cui contenuto può essere soltanto aggiunto e mai modificato o cancellato, imposta tramite trigger; è il modello adottato per il log delle transazioni e per i record di annullo.
+  / Append-only: proprietà di una tabella del database il cui contenuto può essere soltanto aggiunto e mai modificato o cancellato; è il modello adottato per il log delle transazioni e per i record di annullo.
 
   / Back-office: interfaccia web riservata agli operatori autorizzati, utilizzata per la gestione delle anagrafiche di organizzatori, locali ed eventi e per le operazioni di emissione e annullo dei titoli.
 
@@ -27,6 +27,8 @@
   / Chiave di idempotenza: identificativo univoco associato a un'operazione di scrittura, utilizzato dal writer serializzato per riconoscere ed evitare la duplicazione di un movimento già registrato in caso di richieste ripetute.
 
   / CRM: _Customer Relationship Management_. Sistema software per la gestione delle relazioni con organizzatori e clienti; nel progetto è rappresentato da RelAi, con cui il prototipo deve integrarsi.
+
+  / DTD: _Document Type Definition_. Linguaggio utilizzato per definire la struttura e i vincoli di validità di un documento XML, meno espressivo dell'XSD; impiegato per validare i tracciati XML del log delle transazioni e dei riepiloghi.
 
   / Giornata fiscale: periodo durante il quale i movimenti di emissione e annullo restano aperti sullo stesso segmento del giornale fiscale, fino alla chiusura che ne genera il riepilogo; non coincide necessariamente con la giornata di calendario, perché un evento può attraversare la mezzanotte.
 
@@ -75,6 +77,4 @@
   / White-label: modalità di distribuzione in cui l'aspetto grafico e il dominio del prodotto software sono personalizzati per il cliente che lo utilizza, mascherando il fornitore originario della piattaforma.
 
   / Writer serializzato: componente che garantisce la scrittura in sequenza, una alla volta, dei movimenti sulla carta di attivazione e sul log delle transazioni, impiegato insieme alla chiave di idempotenza per preservarne l'integrità.
-
-  / DTD: _Document Type Definition_. Linguaggio utilizzato per definire la struttura e i vincoli di validità di un documento XML, meno espressivo dell'XSD; impiegato per validare i tracciati XML del log delle transazioni e dei riepiloghi.
 ]

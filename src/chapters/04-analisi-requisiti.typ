@@ -310,7 +310,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
 #pagebreak()
 #usecase("10.1", [Cambio nominativo fuori termine], [Cliente],
   [Il cliente sta eseguendo il cambio nominativo e l’evento è già iniziato, oppure il titolo risulta già usato.],
-  [Il sistema rifiuta il cambio nominativo e segnala lo stesso limite temporale previsto per l’annullo dei titoli digitali dato che si tratta di un annullo seguito da nuova emissione.],
+  [Il sistema rifiuta il cambio nominativo e segnala lo stesso limite temporale previsto per l’annullo dei titoli digitali, dato che si tratta di un annullo seguito da nuova emissione.],
   [Il titolo originario resta invariato e nessun nuovo titolo viene emesso.]) <uc-cambio-nominativo-termine>
 
 #usecase("10.2", [Proprietà del titolo non verificata], [Cliente],
@@ -330,7 +330,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
 
 #pagebreak()
 #usecase(12, [Lettura del titolo al varco], [Addetto al varco],
-  [L’evento è attivo e la lista unica dei titoli validi per l’evento è caricata, comprensiva degli eventuali titoli importati da altri sistemi (#link(<uc-configurazione-evento>)[UC-1]).],
+  [L’evento è attivo e la lista unica dei titoli validi per l’evento è caricata, comprensiva degli eventuali titoli importati da altri sistemi.],
   [
     + L’addetto legge il codice del titolo presentato dal cliente.
     + Il sistema verifica che il titolo sia nella lista e non sia già stato usato.

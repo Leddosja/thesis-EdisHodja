@@ -74,7 +74,7 @@ Il presente documento descrive il lavoro svolto durante il periodo di stage dal 
 
 L'elaborato è stato redatto seguendo il piano di lavoro proposto dal tutor aziendale #tutor ed espone le procedure operative e metodologiche adoperate durante lo sviluppo del prodotto atteso. In particolare, descrive le modalità di apprendimento e di esecuzione delle attività, l'organizzazione del lavoro in settimane e il confronto periodico con il tutor, che comprende incontri settimanali e revisioni del codice.
 
-Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile sono simulati e il sistema non è oggetto di certificazione durante lo stage, il prototipo serve a dimostrare i flussi end-to-end e a costituire la base tecnica per lo sviluppo del sistema definitivo. Il lavoro comprende l'analisi dei requisiti normativi, la progettazione del modello dati su PostgreSQL, l'emissione e l'annullamento dei titoli, la generazione del log delle transazioni e dei riepiloghi, la vendita online e il controllo accessi, con la verifica dei risultati tramite test funzionali e di concorrenza.
+Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile sono simulati e il sistema non è oggetto di certificazione durante lo stage, il prototipo serve a dimostrare i flussi end-to-end e a costituire la base tecnica per lo sviluppo del sistema definitivo. Il lavoro comprende l'analisi dei requisiti normativi, la progettazione del modello dati su MariaDB, l'emissione e l'annullamento dei titoli, la generazione del log delle transazioni e dei riepiloghi, la vendita online e il controllo accessi, con la verifica dei risultati tramite test funzionali e di concorrenza.
 
 
 #pagebreak()

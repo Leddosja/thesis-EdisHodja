@@ -9,7 +9,7 @@
 #let matricola = [2116422]
 #let anno = [2025-2026]
 #let location = [Padova]
-#let date = [Ottobre 2026]
+#let date = [Novembre 2026]
 #let azienda = [Spazio Dev S.r.l.]
 
 #let placeholder = [
