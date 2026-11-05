@@ -68,7 +68,7 @@
 #pagebreak()
 = Progettazione e codifica <progettazione-codifica>
 #v(0.2cm)
-Questo capitolo descrive come il prototipo è stato costruito: lo stack tecnologico adottato, l'architettura del modulo fiscale e l'ordine in cui è stata realizzata, i design pattern applicati e un estratto della codifica.
+Questo capitolo descrive come il prototipo è stato costruito: lo stack tecnologico adottato, l'architettura del modulo fiscale e l'ordine in cui è stata realizzata, i design pattern applicati ed un estratto della codifica.
 
 == Tecnologie e strumenti <tecnologie-strumenti>
 #v(0.2cm)
@@ -131,7 +131,7 @@ Il backend del prototipo vive in un namespace dedicato, `App\Fiscal` la cui stru
   table.header([*Namespace*], [*Responsabilità*]),
   [`App\Fiscal\Models`], [Stato persistente del sistema: sistema certificato, carta di attivazione, titoli, abbonamenti, transazioni, annullamenti.],
   [`App\Fiscal\Support`], [Servizi di dominio: emissione, annullo, macchina a stati del sistema certificato, scrittura idempotente, chiusura di segmento di log.],
-  [`App\Fiscal\Support\Tracciato`], [Costruttori dei tracciati di esportazione ASCII e XML e relativa validazione contro il DTD 2019.],
+  [`App\Fiscal\Support\ Tracciato`], [Costruttori dei tracciati di esportazione ASCII e XML e relativa validazione contro il DTD 2019.],
   [`App\Fiscal\Enums`], [Tabelle normative codificate come enum tipizzati.],
 ) <tab-namespace-fiscal>
 #v(0.6cm)
@@ -176,7 +176,7 @@ if ($comandoEsistente !== null) {
 
 #v(1cm)
 #pagebreak()
-Ogni movimento porta anche l'impronta di quello precedente, così che un'alterazione di un record già scritto si manifesti come una mancata corrispondenza nel record successivo (#link(<uc-chiusura-digest>)[UC-6.1]):
+Ogni movimento porta anche l'impronta di quello precedente, così che un'alterazione di un record già scritto si manifesti come una mancata corrispondenza nel record successivo:
 #v(1cm)
 #phpcode(```php
 $improntaPrecedente = $segmento->last_record_digest;
@@ -305,7 +305,7 @@ Il pagamento è delegato a Stripe Checkout, che offre carta, Apple Pay, Satispay
 
 === Separazione tra presentazione e logica <frontend-pagina-servizio>
 
-In entrambe le interfacce la pagina (o il componente) si limita a raccogliere e normalizzare l'input: la decisione se un'operazione è ammessa, e la sua esecuzione, spettano sempre al servizio di dominio sottostante. Non è una scelta di stile perché in un sistema di emissione certificato, verificare la conformità normativa si deve tradurre nel leggere un numero finito di classi in `App\Fiscal\Support`, non ogni schermata che può toccare un dato fiscale.
+In entrambe le interfacce la pagina (o il componente) si limita a raccogliere e normalizzare l'input: la decisione se un'operazione è ammessa, e la sua esecuzione, spettano sempre al servizio di dominio sottostante.\ Non è una scelta di stile perché in un sistema di emissione certificato, verificare la conformità normativa si deve tradurre nel leggere un numero finito di classi in `App\Fiscal\Support`, non ogni schermata che può toccare un dato fiscale.
 
 Sul pannello di back-office le azioni Filament risolvono sistema, carta e segmento attivi tramite `FiscalEnvironment` e delegano l'operazione al servizio corrispondente, come mostra l'annullo di un titolo:
 #v(1cm)
@@ -357,7 +357,7 @@ La formattazione dei singoli campi è centralizzata in `FixedWidthFormatter`, ch
 I due metodi restano separati perché `fields()` viene usato anche altrove: la pagina `EmissioneTitolo` lo chiama direttamente per mostrare il tracciato in una tabella, senza passare dalla stringa concatenata prodotta da `build()`.
 #v(0.8cm)
 
-#screenshot("../../img/patterns/builder.png", caption: [Figura 8: Builder]) <pattern-builder>
+#screenshot("../../img/patterns/builder.png", caption: [Figura 8: Diagramma del Pattern Builder]) <pattern-builder>
 #pagebreak()
 === Facade <pattern-facade>
 
@@ -366,7 +366,7 @@ Il pattern strutturale *Facade* fornisce un'interfaccia unica per un sottosistem
 Il metodo nasconde cinque classi (`CertifiedSystem`, `ActivationCard`, `SystemStateMachine`, `FiscalLogSegment`, `FiscalLogSegmentCloser`) ed è chiamato così com'è da quattordici punti diversi del codice. Senza la facciata, ognuno di quei punti dovrebbe ripetere la stessa sequenza di cinque controlli, con il rischio di sbagliarne l'ordine.
 #v(0.8cm)
 
-#screenshot("../../img/patterns/facade.png", caption: [Figura 9: Facade]) <pattern-facade>
+#screenshot("../../img/patterns/facade.png", caption: [Figura 9: Diagramma del Pattern Facade]) <pattern-facade>
 
 #pagebreak()
 === Command <pattern-command>
@@ -375,4 +375,4 @@ Il pattern comportamentale *Command* incapsula una richiesta come oggetto, invec
  La classe `FiscalWriter` non sa cosa sia un titolo o un abbonamento ma riceve un comando generico e scrive una riga di `fiscal_transactions` all'interno del database.
 #v(0.8cm)
 
-#screenshot("../../img/patterns/command.png", caption: [Figura 10: Command]) <pattern-command>
+#screenshot("../../img/patterns/command.png", caption: [Figura 10: Diagramma del Pattern Command]) <pattern-command>
