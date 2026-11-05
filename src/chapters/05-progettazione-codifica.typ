@@ -55,9 +55,8 @@
 )[#image(path, width: 100%)]
 
 #let screenshot-pair(path-left, caption-left, path-right, caption-right, pull-left: 2cm, pull-right: 2cm) = pad(left: -pull-left, right: -pull-right)[
-  #show figure.caption: none
   #grid(
-    columns: (1fr, 1fr),
+    columns: (0.6fr, 0.6fr),
     column-gutter: 0.4cm,
     align: horizon,
     figure(screenshot-frame(path-left), caption: caption-left),
@@ -76,7 +75,7 @@ Di seguito viene data una panoramica delle tecnologie e degli strumenti utilizza
 
 #tech-heading("PHP", "../../img/logos/php.svg") <tec-php>
 
-Linguaggio di programmazione lato server su cui è costruita l'intera applicazione. La scelta non nasce da una necessità specifica del prototipo, ma dalla decisione aziendale di sviluppare la biglietteria fiscale all'interno del codebase già esistente di RelAi, per riutilizzarne l'infrastruttura (autenticazione, multi-tenant, pipeline di test e di integrazione continua). Tra le caratteristiche del linguaggio sfruttate nel prototipo:
+#link(<web-php>)[PHP] è il linguaggio di programmazione lato server su cui è costruita l'intera applicazione. La scelta non nasce da una necessità specifica del prototipo, ma dalla decisione aziendale di sviluppare la biglietteria fiscale all'interno del codebase già esistente di RelAi, per riutilizzarne l'infrastruttura (autenticazione, multi-tenant, pipeline di test e di integrazione continua). Tra le caratteristiche del linguaggio sfruttate nel prototipo:
 
 - enum nativi con metodi propri, usati per codificare i tipi di titolo e le causali di annullamento secondo le tabelle del tracciato AdE/SIAE;
 - promozione delle proprietà nel costruttore, per ridurre il codice ripetitivo nei model e nei servizi di dominio;
@@ -87,34 +86,34 @@ Linguaggio di programmazione lato server su cui è costruita l'intera applicazio
 
 #tech-heading("Laravel", "../../img/logos/laravel.svg") <tec-laravel>
 
-Framework PHP full-stack che fornisce l'ORM (`Eloquent`), il sistema di migrazioni, la gestione delle code e la validazione. Nel modulo fiscale è stato impiegato soprattutto per: le migrazioni che definiscono lo schema _append-only_ delle tabelle fiscali, con il vincolo imposto a livello applicativo contro operazioni di `UPDATE` e `DELETE`; i model `Eloquent` di titoli, abbonamenti, transazioni e stato del sistema certificato; l'integrazione con lo _scheduler_ dei task per le chiusure di giornata.
+#link(<web-laravel>)[Laravel] è il framework PHP full-stack che fornisce l'ORM (`Eloquent`), il sistema di migrazioni, la gestione delle code e la validazione. Nel modulo fiscale è stato impiegato soprattutto per: le migrazioni che definiscono lo schema _append-only_ delle tabelle fiscali, con il vincolo imposto a livello applicativo contro operazioni di `UPDATE` e `DELETE`; i model `Eloquent` di titoli, abbonamenti, transazioni e stato del sistema certificato; l'integrazione con lo _scheduler_ dei task per le chiusure di giornata.
 
 #tech-heading("Filament", "../../img/logos/filament.svg") <tec-filament>
 
-Framework per la costruzione di pannelli amministrativi reattivi sopra Laravel. È lo strato con cui l'operatore di back-office interagisce: la pagina `EmissioneTitolo` (emissione e annullo dei titoli), l'interfaccia per gli abbonamenti e quella dei riepiloghi giornalieri sono tutte pagine Filament, costruite riusando i componenti già presenti nel pannello di RelAi per restare coerenti con il resto dell'applicazione.
+#link(<web-filament>)[Filament] è il framework per la costruzione di pannelli amministrativi reattivi sopra Laravel. È lo strato con cui l'operatore di back-office interagisce: la pagina `EmissioneTitolo` (emissione e annullo dei titoli), l'interfaccia per gli abbonamenti e quella dei riepiloghi giornalieri sono tutte pagine Filament, costruite riusando i componenti già presenti nel pannello di RelAi per restare coerenti con il resto dell'applicazione.
 
 #tech-heading("Livewire", "../../img/logos/livewire.svg") <tec-livewire>
 
-Libreria che permette a Filament di aggiornare l'interfaccia via AJAX senza scrivere JavaScript dedicato in cui ogni pagina fiscale è di fatto un componente Livewire, con lo stato del form gestito lato server e sincronizzato nel browser.
+#link(<web-livewire>)[Livewire] è la libreria che permette a Filament di aggiornare l'interfaccia via AJAX senza scrivere JavaScript dedicato in cui ogni pagina fiscale è di fatto un componente Livewire, con lo stato del form gestito lato server e sincronizzato nel browser.
 
 #tech-heading("MariaDB", "../../img/logos/mariadb.svg") <tec-mariadb>
 
-Sistema di gestione di basi di dati relazionali, adottato come unico storage del prototipo e già in uso in azienda con differenti tabelle riutilizzabili.
-\ Le tabelle fiscali sono progettate per essere _append-only_ — solo inserimento, mai modifica né cancellazione — per rispecchiare il vincolo di immodificabilità richiesto ad un sistema di emissione certificato.
+#link(<web-mariadb>)[MariaDB] è il sistema di gestione di basi di dati relazionali adottato come unico storage del prototipo e già in uso in azienda con differenti tabelle riutilizzabili.
+\ Le tabelle fiscali sono progettate per essere _append-only_: ammettono solo l'inserimento di nuove righe, non la modifica né la cancellazione di quelle esistenti, per rispecchiare il vincolo di immodificabilità richiesto a un sistema di emissione certificato.
 #pagebreak()
 #tech-heading("DDEV", "../../img/logos/ddev.svg") <tec-ddev>
 
-Ambiente di sviluppo containerizzato (Docker) che fornisce web server, PHP, MariaDB e i servizi di supporto in locale, identico a quello usato dal resto del team di RelAi, così da poter eseguire la suite di test e il linting con gli stessi strumenti già in uso nel progetto ospitante.
+#link(<web-ddev>)[DDEV] è l'ambiente di sviluppo containerizzato (Docker) che fornisce web server, PHP, MariaDB e i servizi di supporto in locale, identico a quello usato dal resto del team di RelAi, così da poter eseguire la suite di test e il linting con gli stessi strumenti già in uso nel progetto ospitante.
 
 #heading(level: 3, numbering: none, outlined: false)[
   #box(baseline: 15%, image("../../img/logos/pest.svg", height: 0.60cm)) #h(0.2em) #text(size: 0.5cm, weight: "bold")[Pest]
 ] <tec-pest>
 
-Framework di testing, costruito sopra PHPUnit, con cui è stata scritta la suite di test del modulo fiscale ed ogni funzionalità è stata accompagnata da almeno un test automatico, secondo la convenzione già in uso nel progetto RelAi.
+#link(<web-pest>)[Pest] è il framework di testing, costruito sopra PHPUnit, con cui è stata scritta la suite di test del modulo fiscale ed ogni funzionalità è stata accompagnata da almeno un test automatico, secondo la convenzione già in uso nel progetto RelAi.
 
 #tech-heading("Git", "../../img/logos/git.svg") <tec-git>
 
-Sistema di controllo di versione utilizzato per tracciare lo sviluppo incrementale del prototipo: il lavoro di stage è confluito in un unico ramo dedicato, con commit atomici e descrittivi per ogni singola funzionalità. Il ramo è integrato nella pipeline di integrazione continua già attiva sul progetto ospitante, che esegue formattazione del codice, analisi statica e suite di test ad ogni operazione di push.
+#link(<web-git>)[Git] è il sistema di controllo di versione utilizzato per tracciare lo sviluppo incrementale del prototipo: il lavoro di stage è confluito in un unico ramo dedicato, con commit atomici e descrittivi per ogni singola funzionalità. Il ramo è integrato nella pipeline di integrazione continua già attiva sul progetto ospitante, che esegue formattazione del codice, analisi statica e suite di test ad ogni operazione di push.
 
 #pagebreak()
 == Progettazione backend <progettazione-backend>
@@ -142,7 +141,7 @@ Il log registra infatti i movimenti prodotti dall'emissione, e i riepiloghi legg
 #pagebreak()
 === Meccanismi implementativi <meccanismi-implementativi>
 
-I vincoli imposti dalla normativa — un dato non falsificabile, una richiesta che non va eseguita due volte, un log che non si può alterare senza lasciarne traccia, uno stato che resta coerente anche sotto richieste concorrenti — non restano principi astratti: diventano meccanismi precisi nel codice del backend. Le righe seguenti ne isolano cinque, ciascuno nel punto esatto del codice in cui agisce.
+La normativa impone una serie di vincoli: un dato non falsificabile, una richiesta che non va eseguita due volte, un log che non si può alterare senza lasciarne traccia, uno stato che resta coerente anche sotto richieste concorrenti. Nel backend questi vincoli diventano meccanismi precisi nel codice, e le righe seguenti ne isolano cinque, ciascuno nel punto esatto in cui agisce.
 #v(0.5cm)
 
 Ogni transazione porta un sigillo fiscale non falsificabile (#link(<uc-emissione>)[UC-4]), ottenuto concatenando i dati della transazione, applicando una funzione di hash e prendendone i primi sedici caratteri:
@@ -230,7 +229,7 @@ Il frontend del prototipo riflette questa distinzione in due interfacce separate
 
 === Pannello di back-office <frontend-backoffice>
 
-Il back-office non è un insieme di pagine separate, una per funzione, ma un'unica pagina Filament, `EmissioneTitolo`, organizzata in schede: l'operatore passa dall'una all'altra senza mai lasciare la pagina, mentre Livewire sostituisce solo il contenuto interessato. La scelta riduce la navigazione a un solo punto di ingresso e tiene vicine funzioni che condividono lo stesso contesto, come lo stesso evento e lo stesso organizzatore, invece di separarle in risorse Filament indipendenti.
+Il back-office è un'unica pagina Filament, `EmissioneTitolo`, organizzata in schede, invece di tante pagine separate una per funzione: l'operatore passa dall'una all'altra senza mai lasciare la pagina, mentre Livewire sostituisce solo il contenuto interessato. La scelta riduce la navigazione a un solo punto di ingresso e tiene vicine funzioni che condividono lo stesso contesto, come lo stesso evento e lo stesso organizzatore, invece di separarle in risorse Filament indipendenti.
 
 #table(
   columns: (4.75cm, 1fr),
@@ -261,7 +260,7 @@ Le tre schede riassuntive in alto (titoli validi, titoli annullati, valore compl
 #v(1fr)
 #heading(level: 4, numbering: none, outlined: false)[#text(size: 0.6cm, weight: "bold")[Riepiloghi]]
 #v(0.4cm)
-Nella scheda "Riepiloghi", l'operatore seleziona una giornata e vede i titoli e gli abbonamenti emessi e annullati per ciascun evento, insieme ai proventi e da qui scarica anche il documento di riepilogo e il modulo C.1, un'aggiunta richiesta dalla checklist di certificazione.
+La #link(<fig-backoffice-riepiloghi>)[figura seguente] mostra la scheda "Riepiloghi": l'operatore seleziona una giornata e vede i titoli e gli abbonamenti emessi e annullati per ciascun evento, insieme ai proventi, e da qui scarica anche il documento di riepilogo e il modulo C.1, un'aggiunta richiesta dalla checklist di certificazione.
 
 È possibile alternare la vista giornaliera e quella mensile mantenendo la stessa tabella dove ogni riga riporta un singolo evento, non un totale aggregato per giornata: un organizzatore con più eventi lo stesso giorno compare quindi su più righe distinte, una per evento, così che il riepilogo resti tracciabile fino al singolo evento invece di nascondere il dettaglio dietro una somma.
 #v(1.2cm)
@@ -272,7 +271,7 @@ Nella scheda "Riepiloghi", l'operatore seleziona una giornata e vede i titoli e 
 #v(1fr)
 #heading(level: 4, numbering: none, outlined: false)[#text(size: 0.6cm, weight: "bold")[Trasmissioni]]
 #v(0.4cm)
-La scheda "Trasmissioni", infine, raccoglie due cose distinte che la normativa tratta separatamente: la comunicazione preventiva a SIAE dei periodi di inattività del sistema (simulata), e il giornale fiscale, un segmento per ogni giornata di attività. Per ogni segmento chiuso l'interfaccia mostra se la catena di impronte è integra, la stessa verifica descritta a proposito della catena di hash, ricostruendola in lettura invece di limitarsi a fidarsi del dato salvato.
+La #link(<fig-backoffice-trasmissioni>)[figura seguente] mostra la scheda "Trasmissioni", che raccoglie due cose distinte che la normativa tratta separatamente: la comunicazione preventiva a SIAE dei periodi di inattività del sistema (simulata), e il giornale fiscale, un segmento per ogni giornata di attività. Per ogni segmento chiuso l'interfaccia mostra se la catena di impronte è integra, la stessa verifica descritta a proposito della catena di hash, ricostruendola in lettura invece di limitarsi a fidarsi del dato salvato.
 #v(1.2cm)
 #screenshot("../../img/screenshots/trasmissioni.png", caption: [Figura 3: Tab delle trasmissioni e giornale fiscale]) <fig-backoffice-trasmissioni>
 #v(1fr)
@@ -280,20 +279,21 @@ La scheda "Trasmissioni", infine, raccoglie due cose distinte che la normativa t
 
 === Interfaccia di vendita online <frontend-storefront>
 
-Il cliente non accede al pannello Filament, riservato all'operatore, bensì interagisce con un componente Livewire a pagina intera, `TicketPurchase`, raggiungibile su `/biglietteria-fiscale/{event}` senza autenticazione preventiva. A differenza del back-office, qui ogni fase dell'acquisto è gestita come stato interno dello stesso componente, non come scheda tra cui l'operatore sceglie liberamente bensì il cliente avanza in un unico ordine — verifica del CAPTCHA, dati anagrafici o SPID, conferma del codice OTP, scelta dei biglietti e pagamento, conferma finale con generazione del codice QR allegato al biglietto.
+Il cliente interagisce con un componente Livewire a pagina intera, `TicketPurchase`, raggiungibile su `/biglietteria-fiscale/{event}` senza autenticazione preventiva, non con il pannello Filament riservato all'operatore. A differenza del back-office, qui ogni fase dell'acquisto è gestita come stato interno dello stesso componente: il cliente non sceglie liberamente tra schede, ma avanza in un unico ordine, dalla verifica del CAPTCHA ai dati anagrafici o SPID, dalla conferma del codice OTP alla scelta dei biglietti e al pagamento, fino alla conferma finale con generazione del codice QR allegato al biglietto.
 
 #heading(level: 4, numbering: none, outlined: false)[#text(size: 0.6cm, weight: "bold")[Dati e biglietti]]
-Il cliente si identifica con SPID simulato oppure con nome, cognome e telefono. In caso l'utente non venisse identificato vengono richiesti ulteriori dati per effettuare la registrazione. Di seguito avviene la verifica via OTP e sceglie i biglietti dove il carrello è parte della stessa schermata e si aggiorna a ogni aggiunta mostrando il totale da pagare.
-#v(1.2cm)
+Le #link(<fig-storefront-dati-biglietti>)[due figure seguenti] mostrano queste schermate: il cliente si identifica con SPID simulato oppure con nome, cognome e telefono, e se l'utente non viene identificato vengono richiesti ulteriori dati per effettuare la registrazione; di seguito avviene la verifica via OTP e la scelta dei biglietti, dove il carrello è parte della stessa schermata e si aggiorna a ogni aggiunta mostrando il totale da pagare.
+#v(0.5cm)
 #screenshot-pair(
   "../../img/screenshots/dati.png", [Figura 4: Schermata di identificazione dell'utente],
   "../../img/screenshots/biglietti.png", [Figura 5: Schermata scelta dei biglietti disponibili],
+  pull-left: 0.5cm, pull-right: 0.5cm,
 ) <fig-storefront-dati-biglietti>
 #v(1fr)
 
 #heading(level: 4, numbering: none, outlined: false)[#text(size: 0.6cm, weight: "bold")[Pagamento e biglietto emesso]]
 #v(0.4cm)
-Il pagamento è delegato a Stripe Checkout, che offre carta, Apple Pay, Satispay e il wallet Link e se non va a buon fine, nessun titolo viene emesso né scritto nel log. Confermato il pagamento, il titolo è consultabile tramite un link firmato da token, senza bisogno di login: la vista del biglietto con il codice QR da presentare al varco, lo stesso QR in formato immagine e il PDF stampabile, serviti da un controller pubblico separato dal componente Livewire.
+Le #link(<fig-storefront-pagamento-biglietto>)[due figure seguenti] mostrano il pagamento e il biglietto emesso. Il pagamento è delegato a Stripe Checkout, che offre carta, Apple Pay, Satispay e il wallet Link; se non va a buon fine, nessun titolo viene emesso né scritto nel log. Confermato il pagamento, il titolo è consultabile tramite un link firmato da token, senza bisogno di login: la vista del biglietto con il codice QR da presentare al varco, lo stesso QR in formato immagine e il PDF stampabile, serviti da un controller pubblico separato dal componente Livewire.
 #v(1.2cm)
 #screenshot-pair(
   "../../img/screenshots/pagamento.png", [Figura 6: Schermata del pagamento],
@@ -345,7 +345,7 @@ Le due interfacce convergono così sullo stesso strato di servizi e sullo stesso
 
 == Design Pattern <design-pattern>
 
-Tre problemi si ripetono più volte nel modulo fiscale: costruire lo stesso oggetto in rappresentazioni diverse (un tracciato ASCII, un documento XML), nascondere dietro un'unica chiamata un'inizializzazione che coinvolge più classi correlate, e riconoscere un'operazione già eseguita invece di ripeterla. Le sezioni seguenti descrivono i tre design pattern con cui il modulo fiscale (`App\Fiscal`) risponde a ciascun problema.
+Tre problemi si ripetono più volte nel modulo fiscale: costruire lo stesso oggetto in rappresentazioni diverse (un tracciato ASCII, un documento XML), nascondere dietro un'unica chiamata un'inizializzazione che coinvolge più classi correlate, e riconoscere un'operazione già eseguita invece di ripeterla. Le sezioni seguenti descrivono i tre design pattern del catalogo classico della progettazione orientata agli oggetti (#link(<gof>)[Gamma et al., 1994]) con cui il modulo fiscale (`App\Fiscal`) risponde a ciascun problema.
 
 === Builder <pattern-builder>
 
@@ -354,25 +354,28 @@ Il pattern creazionale *Builder* separa la costruzione di un oggetto complesso d
 - `build()` li concatena nella stringa a lunghezza fissa. 
 La formattazione dei singoli campi è centralizzata in `FixedWidthFormatter`, che non va riscritta in ogni builder.
 
-I due metodi restano separati perché `fields()` viene usato anche altrove: la pagina `EmissioneTitolo` lo chiama direttamente per mostrare il tracciato in una tabella, senza passare dalla stringa concatenata prodotta da `build()`.
+I due metodi restano separati perché `fields()` viene usato anche altrove: la pagina `EmissioneTitolo` lo chiama direttamente per mostrare il tracciato in una tabella, senza passare dalla stringa concatenata prodotta da `build()`.\
+Lo schema generico del pattern, nei ruoli Director/Builder/Product descritti a lezione, è riportato nella figura seguente.
 #v(0.8cm)
 
-#screenshot("../../img/patterns/builder.png", caption: [Figura 8: Diagramma del Pattern Builder]) <pattern-builder>
+#screenshot("../../img/patterns/builder.png", caption: [Figura 8: Diagramma del Pattern Builder]) <fig-pattern-builder>
 #pagebreak()
 === Facade <pattern-facade>
 
 Il pattern strutturale *Facade* fornisce un'interfaccia unica per un sottosistema composto da più parti correlate. `FiscalEnvironment::active()` svolge questo ruolo andando a risolvere in un'unica chiamata il sistema certificato attivo, la carta di attivazione associata, verifica e aggiorna lo stato della macchina a stati, chiude i segmenti di log rimasti aperti da giornate precedenti e apre quello del giorno corrente.
 
-Il metodo nasconde cinque classi (`CertifiedSystem`, `ActivationCard`, `SystemStateMachine`, `FiscalLogSegment`, `FiscalLogSegmentCloser`) ed è chiamato così com'è da quattordici punti diversi del codice. Senza la facciata, ognuno di quei punti dovrebbe ripetere la stessa sequenza di cinque controlli, con il rischio di sbagliarne l'ordine.
+Il metodo nasconde cinque classi (`CertifiedSystem`, `ActivationCard`, `SystemStateMachine`, `FiscalLogSegment`, `FiscalLogSegmentCloser`) ed è chiamato così com'è da quattordici punti diversi del codice. Senza la facciata, ognuno di quei punti dovrebbe ripetere la stessa sequenza di cinque controlli, con il rischio di sbagliarne l'ordine.\
+Lo schema generico del pattern, con il Client che vede solo la Facade e non i sottosistemi che essa orchestra, è riportato nella figura seguente.
 #v(0.8cm)
 
-#screenshot("../../img/patterns/facade.png", caption: [Figura 9: Diagramma del Pattern Facade]) <pattern-facade>
+#screenshot("../../img/patterns/facade.png", caption: [Figura 9: Diagramma del Pattern Facade]) <fig-pattern-facade>
 
 #pagebreak()
 === Command <pattern-command>
 
 Il pattern comportamentale *Command* incapsula una richiesta come oggetto, invece che come una semplice chiamata di metodo e questo permette di riconoscere se una richiesta è già stata eseguita. Ogni operazione fiscale passa attraverso `FiscalWriter::execute()` con un `commandType` che la identifica: `ISSUE_TITLE`, `ISSUE_SUBSCRIPTION`, `CANCEL_TITLE`, `CANCEL_SUBSCRIPTION`.\  Il comando è salvato come riga di `FiscalCommand`, con tipo, richiesta serializzata, impronta e stato (`PENDING`/`COMPLETED`/`FAILED`); è questa riga a decidere l'esito quando la stessa chiave di idempotenza arriva una seconda volta.\
- La classe `FiscalWriter` non sa cosa sia un titolo o un abbonamento ma riceve un comando generico e scrive una riga di `fiscal_transactions` all'interno del database.
+ La classe `FiscalWriter` non sa cosa sia un titolo o un abbonamento ma riceve un comando generico e scrive una riga di `fiscal_transactions` all'interno del database.\
+Lo schema generico del pattern, con l'Invoker disaccoppiato dai Client che costruiscono i comandi, è riportato nella figura seguente.
 #v(0.8cm)
 
-#screenshot("../../img/patterns/command.png", caption: [Figura 10: Diagramma del Pattern Command]) <pattern-command>
+#screenshot("../../img/patterns/command.png", caption: [Figura 10: Diagramma del Pattern Command]) <fig-pattern-command>
