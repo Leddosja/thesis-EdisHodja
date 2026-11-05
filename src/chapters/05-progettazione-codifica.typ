@@ -254,7 +254,7 @@ La #link(<fig-backoffice-log-titoli>)[figura seguente] mostra la scheda "Log tit
 
 Le tre schede riassuntive in alto (titoli validi, titoli annullati, valore complessivo) permettono all'operatore di verificare lo stato del registro senza contare le righe della tabella sottostante e il pulsante "Emetti titolo" apre la stessa form del caso d'uso #link(<uc-emissione>)[UC-4]\; il pulsante "Annulla", disponibile su ogni riga di eventi non annullati o non passati, chiede invece la causale tra i dieci codici previsti dalla normativa, coerentemente con il #link(<uc-annullo>)[UC-5].
 #v(1.2cm)
-#screenshot("../../img/screenshots/log-titoli.png", caption: [Figura 1: tab dei log dei titoli]) <fig-backoffice-log-titoli>
+#screenshot("../../img/screenshots/log-titoli.png", caption: [Figura 1: Tab dei log dei titoli]) <fig-backoffice-log-titoli>
 #v(1fr)
 
 #pagebreak()
@@ -265,7 +265,7 @@ Nella scheda "Riepiloghi", l'operatore seleziona una giornata e vede i titoli e 
 
 È possibile alternare la vista giornaliera e quella mensile mantenendo la stessa tabella dove ogni riga riporta un singolo evento, non un totale aggregato per giornata: un organizzatore con più eventi lo stesso giorno compare quindi su più righe distinte, una per evento, così che il riepilogo resti tracciabile fino al singolo evento invece di nascondere il dettaglio dietro una somma.
 #v(1.2cm)
-#screenshot("../../img/screenshots/riepiloghi.png", caption: [Figura 2: tab dei riepiloghi giornalieri e mensili]) <fig-backoffice-riepiloghi>
+#screenshot("../../img/screenshots/riepiloghi.png", caption: [Figura 2: Tab dei riepiloghi giornalieri e mensili]) <fig-backoffice-riepiloghi>
 #v(1fr)
 
 #pagebreak()
@@ -274,7 +274,7 @@ Nella scheda "Riepiloghi", l'operatore seleziona una giornata e vede i titoli e 
 #v(0.4cm)
 La scheda "Trasmissioni", infine, raccoglie due cose distinte che la normativa tratta separatamente: la comunicazione preventiva a SIAE dei periodi di inattività del sistema (simulata), e il giornale fiscale, un segmento per ogni giornata di attività. Per ogni segmento chiuso l'interfaccia mostra se la catena di impronte è integra, la stessa verifica descritta a proposito della catena di hash, ricostruendola in lettura invece di limitarsi a fidarsi del dato salvato.
 #v(1.2cm)
-#screenshot("../../img/screenshots/trasmissioni.png", caption: [Figura 3: tab delle trasmissioni e giornale fiscale]) <fig-backoffice-trasmissioni>
+#screenshot("../../img/screenshots/trasmissioni.png", caption: [Figura 3: Tab delle trasmissioni e giornale fiscale]) <fig-backoffice-trasmissioni>
 #v(1fr)
 #pagebreak()
 
