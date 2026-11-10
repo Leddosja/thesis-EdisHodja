@@ -22,7 +22,7 @@
 
 = Analisi dei requisiti <analisi-requisiti>
 
-Questo capitolo raccoglie i requisiti del prototipo e li collega ai casi d’uso che li realizzano. La fonte primaria è la normativa fiscale AdE/SIAE sui sistemi di emissione dei titoli di accesso; l’azienda l’ha tradotta in un documento di requisiti organizzato in gruppi tematici (A-N).
+Questo capitolo raccoglie i requisiti del prototipo e li collega ai casi d’uso che li realizzano. La fonte primaria è la normativa fiscale #link(<gloss-ade>)[AdE]/SIAE sui sistemi di emissione dei titoli di accesso; l’azienda l’ha tradotta in un documento di requisiti organizzato in gruppi tematici (A-N).
 
 == Fonti normative e perimetro <fonti-perimetro>
 
@@ -62,12 +62,12 @@ La tabella seguente riassume i requisiti di sistema individuati, con la priorit�
 
 == Attori <attori>
 
-Un attore è una persona o un sistema esterno che interagisce con il sistema. Ciò che il progetto può controllare e realizzare fa parte del sistema e non è un attore. Per questo la carta di attivazione, il pagamento e lo SPID, che il prototipo simula internamente, non sono attori: compaiono nelle precondizioni e nelle descrizioni, e le loro interfacce restano compatibili con una futura sostituzione con i componenti reali. #v(0.3cm)
+Un attore è una persona o un sistema esterno che interagisce con il sistema. Ciò che il progetto può controllare e realizzare fa parte del sistema e non è un attore. Per questo la carta di attivazione, il pagamento e lo #link(<gloss-spid>)[SPID], che il prototipo simula internamente, non sono attori: compaiono nelle precondizioni e nelle descrizioni, e le loro interfacce restano compatibili con una futura sostituzione con i componenti reali. #v(0.3cm)
 
 *Attori principali*
 
-- *Operatore di back-office*: la persona dell’organizzatore o dell’azienda che usa il sistema da dietro le quinte. Configura organizzatori, locali, eventi e prezzi, gestisce la carta simulata, emette e annulla titoli, chiude la giornata e consulta i riepiloghi.
-- *Cliente*: la persona che compra un biglietto sullo storefront online. All’inizio è solo un visitatore e può soltanto registrarsi o accedere con SPID simulato; da quel momento è lo stesso attore, ora identificato, e può acquistare, cambiare il nominativo di un titolo, rimetterlo in vendita e stamparlo. Non è diviso in due attori distinti: l’unica differenza è se ha già completato l’identificazione, ed è questa la precondizione che distingue i casi d’uso riservati all’acquisto da quelli aperti a chiunque visiti lo storefront.
+- *Operatore di #link(<gloss-back-office>)[back-office]*: la persona dell’organizzatore o dell’azienda che usa il sistema da dietro le quinte. Configura organizzatori, locali, eventi e prezzi, gestisce la carta simulata, emette e annulla titoli, chiude la giornata e consulta i riepiloghi.
+- *Cliente*: la persona che compra un biglietto sullo #link(<gloss-storefront>)[storefront] online. All’inizio è solo un visitatore e può soltanto registrarsi o accedere con SPID simulato; da quel momento è lo stesso attore, ora identificato, e può acquistare, cambiare il nominativo di un titolo, rimetterlo in vendita e stamparlo. Non è diviso in due attori distinti: l’unica differenza è se ha già completato l’identificazione, ed è questa la precondizione che distingue i casi d’uso riservati all’acquisto da quelli aperti a chiunque visiti lo storefront.
 - *Addetto al varco*: la persona all’ingresso dell’evento che legge il codice del titolo e fa passare il cliente.
 
 #pagebreak()
@@ -132,7 +132,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
     + Il sistema si accende, o la carta viene rimossa e reinserita: in entrambi i casi chiede il PIN.
     + L’operatore inserisce il PIN.
     + Se è la prima attivazione della carta, il sistema registra titolare, codice sistema e codice carta, e controlla la firma.
-    + Il sistema legge contatori, progressivo e sigillo simulati sulla carta, verifica che sia associata a questo sistema e mostra i contatori a schermo.
+    + Il sistema legge contatori, #link(<gloss-progressivo>)[progressivo] e sigillo simulati sulla carta, verifica che sia associata a questo sistema e mostra i contatori a schermo.
     + Lo stato passa a pronto: tutte le funzioni che richiedono la carta diventano utilizzabili.
   ],
   [Lo stato del sistema riflette la carta presente.],
@@ -171,7 +171,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [
     + L’operatore seleziona il titolo da annullare e indica la causale dell’annullo, scelta tra i dieci codici della tabella specificata dalla normativa.
     + Il sistema verifica che il termine previsto per quella causale non sia scaduto.
-    + Genera un nuovo record ANNULLATO, con il proprio progressivo e sigillo, che riporta i dati del titolo originario.
+    + Genera un nuovo #link(<gloss-record>)[record] ANNULLATO, con il proprio progressivo e sigillo, che riporta i dati del titolo originario.
   ],
   [Il titolo risulta annullato e viene conservato. I due movimenti sono correlati nel log e rientrano nella chiusura giornaliera (#link(<uc-chiusura>)[UC-6]). La lista di ingresso si aggiorna (#link(<uc-varco>)[UC-12]) e il wallet pass viene revocato (#link(<uc-wallet>)[UC-14]).],
   alternative: [Se il termine di annullo è scaduto (#link(<uc-annullo-termine>)[UC-5.1]) o il titolo è già annullato (#link(<uc-annullo-gia>)[UC-5.2]), l’operazione viene rifiutata.],
@@ -189,10 +189,10 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
 
 #pagebreak()
 #usecase(6, [Generazione del log giornaliero], [Operatore],
-  [La carta simulata è valida e il sistema è pronto. Sono presenti movimenti non ancora chiusi nella giornata fiscale, prodotti da emissioni e annulli.],
+  [La carta simulata è valida e il sistema è pronto. Sono presenti movimenti non ancora chiusi nella #link(<gloss-giornata-fiscale>)[giornata fiscale], prodotti da emissioni e annulli.],
   [
     + L’operatore avvia la chiusura della giornata fiscale, a fine servizio.
-    + Il sistema genera i record del log del giorno, nei due formati (ASCII a campi fissi e XML), e aggiorna la catena di impronte che li collega.
+    + Il sistema genera i record del log del giorno, nei due formati (ASCII a campi fissi e XML), e aggiorna la catena di #link(<gloss-impronta>)[impronte] che li collega.
     + Firma digitalmente la giornata con la chiave della carta simulata e scrive il risultato su un supporto simulato non riscrivibile.
     + Produce il riepilogo giornaliero e lo rende disponibile insieme al log, conservato per i successivi 24 mesi.
   ],
@@ -242,7 +242,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
 #usecase(9, [Acquisto dei titoli online], [Cliente],
   [Lo storefront dell’organizzatore è attivo e il sistema è pronto. L’evento è configurato e i listini sono definiti. Il cliente si è già identificato, con la registrazione a doppio riscontro o con l’accesso SPID.],
   [
-    + Il cliente supera il CAPTCHA e compone il carrello, scegliendo evento, ordine di posto e quantità, fino al limite di dieci titoli per evento, rispettato a livello di sistema anche tra organizzatori diversi.
+    + Il cliente supera il #link(<gloss-captcha>)[CAPTCHA] e compone il carrello, scegliendo evento, ordine di posto e quantità, fino al limite di dieci titoli per evento, rispettato a livello di sistema anche tra organizzatori diversi.
     + Paga con un metodo tracciabile, simulato nel prototipo.
     + Al pagamento andato a buon fine, il sistema emette i titoli.
     + I titoli vengono consegnati solo dopo la chiusura della sessione di acquisto.
@@ -256,7 +256,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [Lo storefront dell’organizzatore è attivo e il cliente non si è ancora identificato.],
   [
     + Il cliente compila i propri dati anagrafici, l’indirizzo email, il numero di cellulare e il mezzo scelto per ricevere il codice di conferma.
-    + Il sistema invia un codice OTP simulato.
+    + Il sistema invia un codice #link(<gloss-otp>)[OTP] simulato.
     + Il cliente lo inserisce per confermare la registrazione e il sistema verifica che il cellulare non sia già associato ad un altro cliente.
   ],
   [Il cliente è identificato e può procedere all’acquisto.],
@@ -393,7 +393,7 @@ Le tabelle seguono l’ordine della checklist fornita da #azienda e ogni riga ri
   ([C1], [Emissione completa quando il titolo è definito e registrato nel log, anche se non è stato stampato], [UC4]),
   ([C2], [Dati obbligatori dell’art. 3 del #link(<dm2000>)[D.M. 2000]: natura, data e ora, luogo, posto, corrispettivo, gratuità o riduzione con causale, prevendita e prestazioni accessorie separate, sigillo], [UC4]),
   ([C3], [Diciture per la vendita per conto di terzi e per la vendita da parte dell’organizzatore], [UC4]),
-  ([C4], [Abbonamenti con dicitura, numero di prestazioni, turno libero e ratei per turno fisso], [UC4]),
+  ([C4], [#link(<gloss-abbonamento>)[Abbonamenti] con dicitura, numero di prestazioni, turno libero e ratei per turno fisso], [UC4]),
   ([C5], [Titoli open registrati come abbonamenti con codice proprio, un evento abilitato e turno libero], [UC4]),
   ([C6], [Gratuità e riduzioni evidenziate per la lettura immediata], [UC4]),
   ([C7], [Sigillo di 16 caratteri calcolato dalla carta su codice carta, data, ora, importo e progressivo], [UC4]),
@@ -426,7 +426,7 @@ L’annullo richiede sempre una causale, scelta tra i dieci codici definiti dall
   [008], [Annullamento per rivendita],
   [009], [Annullamento per furto/smarrimento],
   [010], [Annullamento per sostituzione contestuale con titolo diverso di importo uguale o superiore (upselling)],
-), caption: [Causali di annullo, da 2019 All.B p.1 lett. i], kind: table, supplement: [Tabella]) <tab-causali>
+), caption: [#link(<gloss-causale-annullo>)[Causali di annullo], da 2019 All.B p.1 lett. i], kind: table, supplement: [Tabella]) <tab-causali>
 
 #status-table((
   ([D1], [Annullo con causale entro il quinto giorno lavorativo successivo all’evento], [UC5]),
@@ -510,7 +510,7 @@ L’annullo richiede sempre una causale, scelta tra i dieci codici definiti dall
   ([K2], [Registrazione in tempo reale di ogni accesso], [UC12]),
   ([K3], [Inibizione del riutilizzo dello stesso titolo], [UC12]),
   ([K4], [Nella lista unica solo nome e cognome degli intestatari], [UC12]),
-  ([K5], [Il varco è componente del sistema certificato: va descritto nell’istanza e verificato in certificazione], [UC12]),
+  ([K5], [Il varco è componente del #link(<gloss-sistema-certificato>)[sistema certificato]: va descritto nell’istanza e verificato in certificazione], [UC12]),
 ), caption: [Requisiti del gruppo K.]) <tab-gruppo-k>
 
 #heading(level: 3, outlined: false)[Gruppo L: output e supporti] <gruppo-l>

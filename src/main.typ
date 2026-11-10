@@ -64,10 +64,6 @@
 
 #pagebreak()
 
-/* #include "chapters/00-rigraziamenti.typ"
-
-#pagebreak()*/
-
 #heading(outlined: false)[Sommario] <sommario>
 #v(0.5cm)
 Il presente documento descrive il lavoro svolto durante il periodo di stage dal laureando #io presso l'azienda #azienda, della durata di circa 300 ore, svolte nel periodo che intercorre dal 28 settembre 2026 al 20 novembre 2026. Lo stage ha per oggetto la realizzazione di un prototipo di sistema di biglietteria automatizzata per la vendita online di titoli di accesso per conto di organizzatori terzi, in modalità white-label, destinato a integrarsi con il CRM aziendale RelAi. Il sistema deve rispettare i requisiti stabiliti dalla normativa AdE/SIAE.
@@ -76,6 +72,9 @@ L'elaborato è stato redatto seguendo il piano di lavoro proposto dal tutor azie
 
 Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile sono simulati e il sistema non è oggetto di certificazione durante lo stage, il prototipo serve a dimostrare i flussi end-to-end e a costituire la base tecnica per lo sviluppo del sistema definitivo. Il lavoro comprende l'analisi dei requisiti normativi, la progettazione del modello dati su MariaDB, l'emissione e l'annullamento dei titoli, la generazione del log delle transazioni e dei riepiloghi, la vendita online e il controllo accessi, con la verifica dei risultati tramite test funzionali e di concorrenza.
 
+#pagebreak()
+
+#include "chapters/00-rigraziamenti.typ"
 
 #pagebreak()
 #heading(outlined: false)[Indice] <indice>
@@ -112,6 +111,6 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 #include "chapters/04-analisi-requisiti.typ"
 #include "chapters/05-progettazione-codifica.typ"
 #include "chapters/06-verifica-validazione.typ"
-// #include "chapters/07-conclusioni.typ"
+#include "chapters/07-conclusioni.typ"
 #include "chapters/01-glossario.typ"
 #include "chapters/08-bibliografia.typ"

@@ -71,7 +71,7 @@ Questo capitolo descrive come il prototipo è stato costruito: lo stack tecnolog
 
 == Tecnologie e strumenti <tecnologie-strumenti>
 #v(0.2cm)
-Di seguito viene data una panoramica delle tecnologie e degli strumenti utilizzati per la realizzazione del prototipo. Lo stack è quello già adottato da RelAi, l'applicazione ospitante con piattaforma CRM e loyalty multi-tenant di #azienda, in modo da integrare il modulo fiscale senza introdurre dipendenze aggiuntive né un ambiente di sviluppo separato da quello del resto del team.
+Di seguito viene data una panoramica delle tecnologie e degli strumenti utilizzati per la realizzazione del prototipo. Lo stack è quello già adottato da RelAi, l'applicazione ospitante con piattaforma CRM e loyalty #link(<gloss-multi-tenant>)[multi-tenant] di #azienda, in modo da integrare il modulo fiscale senza introdurre dipendenze aggiuntive né un ambiente di sviluppo separato da quello del resto del team.
 
 #tech-heading("PHP", "../../img/logos/php.svg") <tec-php>
 
@@ -86,7 +86,7 @@ Di seguito viene data una panoramica delle tecnologie e degli strumenti utilizza
 
 #tech-heading("Laravel", "../../img/logos/laravel.svg") <tec-laravel>
 
-#link(<web-laravel>)[Laravel] è il framework PHP full-stack che fornisce l'ORM (`Eloquent`), il sistema di migrazioni, la gestione delle code e la validazione. Nel modulo fiscale è stato impiegato soprattutto per: le migrazioni che definiscono lo schema _append-only_ delle tabelle fiscali, con il vincolo imposto a livello applicativo contro operazioni di `UPDATE` e `DELETE`; i model `Eloquent` di titoli, abbonamenti, transazioni e stato del sistema certificato; l'integrazione con lo _scheduler_ dei task per le chiusure di giornata.
+#link(<web-laravel>)[Laravel] è il framework PHP full-stack che fornisce l'ORM (`Eloquent`), il sistema di migrazioni, la gestione delle code e la validazione. Nel modulo fiscale è stato impiegato soprattutto per: le migrazioni che definiscono lo schema _#link(<gloss-append-only>)[append-only]_ delle tabelle fiscali, con il vincolo imposto a livello applicativo contro operazioni di `UPDATE` e `DELETE`; i model `Eloquent` di titoli, abbonamenti, transazioni e stato del sistema certificato; l'integrazione con lo _scheduler_ dei task per le chiusure di giornata.
 
 #tech-heading("Filament", "../../img/logos/filament.svg") <tec-filament>
 
@@ -130,13 +130,20 @@ Il backend del prototipo vive in un namespace dedicato, `App\Fiscal` la cui stru
   table.header([*Namespace*], [*Responsabilità*]),
   [`App\Fiscal\Models`], [Stato persistente del sistema: sistema certificato, carta di attivazione, titoli, abbonamenti, transazioni, annullamenti.],
   [`App\Fiscal\Support`], [Servizi di dominio: emissione, annullo, macchina a stati del sistema certificato, scrittura idempotente, chiusura di segmento di log.],
-  [`App\Fiscal\Support\ Tracciato`], [Costruttori dei tracciati di esportazione ASCII e XML e relativa validazione contro il DTD 2019.],
+  [`App\Fiscal\Support\ Tracciato`], [Costruttori dei tracciati di esportazione ASCII e XML e relativa validazione contro il #link(<gloss-dtd>)[DTD] 2019.],
   [`App\Fiscal\Enums`], [Tabelle normative codificate come enum tipizzati.],
 ) <tab-namespace-fiscal>
 #v(0.6cm)
 I sotto-namespace sono stati implementati seguendo un modello iterativo e incrementale: ogni blocco è stato realizzato, accompagnato dal relativo test automatico prima di passare al successivo.
 
 Il log registra infatti i movimenti prodotti dall'emissione, e i riepiloghi leggono movimenti che devono già esistere nel log e costruire i blocchi in quest'ordine ha permesso di validare ciascuno con un riscontro concreto prima di costruire sopra il successivo, riducendo il rischio di dover tornare indietro su assunzioni sbagliate quando il dominio normativo presentava ambiguità scoperte solo durante l'implementazione.
+
+/*=== Modello dei dati <modello-dati>
+#v(1cm)
+#figure(
+  image("../../img/diagrams/er.png", width: 130%),
+  caption: [Schema relazionale],
+)*/
 
 #pagebreak()
 === Meccanismi implementativi <meccanismi-implementativi>
@@ -156,7 +163,7 @@ public function calculateSeal(ActivationCard $card, string $fiscalDate, string $
 
 #v(1cm)
 
-La _chiave di idempotenza_ garantisce che una richiesta ripetuta, ad esempio un doppio click o un retry di rete, non venga eseguita due volte: se il comando è già noto, il backend non lo riscrive, ma restituisce l'esito della prima esecuzione.
+La _#link(<gloss-chiave-idempotenza>)[chiave di idempotenza]_ garantisce che una richiesta ripetuta, ad esempio un doppio click o un retry di rete, non venga eseguita due volte: se il comando è già noto, il backend non lo riscrive, ma restituisce l'esito della prima esecuzione.
 
 #phpcode(```php
 $comandoEsistente = FiscalCommand::query()
@@ -200,7 +207,7 @@ $righeAggiornate = DB::table('fiscal_core_states')
 if ($righeAggiornate === 0) {
     throw new RuntimeException("Lo stato del sistema {$statoLetto->system_id} è cambiato nel frattempo: rileggilo e riprova.");
 }
-```, caption: [Locking ottimistico sul campo `version`]) <listing-locking>
+```, caption: [#link(<gloss-locking-ottimistico>)[Locking ottimistico] sul campo `version`]) <listing-locking>
 
 #v(1cm)
 #pagebreak()
