@@ -40,21 +40,21 @@
 
 #heading(level: 2, numbering: none, outlined: false)[Tecnologie e strumenti]
 
-#webref([PHP], descr: [documentazione ufficiale, "What is PHP?"], url: "https://www.php.net/manual/en/intro-whatis.php", label: [php.net], visited: "05/11/2026") <web-php>
+#webref([PHP], descr: [documentazione ufficiale, "What is PHP?"], url: "https://www.php.net/manual/en/intro-whatis.php", label: [php.net], visited: "29/10/2026") <web-php>
 
-#webref([Laravel], descr: [documentazione ufficiale], url: "https://laravel.com/docs", label: [laravel.com], visited: "05/11/2026") <web-laravel>
+#webref([Laravel], descr: [documentazione ufficiale], url: "https://laravel.com/docs", label: [laravel.com], visited: "09/11/2026") <web-laravel>
 
-#webref([Filament], descr: [documentazione ufficiale], url: "https://filamentphp.com/docs", label: [filamentphp.com], visited: "05/11/2026") <web-filament>
+#webref([Filament], descr: [documentazione ufficiale], url: "https://filamentphp.com/docs", label: [filamentphp.com], visited: "29/10/2026") <web-filament>
 
-#webref([Livewire], descr: [documentazione ufficiale, guida introduttiva], url: "https://livewire.laravel.com/docs/quickstart", label: [livewire.laravel.com], visited: "05/11/2026") <web-livewire>
+#webref([Livewire], descr: [documentazione ufficiale, guida introduttiva], url: "https://livewire.laravel.com/docs/quickstart", label: [livewire.laravel.com], visited: "12/10/2026") <web-livewire>
 
-#webref([MariaDB], descr: [documentazione ufficiale], url: "https://mariadb.org/documentation/", label: [mariadb.org], visited: "05/11/2026") <web-mariadb>
+#webref([MariaDB], descr: [documentazione ufficiale], url: "https://mariadb.org/documentation/", label: [mariadb.org], visited: "29/10/2026") <web-mariadb>
 
-#webref([DDEV], descr: [guida introduttiva ufficiale], url: "https://ddev.com/get-started/", label: [ddev.com], visited: "05/11/2026") <web-ddev>
+#webref([DDEV], descr: [guida introduttiva ufficiale], url: "https://ddev.com/get-started/", label: [ddev.com], visited: "02/10/2026") <web-ddev>
 
-#webref([Pest], descr: [documentazione ufficiale, installazione], url: "https://pestphp.com/docs/installation", label: [pestphp.com], visited: "05/11/2026") <web-pest>
+#webref([Pest], descr: [documentazione ufficiale, installazione], url: "https://pestphp.com/docs/installation", label: [pestphp.com], visited: "02/10/2026") <web-pest>
 
-#webref([Git], descr: [documentazione ufficiale], url: "https://git-scm.com/doc", label: [git-scm.com], visited: "05/11/2026") <web-git>
+#webref([Git], descr: [documentazione ufficiale], url: "https://git-scm.com/doc", label: [git-scm.com], visited: "02/10/2026") <web-git>
 
 /*
 = Sitografia <sitografia>
