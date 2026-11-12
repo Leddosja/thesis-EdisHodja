@@ -6,7 +6,7 @@
 
 #block[
   #set par(first-line-indent: 0pt, justify: true)
-  #set terms(hanging-indent: 2em, spacing: 3em)
+  #set terms(hanging-indent: 3em, spacing: 3em)
 
   / Abbonamento <gloss-abbonamento>: titolo che dà diritto a più ingressi su un insieme di eventi, abilitato a turno libero, quando il titolare sceglie quali prestazioni usare, o a turno fisso, quando le prestazioni sono prestabilite e il relativo importo è ripartito in ratei. Un abbonamento open è registrato con lo stesso meccanismo ma con un solo evento abilitato e turno libero.
 
@@ -57,7 +57,7 @@
   / Sigillo fiscale <gloss-sigillo-fiscale>: codice alfanumerico generato dalla carta di attivazione, nel prototipo dichiaratamente simulato, che certifica l'autenticità di un titolo o di un segmento del log delle transazioni.
 
   / Sistema certificato <gloss-sistema-certificato>: l'istanza del sistema di emissione a cui sono associati la carta di attivazione, lo stato operativo e i segmenti del giornale fiscale; un movimento sigillato da una carta si registra solo nel sistema certificato che la ospita.
-  \ \ 
+  \
   / SPID <gloss-spid>: Sistema Pubblico di Identità Digitale. Sistema italiano di autenticazione digitale, nel prototipo simulato, previsto come modalità di accesso alternativa in fase di registrazione.
 
   / Storefront <gloss-storefront>: interfaccia web rivolta al pubblico, personalizzata per dominio in modalità _white-label_, attraverso cui gli utenti consultano gli eventi e acquistano i titoli di accesso.
