@@ -35,7 +35,7 @@ Il perimetro è il sistema di emissione dei titoli di accesso previsto dall’ar
 
 Ogni requisito ha una priorità, assegnata dal piano di lavoro proposto dal tutor aziendale:
 
-- *Obbligatorio*: necessario perché il prototipo sia un risultato accettabile del referente aziendale, #tutor.
+- *Obbligatorio*: necessario perché il prototipo sia un risultato accettabile per il referente aziendale, #tutor.
 - *Desiderabile*: realizzato dopo gli obbligatori, se il tempo a disposizione lo consente.
 - *Facoltativo*: realizzato solo a margine.
 

@@ -14,7 +14,7 @@ Il piano di lavoro individua due prodotti attesi al termine dello stage, con par
 
 == Organizzazione del lavoro <organizzazione-lavoro>
 
-Il lavoro si svolge in otto settimane: sette da quaranta ore e una da venti in cui ciascuna corrisponde ad un blocco funzionale del sistema. Si parte dall’analisi normativa e dall’ambiente di sviluppo, si passa al modello dei dati e alla carta simulata, poi a emissione e annullo, log e riepiloghi. Le ultime settimane sono dedicate a vendita online, nominatività, controllo accessi e test. 
+Il lavoro si svolge in otto settimane: sette da quaranta ore e una da venti in cui ciascuna ora corrisponde ad un blocco funzionale del sistema. Si parte dall’analisi normativa e dall’ambiente di sviluppo, si passa al modello dei dati e alla carta simulata, poi a emissione e annullo, log e riepiloghi. Le ultime settimane sono dedicate a vendita online, nominatività, controllo accessi e test. 
 \ L’ordine non è casuale: il log registra i movimenti prodotti dall’emissione, quindi conviene costruire prima l’emissione, e il controllo accessi legge titoli che devono già esistere nel sistema.
 
 Ogni settimana segue lo stesso schema in cui il primo incontro con il tutor, all’inizio della settimana, serve a fissare le task: quali requisiti coprire, quali flussi realizzare e quali risorse servono, come documentazione normativa, ambienti e dati di prova. A metà settimana si tiene un incontro intermedio, riservato ai problemi emersi durante lo sviluppo. L’ultimo incontro, a fine settimana, prevede una dimostrazione dei flussi sul prototipo.

@@ -30,7 +30,7 @@ Il prototipo non nasce come applicazione a sé stante, ma come modulo integrato 
 
 Il prototipo è pensato per permettere a organizzatori terzi di vendere titoli online con una modalità _#link(<gloss-white-label>)[white-label]_, sul dominio di ciascun organizzatore. Il perimetro comprende la gestione dei dati di organizzatori, locali, eventi, prezzi e utenti, insieme alle operazioni sui titoli e alla registrazione delle transazioni.
 
-Il piano di lavoro individua cinque obiettivi obbligatori: analizzare i requisiti normativi e l’architettura di riferimento; definire il modello dei dati e simulare la #link(<gloss-carta-attivazione>)[carta di attivazione]\; realizzare emissione, annullamento e registrazione dei movimenti; generare #link(<gloss-riepilogo>)[riepiloghi] e funzioni di consultazione; verificare il prototipo con test funzionali e di concorrenza e documentarne risultati e limiti.
+Il piano di lavoro individua cinque obiettivi obbligatori: analizzare i requisiti normativi e l’architettura di riferimento; definire il modello dei dati e simulare la #link(<gloss-carta-attivazione>)[carta di attivazione]\; realizzare emissione, annullamento e registrazione dei movimenti; generare riepiloghi e funzioni di consultazione; verificare il prototipo con test funzionali e di concorrenza e documentarne risultati e limiti.
 
 Tra le estensioni desiderabili sono previsti la vendita online _white-label_, la gestione dei #link(<gloss-titolo-nominativo>)[titoli nominativi] e dei cambi nominativo, la rimessa in vendita e il controllo degli accessi. Il piano elenca inoltre, come attività facoltative compatibilmente con il tempo, l’emissione di _wallet pass_, la gestione delle procedure in caso di guasto e l’integrazione con RelAi.
 
