@@ -41,6 +41,8 @@ requires: none, secondary: none) = {
     #show enum: set block(spacing: 0em)
     #if diagram != none [
       #v(0.5cm)
+      Il diagramma seguente ne illustra graficamente il flusso.
+      #v(0.3cm)
       #uc-diagram(diagram, caption-text: [Diagramma del caso d'uso UC#id.])
     ]
     \

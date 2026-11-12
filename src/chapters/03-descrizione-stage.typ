@@ -27,7 +27,7 @@ La revisione controlla tre aspetti: che il codice sia leggibile e coerente con l
 
 == Dai requisiti alle evidenze <matrice-requisiti>
 
-Il punto di partenza sono i requisiti che l’azienda ha raccolto in gruppi tematici, dalla A alla N, insieme alle checklist e al testo del #link(<dm2000>)[D.M. 13 luglio 2000] e dei provvedimenti dell’Agenzia delle Entrate. \ Non tutti i requisiti rientrano nel perimetro dello stage e quelli selezionati vengono tradotti in una riga della matrice requisito → componente → test → evidenza redatta, sfruttando Google Sheets, durante la prima settimana ed aggiornata nel corso delle settimane successive. \ La riga indica quale parte del sistema implementa il requisito, quale test lo verifica e quale evidenza ne mostra il risultato, per esempio un tracciato generato o l’esito di un test di concorrenza.
+Il punto di partenza sono i requisiti che l’azienda ha raccolto in gruppi tematici, dalla A alla N, insieme alle checklist e al testo del #link(<dm2000>)[D.M. 13 luglio 2000] e dei provvedimenti dell’Agenzia delle Entrate. \ Non tutti i requisiti rientrano nel perimetro dello stage e quelli selezionati vengono tradotti in una riga della matrice requisito → componente → test → evidenza redatta, sfruttando Google Sheets, durante la prima settimana ed aggiornata nel corso delle settimane successive. \ La riga indica quale parte del sistema implementa il requisito, quale test lo verifica e quale evidenza ne mostra il risultato, per esempio un #link(<gloss-tracciato>)[tracciato] generato o l’esito di un test di concorrenza.
 
 == Strategia di verifica <strategia-verifica>
 

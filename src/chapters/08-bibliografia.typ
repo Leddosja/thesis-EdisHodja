@@ -8,23 +8,21 @@
   #align(center)[#smallcaps[Url]: #link(url)[#text(fill: urlcolor)[#label]] #emph[(visitato il #visited)].]
 ]
 
+#let bookref(entry, descr: none) = block(above: 1.5em, below: 2em)[
+  #set par(hanging-indent: 1.1em, leading: 0.65em)
+  #sym.dash.em #h(0.25em) #emph(entry)#if descr != none [, #descr].
+]
+
 #pagebreak()
 
 // Bibliografia e sitografia, incluse direttamente nel file.
 = Bibliografia <bibliografia>
 
-/*
-== Testi
+#heading(level: 2, numbering: none, outlined: false)[Testi]
 
-#v(0.5em)
-[1] James P. Womack, Daniel T. Jones. _Lean Thinking, Second Edition_. Simon & Schuster, Inc., 2010.
+#bookref([Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides. _Design Patterns: Elements of Reusable Object-Oriented Software_], descr: [Addison-Wesley, 1994]) <gof>
 
-== Articoli
-
-#v(0.5em)
-[2] Albert Einstein, Boris Podolsky, Nathan Rosen. _Can Quantum-Mechanical Description of Physical Reality be Considered Complete?_, Physical Review, 47(10), 777-780, 1935. DOI: `10.1103/PhysRev.47.777`.
-*/
-#heading(level: 2, numbering: none)[Normativa] <normativa>
+#heading(level: 2, numbering: none, outlined: false)[Normativa] <normativa>
 
 #webref([Ministero delle Finanze. Decreto Ministeriale 13 luglio 2000], descr: [recante le caratteristiche dei misuratori fiscali e dei titoli di accesso per spettacoli e altre attività di intrattenimento], url: "https://www.agenziaentrate.gov.it/portale/documents/20143/275244/Decreto+del+13+07+2000_DM+13+luglio+2000.pdf/c53eee61-57b8-3f33-ee15-dfb4c7b19dc7", label: [agenziaentrate.gov.it]) <dm2000>
 
@@ -39,6 +37,24 @@
 #webref([Agenzia delle Entrate. Provvedimento n. 223774 del 27 giugno 2019], descr: [misure attuative in materia di vendita o qualsiasi altra forma di collocamento di titoli di accesso], url: "https://www.agenziaentrate.gov.it/portale/documents/20143/1646898/Provvedimento+del+27+giugno+2019+secondary+ticketing.pdf/d72cb570-41b3-3c47-1bce-6aa4e98ef205", label: [agenziaentrate.gov.it]) <prov2019>
 
 #webref([Agenzia delle Entrate. Provvedimento n. 356768 del 25 settembre 2025], descr: [modifiche al provvedimento del Direttore dell'Agenzia delle Entrate n. 223774 del 27 giugno 2019], url: "https://www.agenziaentrate.gov.it/portale/documents/20143/9294995/provvedimento-del-25-settembre-2025.pdf/aee353e6-59da-0824-fdc0-ab3fedaae525", label: [agenziaentrate.gov.it]) <prov2025>
+
+#heading(level: 2, numbering: none, outlined: false)[Tecnologie e strumenti]
+
+#webref([PHP], descr: [documentazione ufficiale, "What is PHP?"], url: "https://www.php.net/manual/en/intro-whatis.php", label: [php.net], visited: "29/10/2026") <web-php>
+
+#webref([Laravel], descr: [documentazione ufficiale], url: "https://laravel.com/docs", label: [laravel.com], visited: "09/11/2026") <web-laravel>
+
+#webref([Filament], descr: [documentazione ufficiale], url: "https://filamentphp.com/docs", label: [filamentphp.com], visited: "29/10/2026") <web-filament>
+
+#webref([Livewire], descr: [documentazione ufficiale, guida introduttiva], url: "https://livewire.laravel.com/docs/quickstart", label: [livewire.laravel.com], visited: "12/10/2026") <web-livewire>
+
+#webref([MariaDB], descr: [documentazione ufficiale], url: "https://mariadb.org/documentation/", label: [mariadb.org], visited: "29/10/2026") <web-mariadb>
+
+#webref([DDEV], descr: [guida introduttiva ufficiale], url: "https://ddev.com/get-started/", label: [ddev.com], visited: "02/10/2026") <web-ddev>
+
+#webref([Pest], descr: [documentazione ufficiale, installazione], url: "https://pestphp.com/docs/installation", label: [pestphp.com], visited: "02/10/2026") <web-pest>
+
+#webref([Git], descr: [documentazione ufficiale], url: "https://git-scm.com/doc", label: [git-scm.com], visited: "02/10/2026") <web-git>
 
 /*
 = Sitografia <sitografia>
