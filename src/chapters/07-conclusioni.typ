@@ -46,7 +46,7 @@ Come evidenziato dalla tabella, tutti gli obiettivi del piano sono stati raggiun
 
 Lo stage mi ha permesso di confrontarmi con l'applicazione di requisiti normativi in un contesto software già strutturato. Il lavoro ha richiesto di interpretare le disposizioni relative alla biglietteria fiscale e di ricondurle a regole applicative verificabili, considerando sia i riferimenti di Agenzia delle Entrate e SIAE sia le tecnologie adottate in azienda. La normativa ha così guidato la definizione dei dati e dei comportamenti del sistema, mentre i test automatici hanno permesso di verificare che l'implementazione rispettasse i requisiti individuati.
 
-Un ulteriore ambito di apprendimento è stato quello della concorrenza. Ho verificato che un vincolo rispettato durante l'esecuzione sequenziale non garantisce necessariamente lo stesso risultato quando più operazioni accedono contemporaneamente alle risorse condivisee per individuare questi casi ho predisposto test specifici, affiancandoli alle verifiche funzionali. 
+Un ulteriore ambito di apprendimento è stato quello della concorrenza. Ho verificato che un vincolo rispettato durante l'esecuzione sequenziale non garantisce necessariamente lo stesso risultato quando più operazioni accedono contemporaneamente alle risorse condivise e per individuare questi casi ho predisposto test specifici, affiancandoli alle verifiche funzionali. 
 Il lavoro sul progetto mi ha inoltre consentito di acquisire familiarità con il codebase di RelAi e con le pratiche adottate dal team, dalla revisione del codice alla gestione delle modifiche tramite Git.
 
 == Valutazione personale
