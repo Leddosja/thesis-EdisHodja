@@ -55,6 +55,9 @@
   ]
 ]
 
+#pagebreak()
+#pagebreak()
+
 // Frontmatter
 #page(numbering: none)[
   #v(1fr)
@@ -63,6 +66,7 @@
 
 #set heading(numbering: none)
 
+#pagebreak()
 #pagebreak()
 
 #heading(outlined: false)[Sommario] <sommario>
@@ -74,6 +78,8 @@ L'elaborato è stato redatto seguendo il piano di lavoro proposto dal tutor azie
 Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile sono simulati e il sistema non è oggetto di certificazione durante lo stage, il prototipo serve a dimostrare i flussi end-to-end e a costituire la base tecnica per lo sviluppo del sistema definitivo. Il lavoro comprende l'analisi dei requisiti normativi, la progettazione del modello dati su MariaDB, l'emissione e l'annullamento dei titoli, la generazione del log delle transazioni e dei riepiloghi, la vendita online e il controllo accessi, con la verifica dei risultati tramite test funzionali e di concorrenza.
 
 #pagebreak()
+#pagebreak()
+
 
 #include "chapters/00-rigraziamenti.typ"
 

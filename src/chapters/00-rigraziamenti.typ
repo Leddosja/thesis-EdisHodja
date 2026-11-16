@@ -10,6 +10,7 @@
 #v(2em)
 
 #pagebreak()
+#pagebreak()
 #heading(outlined: false)[Ringraziamenti] <ringraziamenti>
 #v(0.5cm)
 Questi ringraziamenti sono forse la parte più difficile da scrivere. Non perché mi manchino le persone da ringraziare, ma perché a volte è complicato trovare le parole giuste per dire quanto siano importanti (e ammetto che la tentazione di usare ChatGPT era tanta).
@@ -60,3 +61,5 @@ Questa laurea porta il mio nome, ma dentro ci siete anche un po’ tutti voi. Gr
 
 #v(3em)
 #grid(columns: (1fr, 1fr), [#location, #date], align(right)[#emph[#io]])
+
+#pagebreak()
