@@ -62,3 +62,8 @@
 #v(0.5em)
 [3] _Manifesto Agile_. #link("http://agilemanifesto.org/iso/it/")[http://agilemanifesto.org/iso/it/]
 */
+
+#pagebreak()
+#pagebreak()
+#pagebreak()
+#pagebreak()
