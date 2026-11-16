@@ -25,33 +25,37 @@
 // Frontespizio
 #page(numbering: none)[
   #align(center)[
-    #v(1.5cm)
-    #text(size: 15pt, weight: "bold")[#uni]
-    #v(5pt)
-    #text(size: 13pt)[#smallcaps[#department]]
-    #v(5pt)
-    #text(size: 13pt)[#smallcaps[#facoltà]]
-    #v(1.25cm)
-    #image("../img/logo_unipd.jpeg", height: 6cm, alt: "Emblema dell'Universita degli Studi di Padova")
     #v(1cm)
-    #text(size: 15pt, weight: "bold")[#titolo]
+    #text(size: 17pt, weight: "bold")[#uni]
     #v(5pt)
-    #text(size: 13pt, style: "italic")[#degree]
+    #text(size: 15pt)[#smallcaps[#department]]
+    #v(5pt)
+    #text(size: 15pt)[#smallcaps[#facoltà]]
+    #v(1.25cm)
+    #image("../img/logo_unipd.jpeg", height: 6.5cm, alt: "Emblema dell'Universita degli Studi di Padova")
+    #v(1cm)
+    #text(size: 16pt, weight: "bold")[#titolo]
+    #v(5pt)
+    #text(size: 14pt, style: "italic")[#degree]
     #v(2cm)
     #grid(columns: (1fr, 1fr),
       align(left)[
-        #emph[Relatore]\
-        #relatore
+        #text(size: 14pt)[
+          #emph[Relatore]\
+          #relatore
+        ]
       ],
       align(right)[
-        #emph[Laureando]\
-        #io\
-        Matricola #matricola
+        #text(size: 14pt)[
+          #emph[Laureando]\
+          #io\
+          Matricola #matricola
+        ]
       ],
     )
     #v(1fr)
     #line(length: 100%)\
-    #text(size: 11pt)[#smallcaps[Anno Accademico #anno]]
+    #text(size: 12pt)[#smallcaps[Anno Accademico #anno]]
   ]
 ]
 
