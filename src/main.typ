@@ -32,7 +32,7 @@
     #v(5pt)
     #text(size: 15pt)[#smallcaps[#facoltà]]
     #v(1.25cm)
-    #image("../img/logo_unipd.jpeg", height: 6.5cm, alt: "Emblema dell'Universita degli Studi di Padova")
+    #image("../img/logo_unipd.jpeg", height: 7cm, alt: "Emblema dell'Universita degli Studi di Padova")
     #v(1cm)
     #text(size: 16pt, weight: "bold")[#titolo]
     #v(5pt)
