@@ -5,7 +5,7 @@
 
 Lo stage, svolto presso #azienda dal 28 settembre al 20 novembre 2026 per un totale di circa 300 ore, ha portato alla realizzazione di un prototipo per la gestione automatizzata della biglietteria fiscale. Il modulo, sviluppato nel namespace `App\Fiscal` all'interno del codebase di RelAi, copre le principali fasi del ciclo di vita di un titolo: dalla configurazione di organizzatori, locali ed eventi, all'emissione e all'annullamento, fino alla chiusura giornaliera del log fiscale e alla generazione dei riepiloghi.
 
-Il backend implementa i meccanismi individuati nella documentazione normativa e aziendale come il sigillo fiscale, la chiave di idempotenza, la catena delle impronte, il vincolo append-only e locking ottimistico sullo stato del sistema certificato. Il pannello di back-office, realizzato con Filament, e lo storefront pubblico, realizzato con Livewire, utilizzano gli stessi servizi di domini, così che la logica fiscale resti in un unico punto verificabile indipendentemente da quale delle due la invochi.
+Il backend implementa i meccanismi individuati nella documentazione normativa e aziendale come il sigillo fiscale, la chiave di idempotenza, la catena delle impronte, il vincolo append-only e locking ottimistico sullo stato del sistema certificato. Il pannello di back-office, realizzato con Filament, e lo storefront pubblico, realizzato con Livewire, utilizzano gli stessi servizi di dominio così che la logica fiscale resti in un unico punto verificabile indipendentemente da quale delle due la invochi.
 
 La verifica ha riguardato sia il corretto funzionamento dei meccanismi implementati sia i casi in cui questi devono intervenire. Sono stati inclusi test di concorrenza sui vincoli più critici e la validazione dei tracciati ASCII e XML rispetto al DTD previsto dal provvedimento del 2019.
 
@@ -46,7 +46,8 @@ Come evidenziato dalla tabella, tutti gli obiettivi del piano sono stati raggiun
 
 Lo stage mi ha permesso di confrontarmi con l'applicazione di requisiti normativi in un contesto software già strutturato. Il lavoro ha richiesto di interpretare le disposizioni relative alla biglietteria fiscale e di ricondurle a regole applicative verificabili, considerando sia i riferimenti di Agenzia delle Entrate e SIAE sia le tecnologie adottate in azienda. La normativa ha così guidato la definizione dei dati e dei comportamenti del sistema, mentre i test automatici hanno permesso di verificare che l'implementazione rispettasse i requisiti individuati.
 
-Un ulteriore ambito di apprendimento è stato quello della concorrenza. Ho verificato che un vincolo rispettato durante l'esecuzione sequenziale non garantisce necessariamente lo stesso risultato quando più operazioni accedono contemporaneamente alle risorse condivise. Per individuare questi casi ho predisposto test specifici, affiancandoli alle verifiche funzionali e il lavoro sul progetto mi ha inoltre consentito di acquisire familiarità con il codebase di RelAi e con le pratiche adottate dal team, dalla revisione del codice alla gestione delle modifiche tramite Git.
+Un ulteriore ambito di apprendimento è stato quello della concorrenza. Ho verificato che un vincolo rispettato durante l'esecuzione sequenziale non garantisce necessariamente lo stesso risultato quando più operazioni accedono contemporaneamente alle risorse condivisee per individuare questi casi ho predisposto test specifici, affiancandoli alle verifiche funzionali. 
+Il lavoro sul progetto mi ha inoltre consentito di acquisire familiarità con il codebase di RelAi e con le pratiche adottate dal team, dalla revisione del codice alla gestione delle modifiche tramite Git.
 
 == Valutazione personale
 
