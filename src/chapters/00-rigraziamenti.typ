@@ -41,6 +41,7 @@ Agli amici delle passeggiate che finivano in due palline di gelato, a ripensare 
 
 Agli amici della tanto amata Macedonia, che rendono speciali quelle poche settimane d’estate e mi fanno sentire a casa ogni volta che torno. Con voi ci sono il DUF, Debar, le igranki e quei momenti che, anche quando finiscono, restano tra i ricordi più belli. Ogni estate sembra di cominciare una nuova missione su GTA e già non vedo l'ora per la prossima.
 
+#pagebreak()
 Agli amici delle superiori, grazie perché il tempo è passato, le nostre vite sono cambiate, ma riusciamo ancora a ritrovarci e a parlare per ore davanti a uno spritz (e alla mia Coca Zero). È uno di quei legami in cui non c'è bisogno di sentirsi ogni giorno per rimanere importanti.
 
 Agli amici dell’università, a chi ha girato con me per il Paolotti cercando l’aula giusta, a chi ha condiviso l’ansia davanti alla LUM250, a chi ha reso memorabili le colazioni al bar dei Chimici con le brioche al cioccolato bianco e a chi ha cercato con me un posto libero in mensa con i vassoi a girarsi intorno.
