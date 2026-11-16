@@ -54,4 +54,5 @@ L’avanzamento è organizzato con confronti regolari con il tutor aziendale, re
 - Il *quarto capitolo* tratta la progettazione e la codifica.
 - Il *quinto capitolo* descrive la verifica e la validazione.
 - Il *sesto capitolo* riassume i risultati e le conclusioni.
-- Il *settimo capitolo* raccoglie la bibliografia.
+- Il *settimo capitolo* definisce le varie terminologie all'interno del glossario.
+- L'*ottavo capitolo* raccoglie la bibliografia.

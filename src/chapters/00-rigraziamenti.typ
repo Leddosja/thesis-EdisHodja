@@ -14,13 +14,13 @@
 #v(0.5cm)
 Questi ringraziamenti sono forse la parte più difficile da scrivere. Non perché mi manchino le persone da ringraziare, ma perché a volte è complicato trovare le parole giuste per dire quanto siano importanti (e ammetto che la tentazione di usare ChatGPT era tanta).
 #v(0.3cm)
-Per primo, ringrazio il #relatore per avermi accompagnato durante la stesura di questo elaborato, per i consigli e per la disponibilità con cui mi ha seguito.
+Ringrazio innanzitutto il #relatore per avermi accompagnato durante la stesura di questo elaborato, per i consigli e per la disponibilità con cui mi ha seguito.
 #v(0.3cm)
-A Nane e Babe, i miei genitori, va il grazie più grande. Mi siete stati accanto anche quando io per primo avevo smesso di credere di potercela fare. Quando avevo perso le speranze per il test d'ingresso all'uni, voi non le avevate perse. Avete cercato di alleggerire ogni momento difficile e di farmi andare avanti, anche quando non sapevo bene come farlo.
+A Nane e Babe, i miei genitori, va il grazie più grande. Mi siete stati accanto anche quando io per primo avevo smesso di credere di potercela fare. Quando avevo perso le speranze per il test d'ingresso all'università, voi non le avevate perse. Avete cercato di alleggerire ogni momento difficile e di farmi andare avanti, anche quando non sapevo bene come farlo.
 
 Da giovani avete dovuto rinunciare allo studio. Oggi in questa laurea, spero possiate vedere anche un po’ dei vostri sacrifici e dei vostri sogni. Questa corona è vostra per tutto quello che avete fatto per me, per avermi sostenuto e sopportato, e per esserci ancora, ogni giorno. Non sono mai riuscito a dirvi facilmente quanto vi voglio bene e forse scriverlo e leggendolo è il mio modo per riuscirci, almeno stavolta.
 #v(0.3cm)
-Grazie a mia sorella Meme. Per le volte in cui usciva dalla cameretta per lasciarmi studiare, anche se prima riuscivamo a urlarci contro e a menarci. Mi hai sempre voluto bene a modo tuo, e io ho sempre saputo di poter contare su di te per qualsiasi cosa. Ora che non condividiamo più la cameretta, quei momenti che erano quotidianità, adesso capisco quanto fossero preziosi.
+Grazie a mia sorella Meme, per le volte in cui usciva dalla cameretta per lasciarmi studiare, anche se prima riuscivamo a urlarci contro e a menarci. Mi hai sempre voluto bene a modo tuo, e io ho sempre saputo di poter contare su di te per qualsiasi cosa. Ora che non condividiamo più la cameretta, quei momenti che erano quotidianità, adesso capisco quanto fossero preziosi.
 
 E grazie, a te e ad Airo, per il regalo più bello che poteste farci, Rayan (Gaga). Da quando è arrivato, la vita di tutti è cambiata e si è riempita di una felicità nuova. Ripenso a quando scherzavamo: «Ti immagini se alla mia laurea avrai un figlio?». Adesso lui è qui e io sono davvero arrivato alla laurea.
 #v(0.3cm)
@@ -37,7 +37,7 @@ Alle betoneghe dell’Agriturismo, grazie per le sparlate dopo il lavoro, per le
 
 Agli amici dei viaggi low cost, low budget (tranne low calorie): forse ormai ci incontriamo più spesso in aeroporto o per festeggiare le lauree, ma ogni volta ritrovarsi è come riprendere da dove ci eravamo lasciati.
 
-Agli amici delle passeggiate finite in due palline di gelato, a ripensare ai fiocchi di latte di Napoli e ai taralli pugliesi che valgono quanto una seduta dallo psicologo.
+Agli amici delle passeggiate che finivano in due palline di gelato, a ripensare ai fiocchi di latte di Napoli e ai taralli pugliesi che valgono quanto una seduta dallo psicologo.
 
 Agli amici della tanto amata Macedonia, che rendono speciali quelle poche settimane d’estate e mi fanno sentire a casa ogni volta che torno. Con voi ci sono il DUF, Debar, le igranki e quei momenti che, anche quando finiscono, restano tra i ricordi più belli. Ogni estate sembra di cominciare una nuova missione su GTA e già non vedo l'ora per la prossima.
 
