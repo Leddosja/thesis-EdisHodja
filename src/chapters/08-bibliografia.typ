@@ -13,7 +13,7 @@
   #sym.dash.em #h(0.25em) #emph(entry)#if descr != none [, #descr].
 ]
 
-#pagebreak()
+#pagebreak(to: "odd")
 
 // Bibliografia e sitografia, incluse direttamente nel file.
 = Bibliografia <bibliografia>

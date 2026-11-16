@@ -64,7 +64,7 @@
   )
 ]
 
-#pagebreak()
+#pagebreak(to: "odd")
 = Progettazione e codifica <progettazione-codifica>
 #v(0.2cm)
 Questo capitolo descrive come il prototipo è stato costruito: lo stack tecnologico adottato, l'architettura del modulo fiscale e l'ordine in cui è stata realizzata, i design pattern applicati ed un estratto della codifica.

@@ -1,6 +1,6 @@
 #import "shared.typ": *
 
-#pagebreak()
+#pagebreak(to: "odd")
 
 = Descrizione dello stage <descrizione-stage>
 

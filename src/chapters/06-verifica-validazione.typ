@@ -16,7 +16,7 @@
   )
 }
 
-#pagebreak()
+#pagebreak(to: "odd")
 = Verifica e validazione <verifica-validazione>
 
 La verifica del prototipo si è incentrata su una revisione non solo dal punto di vista funzionale, ma anche sul controllo normativo degli standard richiesti dalla checklist di requisiti. In primo piano la correttezza dei singoli meccanismi previsti dalla normativa come il principio dell'idempotenza, la catena delle impronte e il vincolo append-only è verificata con test automatici realizzati per ogni classe del livello `App\Fiscal\Support`. L'altra operazione di validazione riguarda invece la conformità dei tracciati prodotti al formato richiesto dall'Agenzia delle Entrate, verificata confrontando l'output del prototipo con il DTD del provvedimento 223774/2019.

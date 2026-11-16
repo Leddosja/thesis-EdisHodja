@@ -18,7 +18,7 @@
   v(1cm)
 }
 
-#pagebreak()
+#pagebreak(to: "odd")
 
 = Analisi dei requisiti <analisi-requisiti>
 

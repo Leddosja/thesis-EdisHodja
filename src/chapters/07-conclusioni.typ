@@ -1,6 +1,6 @@
 #import "shared.typ": *
 
-#pagebreak()
+#pagebreak(to: "odd")
 = Conclusioni <conclusioni>
 
 Lo stage, svolto presso #azienda dal 28 settembre al 20 novembre 2026 per un totale di circa 300 ore, ha portato alla realizzazione di un prototipo per la gestione automatizzata della biglietteria fiscale. Il modulo, sviluppato nel namespace `App\Fiscal` all'interno del codebase di RelAi, copre le principali fasi del ciclo di vita di un titolo: dalla configurazione di organizzatori, locali ed eventi, all'emissione e all'annullamento, fino alla chiusura giornaliera del log fiscale e alla generazione dei riepiloghi.

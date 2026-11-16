@@ -6,7 +6,8 @@
 
 #set page(
   paper: "a4",
-  margin: (top: 2.75cm, bottom: 2.75cm, left: 3.50cm, right: 3cm),
+  margin: (top: 2.75cm, bottom: 2.75cm, inside: 3.50cm, outside: 3cm),
+  binding: left,
   numbering: "i",
   number-align: center,
 )
@@ -101,7 +102,7 @@ Poiché la carta di attivazione, il sigillo fiscale e il supporto immodificabile
 
 
 
-#pagebreak()
+#pagebreak(to: "odd")
 #counter(page).update(1)
 #set page(numbering: "1.")
 #set heading(numbering: "1.")

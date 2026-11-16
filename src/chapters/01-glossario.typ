@@ -1,6 +1,6 @@
 #import "shared.typ": *
 
-#pagebreak()
+#pagebreak(to: "odd")
 
 #heading()[Glossario] <glossario> \
 
