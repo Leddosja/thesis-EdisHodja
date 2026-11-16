@@ -45,7 +45,7 @@ Agli amici delle superiori, grazie perché il tempo è passato, le nostre vite s
 
 Agli amici dell’università, a chi ha girato con me per il Paolotti cercando l’aula giusta, a chi ha condiviso l’ansia davanti alla LUM250, a chi ha reso memorabili le colazioni al bar dei Chimici con le brioche al cioccolato bianco e a chi ha cercato con me un posto libero in mensa con i vassoi a girarsi intorno.
 
-E infine Claude, ChatGPT e DeepSeek che se un giorno si presenteranno alla mia porta con un corpo e una lista di reclami, spero che almeno abbiano dimenticato quante volte gli abbia insultati.
+E infine Claude, ChatGPT e DeepSeek che se un giorno si presenteranno alla mia porta con un corpo e una lista di reclami, spero che almeno abbiano dimenticato quante volte li abbia insultati.
 
 A tutte le persone che sono qui oggi, ve l’avevo detto fin dall’inizio che se vi ho aggiunti nel gruppo un motivo c’era. Siete le persone con cui ho condiviso pezzi diversi della mia vita e che, in modi diversi, mi hanno aiutato ad arrivare fin qui. Guardarvi oggi significa ritrovare dentro questa stanza tanti ricordi, e sentirmi fortunato per averli vissuti con voi.
 
