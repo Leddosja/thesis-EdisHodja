@@ -4,6 +4,8 @@
   #emph["Whatever life holds in store for me, I will never forget these words: 'With great power comes great responsibility.' This is my gift, my curse. Who am I? I'm Spider-Man."] \
   #v(2em)
   -- *Peter Parker*.
+  #v(38em)
+  'Од корените до соништата' \
 ]
 #v(2em)
 
@@ -31,18 +33,21 @@ Un grazie anche all’Agriturismo Da Paradiso. All’inizio non volevo nemmeno a
 #v(1cm)
 E poi ci siete voi, gli amici. Non vi nomino uno per uno, ma ognuno sa quanto spazio occupa nella mia vita e riconoscerà il proprio posto in queste righe.
 
-Alle betoneghe dell’Agriturismo, grazie per le sparlate dopo il lavoro, per le risate e per quei discorsi su buchi e proboscidi che, per il bene di questa tesi, è meglio non approfondire. Quando ripenso a quel periodo, mi vengono in mente anche le vostre voci e il tempo passato insieme (sembra un discorso da cinquantesimo ...). Sono arrivato lì per lavorare e ho trovato persone che, senza saperlo, hanno reso ogni turno di lavoro più bello.
+Alle betoneghe dell’Agriturismo, grazie per le sparlate dopo il lavoro, per le risate e per quei discorsi su buchi e proboscidi che, per il bene di questa tesi, è meglio non approfondire. Quando ripenso a quel periodo, mi vengono in mente anche le vostre voci e il tempo passato insieme (sembra un discorso da cinquantenne che ricorda la sua adolescenza ...). Sono arrivato lì per lavorare e ho trovato persone che, senza saperlo, hanno reso ogni turno di lavoro più bello e fuori dal normale.
 
-Agli amici dei viaggi low cost, low budget, low tutto: forse oggi ci incontriamo più spesso in aeroporto o per festeggiare le lauree che nei nostri paesini, ma ogni volta ritrovarsi è come riprendere da dove ci eravamo lasciati.
+Agli amici dei viaggi low cost, low budget (tranne low calorie): forse ormai ci incontriamo più spesso in aeroporto o per festeggiare le lauree, ma ogni volta ritrovarsi è come riprendere da dove ci eravamo lasciati.
 
-Agli amici della tanto amata Macedonia, che rendono speciali quelle poche settimane d’estate e mi fanno sentire a casa ogni volta che torno. Con voi ci sono il DUF, Debar, le igranki e quei momenti che, anche quando finiscono, restano tra i ricordi più belli. Ogni estate sembra di cominciare una missione su GTA («Ah shit, here we go again») e già non vedo l'ora per la prossima.
+Agli amici delle passeggiate finite in due palline di gelato, a ripensare ai fiocchi di latte di Napoli e ai taralli pugliesi che valgono quanto una seduta dallo psicologo.
 
-Agli amici delle superiori, grazie perché il tempo è passato, le nostre vite sono cambiate, ma riusciamo ancora a ritrovarci e a parlare per ore davanti a uno spritz (e alla mia Coca Zero) e con qualcuno a fare Napoli in giornata. È uno di quei legami in cui non c'è bisogno di sentirsi ogni giorno per rimanere importanti.
+Agli amici della tanto amata Macedonia, che rendono speciali quelle poche settimane d’estate e mi fanno sentire a casa ogni volta che torno. Con voi ci sono il DUF, Debar, le igranki e quei momenti che, anche quando finiscono, restano tra i ricordi più belli. Ogni estate sembra di cominciare una nuova missione su GTA e già non vedo l'ora per la prossima.
 
-#pagebreak()
-Agli amici dell’università, a chi ha girato con me per il Paolotti cercando l’aula giusta, a chi ha condiviso l’ansia davanti alla LUM250, a chi ha reso memorabili le colazioni al bar dei Chimici (BOMBOCLAT) e a chi ha cercato con me un posto libero in mensa con i vassoi a girarsi intorno.
+Agli amici delle superiori, grazie perché il tempo è passato, le nostre vite sono cambiate, ma riusciamo ancora a ritrovarci e a parlare per ore davanti a uno spritz (e alla mia Coca Zero). È uno di quei legami in cui non c'è bisogno di sentirsi ogni giorno per rimanere importanti.
 
-A tutte le persone che sono qui oggi, ve l’avevo detto fin dall’inizio, nel gruppo che un motivo c’era se vi avevo aggiunti. Siete le persone con cui ho condiviso pezzi diversi della mia vita e che, in modi diversi, mi hanno aiutato ad arrivare fin qui. Guardarvi oggi significa ritrovare dentro questa stanza tanti ricordi, e sentirmi fortunato per averli vissuti con voi.
+Agli amici dell’università, a chi ha girato con me per il Paolotti cercando l’aula giusta, a chi ha condiviso l’ansia davanti alla LUM250, a chi ha reso memorabili le colazioni al bar dei Chimici con le brioche al cioccolato bianco e a chi ha cercato con me un posto libero in mensa con i vassoi a girarsi intorno.
+
+E infine Claude, ChatGPT e DeepSeek che se un giorno si presenteranno alla mia porta con un corpo e una lista di reclami, spero che almeno abbiano dimenticato quante volte gli abbia insultati.
+
+A tutte le persone che sono qui oggi, ve l’avevo detto fin dall’inizio che se vi ho aggiunti nel gruppo un motivo c’era. Siete le persone con cui ho condiviso pezzi diversi della mia vita e che, in modi diversi, mi hanno aiutato ad arrivare fin qui. Guardarvi oggi significa ritrovare dentro questa stanza tanti ricordi, e sentirmi fortunato per averli vissuti con voi.
 
 Grazie per avermi voluto bene anche nei momenti in cui io facevo fatica a volermene. Per avermi fatto ridere, per avermi ascoltato e sopportato. Per esserci stati, anche senza sapere quanto ne avessi bisogno.
 #v(0.3cm)
