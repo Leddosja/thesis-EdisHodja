@@ -60,6 +60,7 @@ La tabella seguente riassume i requisiti di sistema individuati, con la priorit�
   [F3], [Il sistema deve integrarsi con il CRM aziendale RelAi.], [Facoltativo], [Nessun gruppo normativo], [–],
 )], caption: [Requisiti di sistema, con priorità, gruppi normativi e casi d’uso.], kind: table, supplement: [Tabella]) <tab-requisiti-sistema>
 
+#pagebreak()
 == Attori <attori>
 
 Un attore è una persona o un sistema esterno che interagisce con il sistema. Ciò che il progetto può controllare e realizzare fa parte del sistema e non è un attore. Per questo la carta di attivazione, il pagamento e lo #link(<gloss-spid>)[SPID], che il prototipo simula internamente, non sono attori: compaiono nelle precondizioni e nelle descrizioni, e le loro interfacce restano compatibili con una futura sostituzione con i componenti reali. #v(0.3cm)
@@ -250,8 +251,7 @@ Il diagramma dei casi d’uso (_Use Case Diagram_) è un diagramma UML che descr
   [I titoli sono emessi e registrati nel log, l’acquisto è tracciato e i titoli sono inviati al cliente dopo la chiusura della sessione, pronti per essere stampati dall’area personale.],
   alternative: [Se il limite di dieci titoli è raggiunto, il carrello viene bloccato prima del pagamento (#link(<uc-acquisto-limite>)[UC-9.3]). Se il pagamento non va a buon fine, nessun titolo viene emesso (#link(<uc-acquisto-pagamento>)[UC-9.4]). Se il CAPTCHA non è superato, il cliente non può comporre il carrello (#link(<uc-acquisto-captcha>)[UC-9.5]).],
   diagram: "../../img/diagrams/uc-9.png") <uc-acquisto>
-
-#pagebreak()
+  
 #usecase("9.1", [Creazione dell’account cliente], [Cliente],
   [Lo storefront dell’organizzatore è attivo e il cliente non si è ancora identificato.],
   [
